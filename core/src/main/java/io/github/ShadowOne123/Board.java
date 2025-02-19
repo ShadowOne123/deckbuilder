@@ -40,14 +40,21 @@ public abstract class Board {
     public void drawBoard(){
         boardArea.draw(spriteBatch);
         boardArea.setSize(worldWidth*4/5,worldHeight/3);
-        boardArea.setAlpha(0);
+        //boardArea.setAlpha(0);
         float left = boardArea.getX();
         float centerY = boardArea.getY() + boardArea.getHeight()/2;
         Sprite temp;
-        for(int i = 0; i < cards.size(); i++){
-            temp = cards.get(i).getSprite();
-            temp.draw(spriteBatch);
-            temp.setCenter(left+(temp.getWidth()/2) + temp.getWidth()*i + i*0.2f, centerY);
+        float offset = 0.2f;
+        if(!cards.isEmpty()) {
+            offset = (boardArea.getWidth() - cards.get(0).getWidth()*0.75f) / cards.size(); //the 0.1 is there for arcane reasons, only matters in edge case when number of cards exceeds like 20
+            if(offset > cards.get(0).getWidth() + 0.2f){
+                offset = cards.get(0).getWidth() + 0.2f;
+            }
+            for (int i = 0; i < cards.size(); i++) {
+                temp = cards.get(i).getSprite();
+                temp.draw(spriteBatch);
+                temp.setCenter(left + (temp.getWidth() / 2) + i * offset, centerY);
+            }
         }
     }
 

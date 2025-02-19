@@ -113,7 +113,10 @@ public class Main extends ApplicationAdapter {
         else if(Gdx.input.isKeyJustPressed(Input.Keys.A)){
             hand.addCard(new Card(viewport));
         }
-        // Clamp x to values between 0 and worldWidth
+        else if(Gdx.input.isKeyJustPressed(Input.Keys.R)){
+            hand.getCards().clear();
+            playArea.getCards().clear();
+        }
 
     }
 

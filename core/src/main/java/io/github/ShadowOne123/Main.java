@@ -29,6 +29,9 @@ public class Main extends ApplicationAdapter {
     Color background;
     Hand hand;
     PlayArea playArea;
+    Texture backgroundTexture;
+    Texture backgroundTexture2;
+    Sprite Background;
 
     @Override
     public void create() {
@@ -41,22 +44,24 @@ public class Main extends ApplicationAdapter {
         bucketSprite = new Sprite(bucketTexture); // Initialize the sprite based on the texture
         bucketSprite.setSize(1, 1); // Define the size of the sprite
         spriteBatch = new SpriteBatch();
-        batch = new SpriteBatch();
+        //batch = new SpriteBatch();
         image = new Texture("libgdx.png");
         hand = new Hand(spriteBatch, viewport);
         playArea = new PlayArea(spriteBatch, viewport);
+        backgroundTexture = new Texture("GothicCastleBackground3.png");
+        backgroundTexture2 = new Texture("MagicalForestBackground1.png");
+        Background = new Sprite(backgroundTexture2);
     }
 
     @Override
     public void render() {
-
         input();
         draw();
     }
 
     @Override
     public void dispose() {
-        batch.dispose();
+        //batch.dispose();
         image.dispose();
     }
 
@@ -74,10 +79,13 @@ public class Main extends ApplicationAdapter {
         spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
         spriteBatch.begin();
 
+        Background.draw(spriteBatch);
+        Background.setSize(viewport.getWorldWidth(), viewport.getWorldHeight());
         bucketSprite.draw(spriteBatch);
         //cardArea.draw(spriteBatch);
         hand.drawHand();
         playArea.drawPlayArea();
+
         spriteBatch.end();
     }
 
@@ -87,32 +95,37 @@ public class Main extends ApplicationAdapter {
             Vector2 clickCoords = new Vector2(Gdx.input.getX(), Gdx.input.getY());
             clickCoords = viewport.unproject(clickCoords);
             //unproject converts between click(absolute coords, measured in pixels) to world coords measured in viewport units
-            for(Card card : hand.getCards()){
-                if(card.getSprite().getBoundingRectangle().contains(clickCoords)){
-                    Card temp = card;
-                    hand.removeCard(card);
+
+            //checks for clicks in hand, if there are any moves clicked card to played cards
+            for(int i = hand.getCards().size()-1; i >= 0; i--){
+                Card temp = hand.getCards().get(i);
+                if(temp.getSprite().getBoundingRectangle().contains(clickCoords)) {
+                    hand.removeCard(i);
                     playArea.addCard(temp);
                     break;
-
                 }
             }
-            for(Card card : playArea.getCards()){
-                if(card.getSprite().getBoundingRectangle().contains(clickCoords)){
-                    if(playArea.getSprite().getBoundingRectangle().contains(clickCoords)){
-                        Card temp = card;
-                        playArea.removeCard(card);
+            //move cards to hand on-click from played area
+            for(int i = playArea.getCards().size()-1; i >= 0; i--){
+                Card temp = playArea.getCards().get(i);
+                if(playArea.getSprite().getBoundingRectangle().contains(clickCoords)) {
+                    if (temp.getSprite().getBoundingRectangle().contains(clickCoords)) {
+                        playArea.removeCard(i);
                         hand.addCard(temp);
                         break;
                     }
                 }
             }
+
         }
-        else if(Gdx.input.isButtonPressed(Input.Buttons.RIGHT)){
-            bucketSprite.translateX(-2f * delta);
-        }
+
         else if(Gdx.input.isKeyJustPressed(Input.Keys.A)){
-            hand.addCard(new Card(viewport));
+            hand.cards.add(new Card(viewport.getWorldHeight()/4, hand.findTexture("temperance")));
         }
+        else if(Gdx.input.isKeyJustPressed(Input.Keys.S)){
+            hand.cards.add(new Card(viewport.getWorldHeight()/4, hand.findTexture("king")));
+        }
+        //reset board
         else if(Gdx.input.isKeyJustPressed(Input.Keys.R)){
             hand.getCards().clear();
             playArea.getCards().clear();

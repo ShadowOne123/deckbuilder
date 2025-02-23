@@ -21,6 +21,7 @@ public abstract class Board {
     protected ArrayList<Card> cards = new ArrayList<Card>();
     protected Texture temperanceTexture;
     protected Dictionary<String, Texture> textureDict = new Hashtable<>();
+    protected float cardHeight, cardWidth;
 
     public Board(SpriteBatch spriteBatch, Viewport viewport){
         this.worldHeight = viewport.getWorldHeight();
@@ -32,9 +33,12 @@ public abstract class Board {
         boardArea = new Sprite(cardTexture);
         textureDict.put("temperance", temperanceTexture);
         textureDict.put("king", cardTexture);
+        cardHeight = worldHeight/5;
+        cardWidth = cardHeight*0.7f;
     }
 
     public void addCard(Card card){
+        card.setSize(cardWidth, cardHeight);
         cards.add(card);
     }
 
@@ -47,25 +51,23 @@ public abstract class Board {
 
     //render method, called by child classes to make their own render methods
     public void drawBoard(){
-        boardArea.draw(spriteBatch);
-        boardArea.setSize(worldWidth*2.5f/5,worldHeight/3);
-        boardArea.setAlpha(0);
+        boardArea.setSize(worldWidth*0.40f,worldHeight/4);
         float left = boardArea.getX();
         float centerY = boardArea.getY() + boardArea.getHeight()/2;
         Sprite temp;
         float offset = 0.2f;
         if(!cards.isEmpty()) {
             //formula to make cards stay in board when more are added. Forces overlap
-            offset = (boardArea.getWidth() - cards.get(0).getWidth()*0.75f) / cards.size();
+            offset = (boardArea.getWidth() - cardWidth*0.75f) / cards.size();
             //regulates maximum distance between cards
-            if(offset > cards.get(0).getWidth() + 0.2f){
-                offset = cards.get(0).getWidth() + 0.2f;
+            if(offset > cardWidth + 0.2f){
+                offset = cardWidth + 0.2f;
             }
             //draws each card
             for (int i = 0; i < cards.size(); i++) {
                 temp = cards.get(i).getSprite();
-                temp.draw(spriteBatch);
                 temp.setCenter(left + (temp.getWidth() / 2) + i * offset, centerY);
+                temp.draw(spriteBatch);
             }
         }
     }

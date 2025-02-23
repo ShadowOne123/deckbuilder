@@ -31,6 +31,7 @@ public class Main extends ApplicationAdapter {
     PlayArea playArea;
     Texture backgroundTexture;
     Texture backgroundTexture2;
+    Texture backgroundTexture3;
     Sprite Background;
 
     @Override
@@ -50,7 +51,8 @@ public class Main extends ApplicationAdapter {
         playArea = new PlayArea(spriteBatch, viewport);
         backgroundTexture = new Texture("GothicCastleBackground3.png");
         backgroundTexture2 = new Texture("MagicalForestBackground1.png");
-        Background = new Sprite(backgroundTexture2);
+        backgroundTexture3 = new Texture("steampunkBackground1.png");
+        Background = new Sprite(backgroundTexture3);
     }
 
     @Override
@@ -61,7 +63,7 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void dispose() {
-        //batch.dispose();
+        spriteBatch.dispose();
         image.dispose();
     }
 
@@ -120,10 +122,10 @@ public class Main extends ApplicationAdapter {
         }
 
         else if(Gdx.input.isKeyJustPressed(Input.Keys.A)){
-            hand.cards.add(new Card(viewport.getWorldHeight()/4, hand.findTexture("temperance")));
+            hand.addCard(new Card(hand.findTexture("temperance")));
         }
         else if(Gdx.input.isKeyJustPressed(Input.Keys.S)){
-            hand.cards.add(new Card(viewport.getWorldHeight()/4, hand.findTexture("king")));
+            hand.addCard(new Card(hand.findTexture("king")));
         }
         //reset board
         else if(Gdx.input.isKeyJustPressed(Input.Keys.R)){

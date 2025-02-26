@@ -6,8 +6,10 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
@@ -18,12 +20,11 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends ApplicationAdapter {
-    final int HEIGHT = 20;
+    final int HEIGHT = 200;
     public SpriteBatch spriteBatch;
     FitViewport viewport;
     Texture bucketTexture;
     Sprite bucketSprite;
-    private SpriteBatch batch;
     private Texture image;
     Sprite cardArea;
     Color background;
@@ -33,10 +34,15 @@ public class Main extends ApplicationAdapter {
     Texture backgroundTexture2;
     Texture backgroundTexture3;
     Sprite Background;
+    Player player;
+    //text
+    BitmapFont healthFont;
+    FreeTypeFontGenerator healthFontGenerator;
+    FreeTypeFontGenerator.FreeTypeFontParameter healthFontParameter;
 
     @Override
     public void create() {
-        viewport = new FitViewport(HEIGHT * 16/9, HEIGHT);
+        viewport = new FitViewport(HEIGHT * 16f/9f, HEIGHT);
         background = Color.BLACK;
         bucketTexture = new Texture("bucket.png");
         cardArea = new Sprite(bucketTexture);
@@ -53,6 +59,13 @@ public class Main extends ApplicationAdapter {
         backgroundTexture2 = new Texture("MagicalForestBackground1.png");
         backgroundTexture3 = new Texture("steampunkBackground1.png");
         Background = new Sprite(backgroundTexture3);
+        //text
+        healthFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("FreeSerif.ttf"));
+        healthFontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        healthFontParameter.size = 128;
+        healthFontParameter.genMipMaps = true;
+        healthFont = healthFontGenerator.generateFont(healthFontParameter);
+        player = new Player(spriteBatch, viewport, healthFont);
     }
 
     @Override
@@ -87,6 +100,8 @@ public class Main extends ApplicationAdapter {
         //cardArea.draw(spriteBatch);
         hand.drawHand();
         playArea.drawPlayArea();
+        player.drawPlayer();
+
 
         spriteBatch.end();
     }

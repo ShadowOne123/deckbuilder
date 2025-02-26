@@ -6,8 +6,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class Card {
     private Sprite sprite;
-    private Texture cardTexture = new Texture("card.png");;
-
 
     public Card(Texture texture){
         sprite = new Sprite(texture);

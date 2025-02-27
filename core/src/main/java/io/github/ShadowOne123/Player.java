@@ -11,29 +11,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
-public class Player {
-    int health;
-    Sprite sprite;
-    Sprite healthBar;
-    Viewport viewport;
-    SpriteBatch spriteBatch;
-    Texture playerTexture;
-    BitmapFont text;
+public class Player extends Creature{
     //statuses probably
 
-    public Player(SpriteBatch spriteBatch, Viewport viewport, BitmapFont text){
-        this.spriteBatch = spriteBatch;
-        this.viewport = viewport;
-        playerTexture = new Texture("bucket.png");
-        sprite = new Sprite(playerTexture);
-        sprite.setSize(viewport.getWorldWidth()/10, viewport.getWorldHeight()/5);
-        this.text = text;
-        text.getData().setScale(0.1f);
+    public Player(SpriteBatch spriteBatch, Viewport viewport, BitmapFont text, float centerX, float centerY, Texture texture){
+        super(spriteBatch, viewport, text, centerX, centerY, texture);
+        hp = 60;
+        maxHP = 60;
     }
 
     public void drawPlayer(){
         sprite.draw(spriteBatch);
-        sprite.setCenter(viewport.getWorldWidth()/7,viewport.getWorldHeight()/3);
+        sprite.setCenter(centerX,centerY);
         text.draw(spriteBatch, "6 0", sprite.getX()+sprite.getWidth()/3.5f, sprite.getY());
     }
 }

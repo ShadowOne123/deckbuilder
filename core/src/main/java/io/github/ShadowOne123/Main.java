@@ -25,7 +25,6 @@ public class Main extends ApplicationAdapter {
     FitViewport viewport;
     Texture bucketTexture;
     Sprite bucketSprite;
-    private Texture image;
     Sprite cardArea;
     Color background;
     Hand hand;
@@ -35,6 +34,8 @@ public class Main extends ApplicationAdapter {
     Texture backgroundTexture3;
     Sprite Background;
     Player player;
+    Enemy enemyTest;
+    Texture enemyTexture;
     //text
     BitmapFont healthFont;
     FreeTypeFontGenerator healthFontGenerator;
@@ -51,8 +52,6 @@ public class Main extends ApplicationAdapter {
         bucketSprite = new Sprite(bucketTexture); // Initialize the sprite based on the texture
         bucketSprite.setSize(1, 1); // Define the size of the sprite
         spriteBatch = new SpriteBatch();
-        //batch = new SpriteBatch();
-        image = new Texture("libgdx.png");
         hand = new Hand(spriteBatch, viewport);
         playArea = new PlayArea(spriteBatch, viewport);
         backgroundTexture = new Texture("GothicCastleBackground3.png");
@@ -65,7 +64,10 @@ public class Main extends ApplicationAdapter {
         healthFontParameter.size = 128;
         healthFontParameter.genMipMaps = true;
         healthFont = healthFontGenerator.generateFont(healthFontParameter);
-        player = new Player(spriteBatch, viewport, healthFont);
+        player = new Player(spriteBatch, viewport, healthFont, viewport.getWorldWidth()/7, viewport.getWorldHeight()/3, bucketTexture);
+        enemyTexture = new Texture("fireElemental.png");
+        enemyTest = new Enemy(spriteBatch, viewport, healthFont, 5.5f*viewport.getWorldWidth()/7,
+            viewport.getWorldHeight()/3, enemyTexture, viewport.getWorldWidth()/10, viewport.getWorldHeight()/4);
     }
 
     @Override
@@ -77,7 +79,6 @@ public class Main extends ApplicationAdapter {
     @Override
     public void dispose() {
         spriteBatch.dispose();
-        image.dispose();
     }
 
     @Override
@@ -97,11 +98,10 @@ public class Main extends ApplicationAdapter {
         Background.draw(spriteBatch);
         Background.setSize(viewport.getWorldWidth(), viewport.getWorldHeight());
         bucketSprite.draw(spriteBatch);
-        //cardArea.draw(spriteBatch);
         hand.drawHand();
         playArea.drawPlayArea();
-        player.drawPlayer();
-
+        player.draw();
+        enemyTest.draw();
 
         spriteBatch.end();
     }
@@ -141,6 +141,9 @@ public class Main extends ApplicationAdapter {
         }
         else if(Gdx.input.isKeyJustPressed(Input.Keys.S)){
             hand.addCard(new Card(hand.findTexture("king")));
+        }
+        else if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
+
         }
         //reset board
         else if(Gdx.input.isKeyJustPressed(Input.Keys.R)){

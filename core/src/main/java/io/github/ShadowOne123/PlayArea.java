@@ -12,7 +12,6 @@ public class PlayArea extends Board{
         cardWidth = cardHeight*0.7f;
     }
 
-
     public void drawPlayArea(){
         boardArea.setCenter(worldWidth/2, worldHeight/2);
         super.drawBoard();

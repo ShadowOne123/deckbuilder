@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import java.util.ArrayList;
+
 abstract public class Creature{
 
     protected int hp;
@@ -20,6 +22,7 @@ abstract public class Creature{
     float centerX;
     float centerY;
     //statuses probably
+    private ArrayList<Status> statuses;
 
     public Creature(SpriteBatch spriteBatch, Viewport viewport, BitmapFont text, float centerX, float centerY, Texture texture){
         this.spriteBatch = spriteBatch;
@@ -31,6 +34,7 @@ abstract public class Creature{
         text.getData().setScale(0.1f);
         this.centerX = centerX;
         this.centerY = centerY;
+        statuses = new ArrayList<Status>();
     }
 
     public void draw(){
@@ -49,5 +53,15 @@ abstract public class Creature{
 
     public void takeDamage(int damage){
         this.hp = this.hp - damage;
+    }
+
+    public void getHealed(int healing){this.hp += healing;}
+
+    public ArrayList<Status> getStatuses() {
+        return statuses;
+    }
+
+    public void setStatuses(ArrayList<Status> statuses) {
+        this.statuses = statuses;
     }
 }

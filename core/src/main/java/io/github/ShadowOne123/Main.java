@@ -17,6 +17,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashMap;
+
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends ApplicationAdapter {
@@ -41,8 +46,15 @@ public class Main extends ApplicationAdapter {
     FreeTypeFontGenerator healthFontGenerator;
     FreeTypeFontGenerator.FreeTypeFontParameter healthFontParameter;
 
+    //Card creation and file reading
+    public static HashMap<Integer, String> cardDictionary = new HashMap<Integer,String>();
+
     @Override
     public void create() {
+        //populate card dictionary
+        populateCardDictionary("assets/cardDictionary.txt");
+
+
         viewport = new FitViewport(HEIGHT * 16f/9f, HEIGHT);
         background = Color.BLACK;
         bucketTexture = new Texture("bucket.png");
@@ -68,6 +80,8 @@ public class Main extends ApplicationAdapter {
         enemyTexture = new Texture("fireElemental.png");
         enemyTest = new Enemy(spriteBatch, viewport, healthFont, 5.5f*viewport.getWorldWidth()/7,
             viewport.getWorldHeight()/3, enemyTexture, viewport.getWorldWidth()/10, viewport.getWorldHeight()/4);
+
+
     }
 
     @Override
@@ -114,8 +128,9 @@ public class Main extends ApplicationAdapter {
             //unproject converts between click(absolute coords, measured in pixels) to world coords measured in viewport units
 
             //checks for clicks in hand, if there are any moves clicked card to played cards
+            Card temp;
             for(int i = hand.getCards().size()-1; i >= 0; i--){
-                Card temp = hand.getCards().get(i);
+                temp = hand.getCards().get(i);
                 if(temp.getSprite().getBoundingRectangle().contains(clickCoords)) {
                     hand.removeCard(i);
                     playArea.addCard(temp);
@@ -124,7 +139,7 @@ public class Main extends ApplicationAdapter {
             }
             //move cards to hand on-click from played area
             for(int i = playArea.getCards().size()-1; i >= 0; i--){
-                Card temp = playArea.getCards().get(i);
+                temp = playArea.getCards().get(i);
                 if(playArea.getSprite().getBoundingRectangle().contains(clickCoords)) {
                     if (temp.getSprite().getBoundingRectangle().contains(clickCoords)) {
                         playArea.removeCard(i);
@@ -137,10 +152,10 @@ public class Main extends ApplicationAdapter {
         }
 
         else if(Gdx.input.isKeyJustPressed(Input.Keys.A)){
-            hand.addCard(new Card(hand.findTexture("temperance")));
+            hand.addCard(new Card(hand.findTexture("temperance"), 1));
         }
         else if(Gdx.input.isKeyJustPressed(Input.Keys.S)){
-            hand.addCard(new Card(hand.findTexture("king")));
+            hand.addCard(new Card(hand.findTexture("king"), 1));
         }
         else if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
 
@@ -153,5 +168,28 @@ public class Main extends ApplicationAdapter {
 
     }
 
+
+    public void populateCardDictionary(String filepath){
+        try(BufferedReader reader = new BufferedReader(new FileReader(filepath))){
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                String[] keyValue = line.split(":");
+
+                // Make sure the line contains exactly one key-value pair
+                if (keyValue.length == 2) {
+                    Integer key = Integer.parseInt(keyValue[0].trim());
+                    String value = keyValue[1].trim();
+
+                    cardDictionary.put(key, value);
+                } else {
+                    System.out.println("Skipping invalid entry: " + line);
+                }
+            }
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+    }
 
 }

@@ -9,9 +9,8 @@ public class Effect {
     public Effect(String[] actionDescriptions){
         actions = new ArrayList<Action>();
         String[] actionDescription;
-        //starts at one, because actions[0] is the name of the card
         //this is where the big switch-case goes for action types
-        for(int i = 1; i < actionDescriptions.length; i++){
+        for(int i = 0; i < actionDescriptions.length; i++){
             actionDescription = actionDescriptions[i].split(",");
             switch(actionDescription[0]){
                 case "1":

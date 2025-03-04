@@ -14,13 +14,13 @@ public class Card {
         sprite.setCenter(-10,-10);
     }
 
-    public Card(Texture texture, int id){
+    public Card(Texture texture, String id){
         sprite = new Sprite(texture);
         sprite.setCenter(-10,-10);
         String cardDescription = cardDictionary.get(id);
         //splits it into the name and each individual action
         String[] splitDesc = cardDescription.split(";");
-        this.name = splitDesc[0];
+        this.name = id;
         this.effect = new Effect(splitDesc);
     }
 

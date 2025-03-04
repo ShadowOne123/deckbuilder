@@ -8,7 +8,7 @@ public class SpellResolver {
 
     }
 
-    public void applyEffect(Creature[] targets, Effect effect){
+    public static void applyEffect(Creature[] targets, Effect effect){
         ArrayList<Action> actions = effect.getActions();
         for(int i = 0; i < targets.length; i++){
             for(int j = 0; j < actions.size(); j++){
@@ -18,7 +18,7 @@ public class SpellResolver {
     }
 
 
-    public Effect buildEffect(ArrayList<Card> cards){
+    public static Effect buildEffect(ArrayList<Card> cards){
         Effect[] effectsArr = new Effect[cards.size()];
         for(int i = 0; i < effectsArr.length; i++){
             effectsArr[i] = cards.get(i).getEffect();
@@ -34,7 +34,7 @@ public class SpellResolver {
 
     }
 
-    public void mergeActions(ArrayList<Action> currentArr, ArrayList<Action> newArr){
+    public static void mergeActions(ArrayList<Action> currentArr, ArrayList<Action> newArr){
         //loops through every action in current array for each new action, if there's an action with the same class, combines them
         //otherwise add the new action to the current array
         boolean combined;

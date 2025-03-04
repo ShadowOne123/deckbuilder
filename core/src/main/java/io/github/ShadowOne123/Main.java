@@ -17,9 +17,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -42,14 +40,13 @@ public class Main extends ApplicationAdapter {
     Player player;
     Enemy enemyTest;
     Texture enemyTexture;
-    SpellResolver spellResolver;
     //text
     BitmapFont healthFont;
     FreeTypeFontGenerator healthFontGenerator;
     FreeTypeFontGenerator.FreeTypeFontParameter healthFontParameter;
 
     //Card creation and file reading
-    public static HashMap<Integer, String> cardDictionary = new HashMap<Integer,String>();
+    public static HashMap<String, String> cardDictionary = new HashMap<String,String>();
 
     //turn management
     private enum Turn {ENEMY, PLAYER}
@@ -58,7 +55,7 @@ public class Main extends ApplicationAdapter {
     @Override
     public void create() {
         //populate card dictionary
-        populateCardDictionary("assets/cardDictionary.txt");
+        populateCardDictionary("cardDictionary.txt");
 
 
         viewport = new FitViewport(HEIGHT * 16f/9f, HEIGHT);
@@ -86,7 +83,6 @@ public class Main extends ApplicationAdapter {
         enemyTexture = new Texture("fireElemental.png");
         enemyTest = new Enemy(spriteBatch, viewport, healthFont, 5.5f*viewport.getWorldWidth()/7,
             viewport.getWorldHeight()/3, enemyTexture, viewport.getWorldWidth()/10, viewport.getWorldHeight()/4);
-        spellResolver = new SpellResolver();
 
     }
 
@@ -159,15 +155,15 @@ public class Main extends ApplicationAdapter {
         }
 
         else if(Gdx.input.isKeyJustPressed(Input.Keys.A)){
-            hand.addCard(new Card(hand.findTexture("temperance"), 2));
+            hand.addCard(new Card(hand.findTexture("temperance"), "temperance"));
         }
         else if(Gdx.input.isKeyJustPressed(Input.Keys.S)){
-            hand.addCard(new Card(hand.findTexture("king"), 1));
+            hand.addCard(new Card(hand.findTexture("king"), "king"));
         }
         else if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
             if(turn == Turn.PLAYER) {
                 Creature[] targets = {enemyTest};
-                spellResolver.applyEffect(targets, spellResolver.buildEffect(playArea.getCards()));
+                SpellResolver.applyEffect(targets, SpellResolver.buildEffect(playArea.getCards()));
                 playArea.getCards().clear();
                 turn = Turn.ENEMY;
             }
@@ -195,7 +191,7 @@ public class Main extends ApplicationAdapter {
 
                 // Make sure the line contains exactly one key-value pair
                 if (keyValue.length == 2) {
-                    Integer key = Integer.parseInt(keyValue[0].trim());
+                    String key = keyValue[0].trim();
                     String value = keyValue[1].trim();
 
                     cardDictionary.put(key, value);

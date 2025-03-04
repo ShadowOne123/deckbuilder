@@ -1,2 +1,2 @@
-1:amogus;1,3
-2:badabing;1,5
+king:1,3
+temperance:1,5

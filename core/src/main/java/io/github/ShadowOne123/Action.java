@@ -14,8 +14,21 @@ public abstract class Action {
         System.out.println("Unidentified action type, an error has occurred");
     }
 
+    public void apply(Effect target){
+        System.out.println("Unidentified action type, an error has occurred");
+    }
+
     public String toString(){
         return "unidentified Action, seek help";
     }
 
+    public int getIntensity(){
+        return this.intensity;
+    }
+
+    public void combine(Action action){
+        System.out.println("Unspecified action combining requested, abort");
+    }
+
 }
+

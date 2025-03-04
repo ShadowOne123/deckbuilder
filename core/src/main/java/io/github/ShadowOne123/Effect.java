@@ -1,5 +1,6 @@
 package io.github.ShadowOne123;
 
+import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 
 public class Effect {
@@ -19,8 +20,16 @@ public class Effect {
         }
     }
 
+    public Effect(){
+        actions = new ArrayList<Action>();
+    }
+
     public void addAction(Action action){
         actions.add(action);
+    }
+
+    public ArrayList<Action> getActions(){
+        return this.actions;
     }
 
     public String toString(){

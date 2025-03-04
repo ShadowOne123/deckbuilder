@@ -43,6 +43,23 @@ abstract public class Creature{
         text.draw(spriteBatch, ""+hp, sprite.getX()+sprite.getWidth()/3.5f, sprite.getY());
     }
 
+
+    public void takeDamage(int damage){
+        if(this.hp - damage > 0) {
+            this.hp = this.hp - damage;
+        }
+        else{
+            this.hp = 0;
+            die();
+        }
+    }
+
+    public void getHealed(int healing){this.hp += healing;}
+
+    public void die(){
+        System.out.println("blerghh, I'm dead!!");
+    }
+
     public Sprite getSprite(){
         return this.sprite;
     }
@@ -51,17 +68,19 @@ abstract public class Creature{
         return hp;
     }
 
-    public void takeDamage(int damage){
-        this.hp = this.hp - damage;
-    }
-
-    public void getHealed(int healing){this.hp += healing;}
-
     public ArrayList<Status> getStatuses() {
         return statuses;
     }
 
     public void setStatuses(ArrayList<Status> statuses) {
         this.statuses = statuses;
+    }
+
+    public void setHealth(int hp){
+        this.hp = hp;
+    }
+
+    public int getMaxHP(){
+        return this.maxHP;
     }
 }

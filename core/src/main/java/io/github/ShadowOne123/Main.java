@@ -20,6 +20,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -41,6 +42,7 @@ public class Main extends ApplicationAdapter {
     Player player;
     Enemy enemyTest;
     Texture enemyTexture;
+    SpellResolver spellResolver;
     //text
     BitmapFont healthFont;
     FreeTypeFontGenerator healthFontGenerator;
@@ -48,6 +50,10 @@ public class Main extends ApplicationAdapter {
 
     //Card creation and file reading
     public static HashMap<Integer, String> cardDictionary = new HashMap<Integer,String>();
+
+    //turn management
+    private enum Turn {ENEMY, PLAYER}
+    private Turn turn = Turn.PLAYER;
 
     @Override
     public void create() {
@@ -80,7 +86,7 @@ public class Main extends ApplicationAdapter {
         enemyTexture = new Texture("fireElemental.png");
         enemyTest = new Enemy(spriteBatch, viewport, healthFont, 5.5f*viewport.getWorldWidth()/7,
             viewport.getWorldHeight()/3, enemyTexture, viewport.getWorldWidth()/10, viewport.getWorldHeight()/4);
-
+        spellResolver = new SpellResolver();
 
     }
 
@@ -116,6 +122,7 @@ public class Main extends ApplicationAdapter {
         playArea.drawPlayArea();
         player.draw();
         enemyTest.draw();
+        healthFont.draw(spriteBatch, turn.toString(), viewport.getWorldWidth()/2.7f, viewport.getWorldHeight()/1.1f);
 
         spriteBatch.end();
     }
@@ -152,18 +159,28 @@ public class Main extends ApplicationAdapter {
         }
 
         else if(Gdx.input.isKeyJustPressed(Input.Keys.A)){
-            hand.addCard(new Card(hand.findTexture("temperance"), 1));
+            hand.addCard(new Card(hand.findTexture("temperance"), 2));
         }
         else if(Gdx.input.isKeyJustPressed(Input.Keys.S)){
             hand.addCard(new Card(hand.findTexture("king"), 1));
         }
         else if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
-
+            if(turn == Turn.PLAYER) {
+                Creature[] targets = {enemyTest};
+                spellResolver.applyEffect(targets, spellResolver.buildEffect(playArea.getCards()));
+                playArea.getCards().clear();
+                turn = Turn.ENEMY;
+            }
+            else{
+                player.takeDamage(5);
+                turn = Turn.PLAYER;
+            }
         }
         //reset board
         else if(Gdx.input.isKeyJustPressed(Input.Keys.R)){
             hand.getCards().clear();
             playArea.getCards().clear();
+            enemyTest.setHealth(enemyTest.getMaxHP());
         }
 
     }

@@ -11,12 +11,9 @@ public class Hand extends Board{
 
     public Hand(SpriteBatch spriteBatch, Viewport viewport){
         super(spriteBatch, viewport);
-        addCard(new Card(temperanceTexture, 1));
+        addCard(new Card(temperanceTexture, 2));
         addCard(new Card(temperanceTexture, 2));
         addCard(new Card(cardTexture, 1));
-        for(Card card : cards){
-            System.out.println(card.toString());
-        }
     }
 
     public void drawBucket(Sprite bucketSprite){

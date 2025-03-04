@@ -16,4 +16,9 @@ public class damagingAction extends Action{
     public String toString(){
         return "Damaging action with intensity " + intensity;
     }
+
+    @Override
+    public void combine(Action action){
+        this.intensity += action.getIntensity();
+    }
 }

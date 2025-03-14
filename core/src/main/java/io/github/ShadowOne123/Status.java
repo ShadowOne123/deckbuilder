@@ -1,8 +1,11 @@
 package io.github.ShadowOne123;
 
-public class Status {
-    int intensity;
-    String name;
+public abstract class Status {
+    protected int intensity;
+    protected String name;
+    protected boolean midTurn;
+    protected boolean endOfTurn;
+
 
     public int getIntensity(){
         return this.intensity;
@@ -16,15 +19,32 @@ public class Status {
         this.intensity += intensity;
     }
 
-    public void resolve(Creature target){
-        //resolve the status' effect
-        //one giant switch case statement for every effect name? That feels so shit ngl. Is there a way to do this through a map or smth?
-        //Although I guess since there's going to be a limited number of statuses it's not that bad.
-        //How many will I realistically even come up with, like 30 max probably.
-        //A 30 line switch case statement isn't quite firing squad worthy
+    public boolean isMidTurn(){
+        return midTurn;
+    }
+
+    public boolean isEndOfTurn() {
+        return endOfTurn;
+    }
+
+    public void apply(Creature target){
+        System.out.println("Unknown status being applied, panic!");
     }
 
     public String toString(){
         return "Status " + name + " at intensity " + intensity;
+    }
+
+    //builds and output a status based on parameters handed through string array
+    //called mostly by statusAddingAction.java when creating new actions
+    public static Status makeStatus(String[] desc){
+        //useful parameters start at index 1 because index 0 was the action identifier
+        boolean tempMidTurn = Boolean.parseBoolean(desc[3]);
+        boolean tempEndTurn = Boolean.parseBoolean(desc[4]);
+        switch(desc[1]){
+            case "1":
+                return new damagingStatus(Integer.parseInt(desc[1]), desc[2], tempMidTurn, tempEndTurn);
+        }
+        return null;
     }
 }

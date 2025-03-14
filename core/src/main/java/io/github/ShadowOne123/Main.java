@@ -55,7 +55,7 @@ public class Main extends ApplicationAdapter {
     @Override
     public void create() {
         //populate card dictionary
-        populateCardDictionary("cardDictionary.txt");
+        populateCardDictionary("assets/cardDictionary.txt");
 
 
         viewport = new FitViewport(HEIGHT * 16f/9f, HEIGHT);
@@ -137,6 +137,7 @@ public class Main extends ApplicationAdapter {
                 if(temp.getSprite().getBoundingRectangle().contains(clickCoords)) {
                     hand.removeCard(i);
                     playArea.addCard(temp);
+                    System.out.println(temp.getEffect().toString());
                     break;
                 }
             }
@@ -171,6 +172,7 @@ public class Main extends ApplicationAdapter {
                 player.takeDamage(5);
                 turn = Turn.PLAYER;
             }
+
         }
         //reset board
         else if(Gdx.input.isKeyJustPressed(Input.Keys.R)){

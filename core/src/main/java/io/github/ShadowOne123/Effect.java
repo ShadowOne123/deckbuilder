@@ -15,6 +15,10 @@ public class Effect {
             switch(actionDescription[0]){
                 case "1":
                     actions.add(new damagingAction(Integer.parseInt(actionDescription[1])));
+                    break;
+                case "2":
+                    actions.add(new statusAddingAction(actionDescription));
+                    break;
             }
         }
     }
@@ -32,11 +36,11 @@ public class Effect {
     }
 
     public String toString(){
-        String toReturn = "";
+        StringBuilder sb = new StringBuilder();
         for(Action action : actions){
-            toReturn = toReturn + action.toString() + "\n";
+            sb.append(action.toString() + "\n");
         }
-        return toReturn;
+        return sb.toString();
     }
 
 

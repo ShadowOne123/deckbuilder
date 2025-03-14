@@ -1,2 +1,2 @@
 king:1,3
-temperance:1,5
+temperance:2,1,bleed,false,true

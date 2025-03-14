@@ -72,6 +72,10 @@ abstract public class Creature{
         return statuses;
     }
 
+    public void addStatus(Status status){
+        this.statuses.add(status);
+    }
+
     public void setStatuses(ArrayList<Status> statuses) {
         this.statuses = statuses;
     }

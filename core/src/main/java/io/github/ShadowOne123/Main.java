@@ -4,15 +4,10 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -43,8 +38,7 @@ public class Main extends ApplicationAdapter {
     Texture enemyTexture;
     //text
     BitmapFont healthFont;
-    FreeTypeFontGenerator healthFontGenerator;
-    FreeTypeFontGenerator.FreeTypeFontParameter healthFontParameter;
+    FontManager fontManager;
     Stage stage;
 
     //Card creation and file reading
@@ -56,7 +50,8 @@ public class Main extends ApplicationAdapter {
     public void create() {
         //populate card dictionary
         populateCardDictionary("/cardDictionary.txt");
-
+        //init fonts
+        FontManager.init();
 
         viewport = new FitViewport(HEIGHT * 16f/9f, HEIGHT);
         background = Color.BLACK;
@@ -74,11 +69,7 @@ public class Main extends ApplicationAdapter {
         backgroundTexture3 = new Texture("steampunkBackground1.png");
         Background = new Sprite(backgroundTexture3);
         //text
-        healthFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("FreeSerif.ttf"));
-        healthFontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        healthFontParameter.size = 128;
-        healthFontParameter.genMipMaps = true;
-        healthFont = healthFontGenerator.generateFont(healthFontParameter);
+        healthFont = FontManager.healthFont;
         player = new Player(spriteBatch, viewport, healthFont, viewport.getWorldWidth()/7, viewport.getWorldHeight()/3, bucketTexture);
         enemyTexture = new Texture("fireElemental.png");
         enemyTest = new Enemy(spriteBatch, viewport, healthFont, 5.5f*viewport.getWorldWidth()/7,

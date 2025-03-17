@@ -21,8 +21,6 @@ public class Player extends Creature{
     }
 
     public void drawPlayer(){
-        sprite.draw(spriteBatch);
-        sprite.setCenter(centerX,centerY);
-        text.draw(spriteBatch, "6 0", sprite.getX()+sprite.getWidth()/3.5f, sprite.getY());
+        super.draw();
     }
 }

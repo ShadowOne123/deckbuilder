@@ -36,7 +36,8 @@ public class combatController {
         //check for no cards played
         if(effect.getActions().isEmpty()){
             System.out.println("No cards played!");
-            return false;
+            //allows no cards played
+            return true;
         }
         //apply to targets
         for(Enemy enemy : enemies){

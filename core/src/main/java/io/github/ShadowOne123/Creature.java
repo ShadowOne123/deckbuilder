@@ -20,10 +20,11 @@ abstract public class Creature extends Actor {
     SpriteBatch spriteBatch;
     Texture creatureTexture;
     BitmapFont text;
+    BitmapFont statusStackFont;
     float centerX;
     float centerY;
     //statuses probably
-    private ArrayList<Status> statuses;
+    protected ArrayList<Status> statuses;
 
     public Creature(SpriteBatch spriteBatch, Viewport viewport, BitmapFont text, float centerX, float centerY, Texture texture){
         this.spriteBatch = spriteBatch;
@@ -37,12 +38,22 @@ abstract public class Creature extends Actor {
         this.centerY = centerY;
         sprite.setCenter(centerX, centerY);
         statuses = new ArrayList<Status>();
+        statusStackFont = FontManager.stackFont;
     }
 
     public void draw(){
         sprite.draw(spriteBatch);
         sprite.setCenter(centerX,centerY);
         text.draw(spriteBatch, ""+hp, sprite.getX()+sprite.getWidth()/3.5f, sprite.getY());
+        Sprite statusSprite;
+        Status status;
+        for(int i = 0; i < statuses.size(); i++){
+            status = statuses.get(i);
+            statusSprite = status.getSprite();
+            statusSprite.setCenter(sprite.getX()+i*statusSprite.getWidth(), sprite.getY()-statusSprite.getHeight()*1.5f);
+            statusSprite.draw(spriteBatch);
+            statusStackFont.draw(spriteBatch, String.valueOf(status.getIntensity()), statusSprite.getX()+statusSprite.getWidth(), statusSprite.getY()+statusSprite.getHeight()*0.5f);
+        }
     }
 
 

@@ -2,9 +2,11 @@ package io.github.ShadowOne123;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+
 import static io.github.ShadowOne123.Main.cardDictionary;
 
-public class Card {
+public class Card extends Actor {
     private Sprite sprite;
     private Effect effect;
     private String name;

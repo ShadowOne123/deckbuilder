@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -44,18 +45,17 @@ public class Main extends ApplicationAdapter {
     BitmapFont healthFont;
     FreeTypeFontGenerator healthFontGenerator;
     FreeTypeFontGenerator.FreeTypeFontParameter healthFontParameter;
+    Stage stage;
 
     //Card creation and file reading
     public static HashMap<String, String> cardDictionary = new HashMap<String,String>();
 
-    //turn management
-    private enum Turn {ENEMY, PLAYER}
-    private Turn turn = Turn.PLAYER;
+    combatController combatController;
 
     @Override
     public void create() {
         //populate card dictionary
-        populateCardDictionary("assets/cardDictionary.txt");
+        populateCardDictionary("/cardDictionary.txt");
 
 
         viewport = new FitViewport(HEIGHT * 16f/9f, HEIGHT);
@@ -82,8 +82,14 @@ public class Main extends ApplicationAdapter {
         player = new Player(spriteBatch, viewport, healthFont, viewport.getWorldWidth()/7, viewport.getWorldHeight()/3, bucketTexture);
         enemyTexture = new Texture("fireElemental.png");
         enemyTest = new Enemy(spriteBatch, viewport, healthFont, 5.5f*viewport.getWorldWidth()/7,
-            viewport.getWorldHeight()/3, enemyTexture, viewport.getWorldWidth()/10, viewport.getWorldHeight()/4);
+            viewport.getWorldHeight()/3, enemyTexture,viewport.getWorldWidth()/10, viewport.getWorldHeight()/4);
 
+        stage = new Stage(viewport);
+        Gdx.input.setInputProcessor(stage);
+        stage.addActor(enemyTest);
+        ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+        enemies.add(enemyTest);
+        combatController = new combatController(player, playArea, enemies);
     }
 
     @Override
@@ -118,7 +124,7 @@ public class Main extends ApplicationAdapter {
         playArea.drawPlayArea();
         player.draw();
         enemyTest.draw();
-        healthFont.draw(spriteBatch, turn.toString(), viewport.getWorldWidth()/2.7f, viewport.getWorldHeight()/1.1f);
+        healthFont.draw(spriteBatch, combatController.getTurn(), viewport.getWorldWidth()/2.7f, viewport.getWorldHeight()/1.1f);
 
         spriteBatch.end();
     }
@@ -162,30 +168,23 @@ public class Main extends ApplicationAdapter {
             hand.addCard(new Card(hand.findTexture("king"), "king"));
         }
         else if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
-            if(turn == Turn.PLAYER) {
-                Creature[] targets = {enemyTest};
-                SpellResolver.applyEffect(targets, SpellResolver.buildEffect(playArea.getCards()));
-                playArea.getCards().clear();
-                turn = Turn.ENEMY;
-            }
-            else{
-                player.takeDamage(5);
-                turn = Turn.PLAYER;
-            }
-
+            combatController.resolveTurn();
         }
         //reset board
         else if(Gdx.input.isKeyJustPressed(Input.Keys.R)){
             hand.getCards().clear();
             playArea.getCards().clear();
             enemyTest.setHealth(enemyTest.getMaxHP());
+            player.setHealth(player.getMaxHP());
         }
 
     }
 
 
     public void populateCardDictionary(String filepath){
-        try(BufferedReader reader = new BufferedReader(new FileReader(filepath))){
+
+        try(InputStream inputStream = getClass().getResourceAsStream(filepath);){
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
 
             while ((line = reader.readLine()) != null) {

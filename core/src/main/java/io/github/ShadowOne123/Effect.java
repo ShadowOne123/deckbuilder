@@ -23,6 +23,12 @@ public class Effect {
         }
     }
 
+    public void apply(Creature target){
+        for(Action action : actions){
+            action.apply(target);
+        }
+    }
+
     public Effect(){
         actions = new ArrayList<Action>();
     }

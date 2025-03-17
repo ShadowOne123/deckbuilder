@@ -5,11 +5,12 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
 
-abstract public class Creature{
+abstract public class Creature extends Actor {
 
     protected int hp;
     protected int maxHP;
@@ -34,6 +35,7 @@ abstract public class Creature{
         text.getData().setScale(0.1f);
         this.centerX = centerX;
         this.centerY = centerY;
+        sprite.setCenter(centerX, centerY);
         statuses = new ArrayList<Status>();
     }
 
@@ -86,5 +88,21 @@ abstract public class Creature{
 
     public int getMaxHP(){
         return this.maxHP;
+    }
+
+    public void applyMidTurnStatuses(){
+        for(Status status : statuses){
+            if(status.isMidTurn()){
+                status.apply(this);
+            }
+        }
+    }
+
+    public void applyEndTurnStatuses(){
+        for(Status status : statuses){
+            if(status.isEndOfTurn()){
+                status.apply(this);
+            }
+        }
     }
 }

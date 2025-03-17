@@ -8,15 +8,6 @@ public class SpellResolver {
 
     }
 
-    public static void applyEffect(Creature[] targets, Effect effect){
-        ArrayList<Action> actions = effect.getActions();
-        for(int i = 0; i < targets.length; i++){
-            for(int j = 0; j < actions.size(); j++){
-                actions.get(j).apply(targets[i]);
-            }
-        }
-    }
-
 
     public static Effect buildEffect(ArrayList<Card> cards){
         Effect[] effectsArr = new Effect[cards.size()];

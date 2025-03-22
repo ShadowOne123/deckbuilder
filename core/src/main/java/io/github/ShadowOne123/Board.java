@@ -3,16 +3,16 @@ package io.github.ShadowOne123;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
-public abstract class Board {
+public abstract class Board extends Actor {
 
     protected SpriteBatch spriteBatch;
-    protected Sprite card;
     protected Texture cardTexture;
     protected Viewport viewport;
     protected float worldWidth;
@@ -70,6 +70,11 @@ public abstract class Board {
                 temp.draw(spriteBatch);
             }
         }
+    }
+
+
+    public void draw(){
+
     }
 
     //gets full list of cards in board

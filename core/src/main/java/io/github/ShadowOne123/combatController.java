@@ -65,9 +65,8 @@ public class combatController {
     public void resolveEnemyTurn(){
         for(Enemy enemy : enemies){
             //enemy action logic/calls to it goes here
-            System.out.println("Arrghhh!");
+            enemy.attackAnim(player);
         }
-        player.takeDamage(5);
         turn = Turn.PLAYER;
     }
 

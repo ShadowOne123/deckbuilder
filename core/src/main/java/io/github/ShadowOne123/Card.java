@@ -7,14 +7,10 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import static io.github.ShadowOne123.Main.cardDictionary;
 
 public class Card extends Actor {
-    private Sprite sprite;
-    private Effect effect;
-    private String name;
+    private final Sprite sprite;
+    private final Effect effect;
+    private final String name;
 
-    public Card(Texture texture, Effect effect){
-        sprite = new Sprite(texture);
-        sprite.setCenter(-10,-10);
-    }
 
     public Card(Texture texture, String id){
         sprite = new Sprite(texture);

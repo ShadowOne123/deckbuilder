@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
@@ -39,11 +41,12 @@ abstract public class Creature extends Actor {
         sprite.setCenter(centerX, centerY);
         statuses = new ArrayList<Status>();
         statusStackFont = FontManager.stackFont;
+        setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
     }
 
     public void draw(){
         sprite.draw(spriteBatch);
-        sprite.setCenter(centerX,centerY);
+        sprite.setCenter(getX()+sprite.getWidth()/2,getY()+ sprite.getHeight()/2);
         text.draw(spriteBatch, ""+hp, sprite.getX()+sprite.getWidth()/3.5f, sprite.getY());
         Sprite statusSprite;
         Status status;
@@ -115,5 +118,25 @@ abstract public class Creature extends Actor {
                 status.apply(this);
             }
         }
+    }
+
+    public void attackAnim(Player player){
+        float originX = getX();
+        addAction(sequence(
+            moveTo(getX() + 10, getY(), 0.06f),
+            delay(0.1f),
+            moveTo(getX() - 20, getY(), 0.1f),
+            moveTo(originX, getY(), 0.3f),
+            run(attack(player))
+        ));
+    }
+
+    public Runnable attack(Player player){
+        return new Runnable() {
+            @Override
+            public void run() {
+                player.takeDamage(5);
+            }
+        };
     }
 }

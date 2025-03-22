@@ -78,6 +78,7 @@ public class Main extends ApplicationAdapter {
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
         stage.addActor(enemyTest);
+        stage.addActor(player);
         ArrayList<Enemy> enemies = new ArrayList<Enemy>();
         enemies.add(enemyTest);
         combatController = new combatController(player, playArea, enemies);
@@ -116,7 +117,7 @@ public class Main extends ApplicationAdapter {
         player.draw();
         enemyTest.draw();
         healthFont.draw(spriteBatch, combatController.getTurn(), viewport.getWorldWidth()/2.7f, viewport.getWorldHeight()/1.1f);
-
+        stage.act();
         spriteBatch.end();
     }
 

@@ -16,18 +16,17 @@ public class Enemy extends Creature{
         sprite.setSize(width, height);
         hp = 10;
         maxHP = hp;
-        creatureTexture = texture;
 
-        //this.setBounds(0,0,creatureTexture.getWidth(), creatureTexture.getHeight());
-        this.setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
+
+
         this.addListener(new InputListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 if(button == 0){
                     if(!selected){
-                        sprite.setSize(sprite.getWidth()*1.25f, sprite.getHeight()*1.25f);
+                        text.setColor(Color.RED);
                     }
                     else{
-                        sprite.setSize(sprite.getWidth()*0.8f, sprite.getHeight()*0.8f);
+                        unselect();
                     }
                     selected = !selected;
                     System.out.println(selected);
@@ -46,6 +45,8 @@ public class Enemy extends Creature{
 
     public void unselect(){
         this.selected = false;
-        sprite.setSize(sprite.getWidth()*0.8f, sprite.getHeight()*0.8f);
+        text.setColor(Color.WHITE);
     }
+
+
 }

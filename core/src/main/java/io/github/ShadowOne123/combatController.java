@@ -52,12 +52,8 @@ public class combatController {
             System.out.println("No targets!");
             return false;
         }
-        //call all relevant statuses at every point
-            //start with just end of turn statuses. Branch out later
-        for(Enemy enemy : enemies){
-            enemy.applyEndTurnStatuses();
-        }
-
+        //apply player statuses
+        player.takeStatuses();
         playArea.getCards().clear();
         return true;
     }

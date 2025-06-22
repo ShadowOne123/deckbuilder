@@ -104,39 +104,7 @@ abstract public class Creature extends Actor {
         return this.maxHP;
     }
 
-    public void applyMidTurnStatuses(){
-        for(Status status : statuses){
-            if(status.isMidTurn()){
-                status.apply(this);
-            }
-        }
-    }
 
-    public void applyEndTurnStatuses(){
-        for(Status status : statuses){
-            if(status.isEndOfTurn()){
-                status.apply(this);
-            }
-        }
-    }
 
-    public void attackAnim(Player player){
-        float originX = getX();
-        addAction(sequence(
-            moveTo(getX() + 10, getY(), 0.06f),
-            delay(0.1f),
-            moveTo(getX() - 20, getY(), 0.1f),
-            moveTo(originX, getY(), 0.3f),
-            run(attack(player))
-        ));
-    }
 
-    public Runnable attack(Player player){
-        return new Runnable() {
-            @Override
-            public void run() {
-                player.takeDamage(5);
-            }
-        };
-    }
 }

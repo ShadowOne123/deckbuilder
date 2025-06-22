@@ -16,5 +16,6 @@ public class damagingStatus extends Status{
     @Override
     public void apply(Creature target){
         target.takeDamage(this.intensity);
+        this.intensity--;
     }
 }

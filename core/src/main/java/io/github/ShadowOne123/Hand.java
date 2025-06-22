@@ -11,9 +11,9 @@ public class Hand extends Board{
 
     public Hand(SpriteBatch spriteBatch, Viewport viewport){
         super(spriteBatch, viewport);
-        addCard(new Card(temperanceTexture, "temperance"));
-        addCard(new Card(temperanceTexture, "temperance"));
-        addCard(new Card(cardTexture, "king"));
+        addCard(new Card("temperance"));
+        addCard(new Card("temperance"));
+        addCard(new Card("king"));
     }
 
     public void drawBucket(Sprite bucketSprite){

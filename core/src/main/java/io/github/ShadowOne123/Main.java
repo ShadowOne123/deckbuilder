@@ -154,10 +154,10 @@ public class Main extends ApplicationAdapter {
         }
 
         else if(Gdx.input.isKeyJustPressed(Input.Keys.A)){
-            hand.addCard(new Card(hand.findTexture("temperance"), "temperance"));
+            hand.addCard(new Card("temperance"));
         }
         else if(Gdx.input.isKeyJustPressed(Input.Keys.S)){
-            hand.addCard(new Card(hand.findTexture("king"), "king"));
+            hand.addCard(new Card("king"));
         }
         else if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
             combatController.resolveTurn();

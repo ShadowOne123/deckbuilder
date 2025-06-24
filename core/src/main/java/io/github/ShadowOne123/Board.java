@@ -7,8 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.Hashtable;
 
 public abstract class Board extends Actor {
 
@@ -19,8 +17,6 @@ public abstract class Board extends Actor {
     protected float worldHeight;
     protected Sprite boardArea;
     protected ArrayList<Card> cards = new ArrayList<Card>();
-    protected Texture temperanceTexture;
-    protected Dictionary<String, Texture> textureDict = new Hashtable<>();
     protected float cardHeight, cardWidth;
 
     public Board(SpriteBatch spriteBatch, Viewport viewport){
@@ -28,18 +24,25 @@ public abstract class Board extends Actor {
         this.worldWidth = viewport.getWorldWidth();
         this.viewport = viewport;
         this.spriteBatch = spriteBatch;
-        cardTexture = new Texture("card.png");
-        temperanceTexture = new Texture("Temperance.png");
+        cardTexture = new Texture("king.png");
         boardArea = new Sprite(cardTexture);
-        textureDict.put("temperance", temperanceTexture);
-        textureDict.put("king", cardTexture);
+        boardArea.setSize(worldWidth*0.40f,worldHeight/4);
         cardHeight = worldHeight/5;
         cardWidth = cardHeight*0.7f;
     }
 
     public void addCard(Card card){
         card.setSize(cardWidth, cardHeight);
+        card.getSprite().setCenter(0, boardArea.getY() + boardArea.getHeight()/2);
         cards.add(card);
+        reposition();
+    }
+
+    public void addCard(Card card, int index){
+        card.setSize(cardWidth, cardHeight);
+        card.getSprite().setCenter(0, boardArea.getY() + boardArea.getHeight()/2);
+        cards.add(index, card);
+        reposition();
     }
 
     //resize method. Idk if it actually matters, but we'll keep it here just in case
@@ -49,32 +52,31 @@ public abstract class Board extends Actor {
         this.worldWidth = viewport.getWorldWidth();
     }
 
-    //render method, called by child classes to make their own render methods
     public void drawBoard(){
         boardArea.setSize(worldWidth*0.40f,worldHeight/4);
-        float left = boardArea.getX();
-        float centerY = boardArea.getY() + boardArea.getHeight()/2;
-        Sprite temp;
-        float offset = 0.2f;
-        if(!cards.isEmpty()) {
-            //formula to make cards stay in board when more are added. Forces overlap
-            offset = (boardArea.getWidth() - cardWidth*0.75f) / cards.size();
-            //regulates maximum distance between cards
-            if(offset > cardWidth + 0.2f){
-                offset = cardWidth + 0.2f;
-            }
-            //draws each card
-            for (int i = 0; i < cards.size(); i++) {
-                temp = cards.get(i).getSprite();
-                temp.setCenter(left + (temp.getWidth() / 2) + i * offset, centerY);
-                temp.draw(spriteBatch);
+        //reposition();
+        if(!cards.isEmpty()){
+            for(Card card : cards){
+                card.getSprite().draw(spriteBatch);
             }
         }
     }
 
 
-    public void draw(){
-
+    private void reposition(){
+        float step;
+        if(cards.isEmpty()){
+            return;
+        }
+        if(cards.size() * cardWidth < boardArea.getWidth()){
+            step = cardWidth;
+        }
+        else{
+            step = (boardArea.getWidth() - cardWidth)/(cards.size()-1);
+        }
+        for(int i = 0; i < cards.size(); i++){
+            cards.get(i).setLeft(boardArea.getX() + (i * step));
+        }
     }
 
     //gets full list of cards in board
@@ -89,14 +91,10 @@ public abstract class Board extends Actor {
 
     public void removeCard(int index){
         cards.remove(index);
+        reposition();
     }
 
     public Sprite getSprite(){
         return boardArea;
-    }
-
-    //fetches texture with specified name from texture dictionary. Used for creating new cards
-    public Texture findTexture(String textureName){
-        return textureDict.get(textureName);
     }
 }

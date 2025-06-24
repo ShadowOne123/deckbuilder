@@ -11,45 +11,15 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
 public class Enemy extends Creature{
-    public boolean selected;
 
     public Enemy(SpriteBatch spriteBatch, Viewport viewport, BitmapFont text, float centerX, float centerY, Texture texture, float width, float height){
         super(spriteBatch, viewport, text, centerX, centerY, texture);
         sprite.setSize(width, height);
         hp = 10;
         maxHP = hp;
-
-
-
-        this.addListener(new InputListener() {
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                //on left click
-                if(button == 0){
-                    if(!selected){
-                        text.setColor(Color.RED);
-                    }
-                    else{
-                        unselect();
-                    }
-                    selected = !selected;
-                    System.out.println(selected);
-                }
-                if(button == 1 && selected){
-                    hp -= 1;
-                }
-                return true;
-            }
-        });
     }
 
-    public boolean isSelected(){
-        return selected;
-    }
 
-    public void unselect(){
-        this.selected = false;
-        text.setColor(Color.WHITE);
-    }
 
 
     public void attackAnim(Player player){

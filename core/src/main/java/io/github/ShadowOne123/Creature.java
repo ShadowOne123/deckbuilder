@@ -1,5 +1,6 @@
 package io.github.ShadowOne123;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -16,6 +17,7 @@ abstract public class Creature extends Actor {
 
     protected int hp;
     protected int maxHP;
+    public boolean selected;
     protected Sprite sprite;
     Sprite healthBar;
     Viewport viewport;
@@ -57,6 +59,24 @@ abstract public class Creature extends Actor {
             statusSprite.draw(spriteBatch);
             statusStackFont.draw(spriteBatch, String.valueOf(status.getIntensity()), statusSprite.getX()+statusSprite.getWidth(), statusSprite.getY()+statusSprite.getHeight()*0.5f);
         }
+    }
+
+    public boolean isSelected(){
+        return selected;
+    }
+
+    public boolean toggleSelected(){
+        if(this.isSelected()){
+            this.selected = false;
+            text.setColor(Color.WHITE);
+            return false;
+        }
+        else{
+            this.selected = true;
+            text.setColor(Color.RED);
+            return true;
+        }
+
     }
 
 

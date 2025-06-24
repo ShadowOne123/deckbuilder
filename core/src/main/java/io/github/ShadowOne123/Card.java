@@ -38,4 +38,9 @@ public class Card extends Actor {
     public String toString(){
         return "Name: " + name + "\n effect: " + effect.toString();
     }
+
+    public void setLeft(float x){
+        sprite.setCenterX(x + sprite.getWidth()/2);
+
+    }
 }

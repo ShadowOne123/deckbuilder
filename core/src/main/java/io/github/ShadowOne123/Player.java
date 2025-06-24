@@ -20,10 +20,6 @@ public class Player extends Creature{
         maxHP = 60;
     }
 
-    public void drawPlayer(){
-        super.draw();
-    }
-
     public void takeStatuses(){
         for(int i = 0; i < statuses.size(); i++){
             statuses.get(i).apply(this);

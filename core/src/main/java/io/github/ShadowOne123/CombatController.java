@@ -1,20 +1,24 @@
 package io.github.ShadowOne123;
 
+import com.badlogic.gdx.math.Vector2;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class combatController {
+public class CombatController {
 
     private ArrayList<Enemy> enemies;
+    private ArrayList<Creature> targets;
     private Player player;
     private PlayArea playArea;
-    private Effect effect;
     private enum Turn {ENEMY, PLAYER}
     private Turn turn = Turn.PLAYER;
 
-    public combatController(Player player, PlayArea playArea, ArrayList<Enemy> enemies){
+    public CombatController(Player player, PlayArea playArea, ArrayList<Enemy> enemies){
         this.enemies = enemies;
         this.playArea = playArea;
         this.player = player;
+        this.targets = new ArrayList<Creature>();
     }
 
     public void resolveTurn(){
@@ -30,9 +34,9 @@ public class combatController {
 
     //called when "enter" is pressed, ie when the spell is cast
     public boolean resolvePlayerTurn(){
-        boolean noneSelected = true;
+        player.takeStatuses();
         //build spell
-        effect = SpellResolver.buildEffect(playArea.getCards());
+        Effect effect = SpellResolver.buildEffect(playArea.getCards());
         //check for no cards played
         if(effect.getActions().isEmpty()){
             System.out.println("No cards played!");
@@ -40,20 +44,17 @@ public class combatController {
             return true;
         }
         //apply to targets
-        for(Enemy enemy : enemies){
-            if(enemy.isSelected()){
-                noneSelected = false;
-                effect.apply(enemy);
-                enemy.unselect();
+        if(!targets.isEmpty()) {
+            for (Creature target : targets) {
+                effect.apply(target);
             }
         }
         //check for no targets
-        if(noneSelected){
+        else{
             System.out.println("No targets!");
             return false;
         }
         //apply player statuses
-        player.takeStatuses();
         playArea.getCards().clear();
         return true;
     }
@@ -66,7 +67,38 @@ public class combatController {
         turn = Turn.PLAYER;
     }
 
+    public void selectTarget(Vector2 clickCoords){
+        if(player.getSprite().getBoundingRectangle().contains(clickCoords)){
+            if(player.toggleSelected()){
+                targets.add(player);
+            }
+            else{
+                targets.remove(player);
+            }
+            return;
+        }
+        for(int i = 0; i < enemies.size(); i++){
+            if(enemies.get(i).getSprite().getBoundingRectangle().contains(clickCoords)){
+                if(enemies.get(i).toggleSelected()) {
+                    targets.add(enemies.get(i));
+                }
+                else{
+                    targets.remove(enemies.get(i));
+                }
+                return;
+            }
+        }
+    }
+
     public String getTurn(){
         return turn.toString();
+    }
+
+    public Player getPlayer(){
+        return player;
+    }
+
+    public ArrayList<Enemy> getEnemies(){
+        return enemies;
     }
 }

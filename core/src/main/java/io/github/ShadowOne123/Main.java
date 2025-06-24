@@ -3,14 +3,11 @@ package io.github.ShadowOne123;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import java.io.*;
@@ -24,9 +21,6 @@ public class Main extends ApplicationAdapter {
     public SpriteBatch spriteBatch;
     FitViewport viewport;
     Texture bucketTexture;
-    Sprite bucketSprite;
-    Sprite cardArea;
-    Color background;
     Hand hand;
     PlayArea playArea;
     Texture backgroundTexture;
@@ -38,13 +32,12 @@ public class Main extends ApplicationAdapter {
     Texture enemyTexture;
     //text
     BitmapFont healthFont;
-    FontManager fontManager;
     Stage stage;
 
     //Card creation and file reading
     public static HashMap<String, String> cardDictionary = new HashMap<String,String>();
 
-    combatController combatController;
+    CombatController combatController;
 
     @Override
     public void create() {
@@ -54,13 +47,7 @@ public class Main extends ApplicationAdapter {
         FontManager.init();
 
         viewport = new FitViewport(HEIGHT * 16f/9f, HEIGHT);
-        background = Color.BLACK;
         bucketTexture = new Texture("bucket.png");
-        cardArea = new Sprite(bucketTexture);
-        cardArea.setSize(10,5);
-        cardArea.setCenter(10,10);
-        bucketSprite = new Sprite(bucketTexture); // Initialize the sprite based on the texture
-        bucketSprite.setSize(1, 1); // Define the size of the sprite
         spriteBatch = new SpriteBatch();
         hand = new Hand(spriteBatch, viewport);
         playArea = new PlayArea(spriteBatch, viewport);
@@ -81,7 +68,9 @@ public class Main extends ApplicationAdapter {
         stage.addActor(player);
         ArrayList<Enemy> enemies = new ArrayList<Enemy>();
         enemies.add(enemyTest);
-        combatController = new combatController(player, playArea, enemies);
+        combatController = new CombatController(player, playArea, enemies);
+        inputController inpt = new inputController();
+        inpt.setInputModeBattle(hand, playArea, combatController, viewport);
     }
 
     @Override
@@ -103,7 +92,6 @@ public class Main extends ApplicationAdapter {
     }
 
     private void draw(){
-        ScreenUtils.clear(background);
 
         viewport.apply();
         spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
@@ -111,59 +99,18 @@ public class Main extends ApplicationAdapter {
 
         Background.draw(spriteBatch);
         Background.setSize(viewport.getWorldWidth(), viewport.getWorldHeight());
-        bucketSprite.draw(spriteBatch);
-        hand.drawHand();
         playArea.drawPlayArea();
         player.draw();
         enemyTest.draw();
         healthFont.draw(spriteBatch, combatController.getTurn(), viewport.getWorldWidth()/2.7f, viewport.getWorldHeight()/1.1f);
+        hand.drawHand();
         stage.act();
         spriteBatch.end();
     }
 
     private void input(){
-        float delta = Gdx.graphics.getDeltaTime();
-        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
-            Vector2 clickCoords = new Vector2(Gdx.input.getX(), Gdx.input.getY());
-            clickCoords = viewport.unproject(clickCoords);
-            //unproject converts between click(absolute coords, measured in pixels) to world coords measured in viewport units
-
-            //checks for clicks in hand, if there are any moves clicked card to played cards
-            Card temp;
-            for(int i = hand.getCards().size()-1; i >= 0; i--){
-                temp = hand.getCards().get(i);
-                if(temp.getSprite().getBoundingRectangle().contains(clickCoords)) {
-                    hand.removeCard(i);
-                    playArea.addCard(temp);
-                    System.out.println(temp.getEffect().toString());
-                    break;
-                }
-            }
-            //move cards to hand on-click from played area
-            for(int i = playArea.getCards().size()-1; i >= 0; i--){
-                temp = playArea.getCards().get(i);
-                if(playArea.getSprite().getBoundingRectangle().contains(clickCoords)) {
-                    if (temp.getSprite().getBoundingRectangle().contains(clickCoords)) {
-                        playArea.removeCard(i);
-                        hand.addCard(temp);
-                        break;
-                    }
-                }
-            }
-
-        }
-
-        else if(Gdx.input.isKeyJustPressed(Input.Keys.A)){
-            hand.addCard(new Card("temperance"));
-        }
-        else if(Gdx.input.isKeyJustPressed(Input.Keys.S)){
-            hand.addCard(new Card("king"));
-        }
-        else if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
-            combatController.resolveTurn();
-        }
         //reset board
-        else if(Gdx.input.isKeyJustPressed(Input.Keys.R)){
+        if(Gdx.input.isKeyJustPressed(Input.Keys.R)){
             hand.getCards().clear();
             playArea.getCards().clear();
             enemyTest.setHealth(enemyTest.getMaxHP());

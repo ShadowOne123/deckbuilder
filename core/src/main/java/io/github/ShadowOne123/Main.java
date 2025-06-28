@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -32,6 +33,8 @@ public class Main extends ApplicationAdapter {
     Texture enemyTexture;
     //text
     BitmapFont healthFont;
+    FreeTypeFontGenerator healthFontGen;
+    FreeTypeFontGenerator.FreeTypeFontParameter healthFontParam;
     Stage stage;
 
     //Card creation and file reading
@@ -56,10 +59,12 @@ public class Main extends ApplicationAdapter {
         backgroundTexture3 = new Texture("steampunkBackground1.png");
         Background = new Sprite(backgroundTexture3);
         //text
+        healthFontGen = FontManager.healthFontGenerator;
+        healthFontParam = FontManager.healthFontParameter;
         healthFont = FontManager.healthFont;
-        player = new Player(spriteBatch, viewport, healthFont, viewport.getWorldWidth()/7, viewport.getWorldHeight()/3, bucketTexture);
+        player = new Player(spriteBatch, viewport, healthFontGen, healthFontParam, viewport.getWorldWidth()/7, viewport.getWorldHeight()/3, bucketTexture);
         enemyTexture = new Texture("fireElemental.png");
-        enemyTest = new Enemy(spriteBatch, viewport, healthFont, 5.5f*viewport.getWorldWidth()/7,
+        enemyTest = new Enemy(spriteBatch, viewport, healthFontGen, healthFontParam, 5.5f*viewport.getWorldWidth()/7,
             viewport.getWorldHeight()/3, enemyTexture,viewport.getWorldWidth()/10, viewport.getWorldHeight()/4);
 
         stage = new Stage(viewport);

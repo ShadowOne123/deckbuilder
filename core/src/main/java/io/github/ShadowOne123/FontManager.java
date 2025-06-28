@@ -8,15 +8,18 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 public class FontManager {
     public static BitmapFont healthFont;
     public static BitmapFont stackFont;
+    public static FreeTypeFontGenerator healthFontGenerator;
+    public static FreeTypeFontGenerator.FreeTypeFontParameter healthFontParameter;
+
 
 
     public static void init(){
-        FreeTypeFontGenerator healthFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("FreeSerif.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter healthFontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        healthFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("FreeSerif.ttf"));
+        healthFontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         healthFontParameter.size = 128;
         healthFontParameter.genMipMaps = true;
         healthFont = healthFontGenerator.generateFont(healthFontParameter);
-        healthFontGenerator.dispose();
+        healthFont.getData().setScale(0.1f);
 
         FreeTypeFontGenerator stackFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("FreeSerif.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter stackFontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();

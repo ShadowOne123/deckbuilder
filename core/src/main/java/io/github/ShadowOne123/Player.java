@@ -14,8 +14,8 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 public class Player extends Creature{
     //statuses probably
 
-    public Player(SpriteBatch spriteBatch, Viewport viewport, BitmapFont text, float centerX, float centerY, Texture texture){
-        super(spriteBatch, viewport, text, centerX, centerY, texture);
+    public Player(SpriteBatch spriteBatch, Viewport viewport, FreeTypeFontGenerator textGen, FreeTypeFontGenerator.FreeTypeFontParameter textParam, float centerX, float centerY, Texture texture){
+        super(spriteBatch, viewport, textGen, textParam, centerX, centerY, texture);
         hp = 60;
         maxHP = 60;
     }

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -17,7 +18,7 @@ abstract public class Creature extends Actor {
 
     protected int hp;
     protected int maxHP;
-    public boolean selected;
+    private boolean selected;
     protected Sprite sprite;
     Sprite healthBar;
     Viewport viewport;
@@ -30,13 +31,13 @@ abstract public class Creature extends Actor {
     //statuses probably
     protected ArrayList<Status> statuses;
 
-    public Creature(SpriteBatch spriteBatch, Viewport viewport, BitmapFont text, float centerX, float centerY, Texture texture){
+    public Creature(SpriteBatch spriteBatch, Viewport viewport, FreeTypeFontGenerator textGen, FreeTypeFontGenerator.FreeTypeFontParameter textParam, float centerX, float centerY, Texture texture){
         this.spriteBatch = spriteBatch;
         this.viewport = viewport;
         creatureTexture = texture;
         sprite = new Sprite(creatureTexture);
         sprite.setSize(viewport.getWorldWidth()/10, viewport.getWorldHeight()/5);
-        this.text = text;
+        this.text = textGen.generateFont(textParam);
         text.getData().setScale(0.1f);
         this.centerX = centerX;
         this.centerY = centerY;
@@ -65,17 +66,10 @@ abstract public class Creature extends Actor {
         return selected;
     }
 
-    public boolean toggleSelected(){
-        if(this.isSelected()){
-            this.selected = false;
-            text.setColor(Color.WHITE);
-            return false;
-        }
-        else{
-            this.selected = true;
-            text.setColor(Color.RED);
-            return true;
-        }
+    public boolean select(){
+        this.selected = true;
+        text.setColor(Color.RED);
+        return true;
 
     }
 
@@ -122,6 +116,11 @@ abstract public class Creature extends Actor {
 
     public int getMaxHP(){
         return this.maxHP;
+    }
+
+    public void unselect(){
+        this.selected = false;
+        text.setColor(Color.WHITE);
     }
 
 

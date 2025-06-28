@@ -13,12 +13,16 @@ public class CombatController {
     private PlayArea playArea;
     private enum Turn {ENEMY, PLAYER}
     private Turn turn = Turn.PLAYER;
+    private int maxTargets;
+    private int currentTargets;
 
     public CombatController(Player player, PlayArea playArea, ArrayList<Enemy> enemies){
         this.enemies = enemies;
         this.playArea = playArea;
         this.player = player;
         this.targets = new ArrayList<Creature>();
+        this.maxTargets = 1;
+        this.currentTargets = 0;
     }
 
     public void resolveTurn(){
@@ -56,6 +60,7 @@ public class CombatController {
         }
         //apply player statuses
         playArea.getCards().clear();
+        unselectAll();
         return true;
     }
 
@@ -68,26 +73,54 @@ public class CombatController {
     }
 
     public void selectTarget(Vector2 clickCoords){
+        int targetDiff = maxTargets - currentTargets;
         if(player.getSprite().getBoundingRectangle().contains(clickCoords)){
-            if(player.toggleSelected()){
-                targets.add(player);
-            }
-            else{
+            if (!player.isSelected()) {
+                if(targetDiff > 0) {
+                    player.select();
+                    targets.add(player);
+                    currentTargets++;
+                }
+                else{
+                    System.out.println("maximum targets reached!");
+                }
+            } else {
+                player.unselect();
                 targets.remove(player);
+                currentTargets--;
             }
             return;
         }
         for(int i = 0; i < enemies.size(); i++){
             if(enemies.get(i).getSprite().getBoundingRectangle().contains(clickCoords)){
-                if(enemies.get(i).toggleSelected()) {
-                    targets.add(enemies.get(i));
+                if(!enemies.get(i).isSelected()) {
+                    if(targetDiff > 0) {
+                        enemies.get(i).select();
+                        targets.add(enemies.get(i));
+                        currentTargets++;
+                    }
+                    else{
+                        System.out.println("max targets");
+                    }
                 }
                 else{
+                    enemies.get(i).unselect();
                     targets.remove(enemies.get(i));
+                    currentTargets--;
                 }
                 return;
             }
         }
+    }
+
+    private void unselectAll(){
+        player.unselect();
+        if(!enemies.isEmpty()){
+            for(Enemy enemy : enemies){
+                enemy.unselect();
+            }
+        }
+        currentTargets = 0;
     }
 
     public String getTurn(){

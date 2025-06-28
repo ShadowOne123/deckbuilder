@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -12,8 +13,8 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
 public class Enemy extends Creature{
 
-    public Enemy(SpriteBatch spriteBatch, Viewport viewport, BitmapFont text, float centerX, float centerY, Texture texture, float width, float height){
-        super(spriteBatch, viewport, text, centerX, centerY, texture);
+    public Enemy(SpriteBatch spriteBatch, Viewport viewport, FreeTypeFontGenerator textGen, FreeTypeFontGenerator.FreeTypeFontParameter textParam, float centerX, float centerY, Texture texture, float width, float height){
+        super(spriteBatch, viewport, textGen, textParam, centerX, centerY, texture);
         sprite.setSize(width, height);
         hp = 10;
         maxHP = hp;

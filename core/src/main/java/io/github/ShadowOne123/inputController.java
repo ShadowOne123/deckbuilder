@@ -25,8 +25,9 @@ public class inputController {
                     //check if there's currently a card attached to the cursor
                     if(hand.heldCard != null){
                         if(playArea.getSprite().getBoundingRectangle().contains(clickCoords)){
-                            playArea.addCard(hand.heldCard);
-                            hand.heldCard = null;
+                            if(playArea.addCard(hand.heldCard)){
+                                hand.heldCard = null;
+                            }
                         }
                         if(hand.getSprite().getBoundingRectangle().contains(clickCoords)){
                             ArrayList<Card> cards = hand.getCards();

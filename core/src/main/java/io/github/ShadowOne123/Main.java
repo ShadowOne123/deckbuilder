@@ -53,7 +53,7 @@ public class Main extends ApplicationAdapter {
         bucketTexture = new Texture("bucket.png");
         spriteBatch = new SpriteBatch();
         hand = new Hand(spriteBatch, viewport);
-        playArea = new PlayArea(spriteBatch, viewport);
+        playArea = new PlayArea(3, spriteBatch, viewport);
         backgroundTexture = new Texture("GothicCastleBackground3.png");
         backgroundTexture2 = new Texture("MagicalForestBackground1.png");
         backgroundTexture3 = new Texture("steampunkBackground1.png");
@@ -93,7 +93,6 @@ public class Main extends ApplicationAdapter {
     public void resize(int width, int height) {
         viewport.update(width, height, true); // true centers the camera
         hand.resize(viewport);
-        playArea.resize(viewport);
     }
 
     private void draw(){

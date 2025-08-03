@@ -59,7 +59,7 @@ public class CombatController {
             return false;
         }
         //apply player statuses
-        playArea.getCards().clear();
+        playArea.clear();
         unselectAll();
         return true;
     }

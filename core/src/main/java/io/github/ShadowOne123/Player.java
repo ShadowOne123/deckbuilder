@@ -19,14 +19,4 @@ public class Player extends Creature{
         hp = 60;
         maxHP = 60;
     }
-
-    public void takeStatuses(){
-        for(int i = 0; i < statuses.size(); i++){
-            statuses.get(i).apply(this);
-            if(statuses.get(i).getIntensity() == 0){
-                statuses.remove(i);
-                i--;
-            }
-        }
-    }
 }

@@ -5,6 +5,8 @@ import com.badlogic.gdx.math.Vector2;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.run;
+
 public class CombatController {
 
     private ArrayList<Enemy> enemies;
@@ -38,7 +40,7 @@ public class CombatController {
 
     //called when "enter" is pressed, ie when the spell is cast
     public boolean resolvePlayerTurn(){
-        player.takeStatuses();
+        player.addAction(run(player.takeStatuses(player)));
         //build spell
         Effect effect = SpellResolver.buildEffect(playArea.getCards());
         //check for no cards played
@@ -61,6 +63,7 @@ public class CombatController {
         //apply player statuses
         playArea.clear();
         unselectAll();
+        targets.clear();
         return true;
     }
 

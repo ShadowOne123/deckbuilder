@@ -73,6 +73,21 @@ abstract public class Creature extends Actor {
 
     }
 
+    protected Runnable takeStatuses(Creature target){
+        return new Runnable() {
+            @Override
+            public void run() {
+                for(int i = 0; i < statuses.size(); i++){
+                    statuses.get(i).apply(target);
+                    if(statuses.get(i).getIntensity() == 0){
+                        statuses.remove(i);
+                        i--;
+                    }
+                }
+            }
+        };
+    }
+
 
     public void takeDamage(int damage){
         if(this.hp - damage > 0) {

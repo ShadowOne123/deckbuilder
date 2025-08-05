@@ -55,11 +55,11 @@ public abstract class Status {
     //called mostly by statusAddingAction.java when creating new actions
     public static Status makeStatus(String[] desc){
         //useful parameters start at index 1 because index 0 was the action identifier
-        boolean tempMidTurn = Boolean.parseBoolean(desc[3]);
-        boolean tempEndTurn = Boolean.parseBoolean(desc[4]);
+        boolean tempMidTurn = Boolean.parseBoolean(desc[4]);
+        boolean tempEndTurn = Boolean.parseBoolean(desc[5]);
         switch(desc[1]){
             case "1":
-                return new damagingStatus(Integer.parseInt(desc[1]), desc[2], tempMidTurn, tempEndTurn, desc[5]);
+                return new damagingStatus(Integer.parseInt(desc[2]), desc[3], tempMidTurn, tempEndTurn, desc[6]);
         }
         return null;
     }

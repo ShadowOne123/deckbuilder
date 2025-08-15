@@ -6,10 +6,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
+import static io.github.ShadowOne123.Main.eventBus;
+import io.github.ShadowOne123.Events.*;
+
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
@@ -30,6 +30,7 @@ abstract public class Creature extends Actor {
     float centerY;
     //statuses probably
     protected ArrayList<Status> statuses;
+    protected CombatController combatController;
 
     public Creature(SpriteBatch spriteBatch, Viewport viewport, FreeTypeFontGenerator textGen, FreeTypeFontGenerator.FreeTypeFontParameter textParam, float centerX, float centerY, Texture texture){
         this.spriteBatch = spriteBatch;
@@ -56,7 +57,7 @@ abstract public class Creature extends Actor {
         for(int i = 0; i < statuses.size(); i++){
             status = statuses.get(i);
             statusSprite = status.getSprite();
-            statusSprite.setCenter(sprite.getX()+i*statusSprite.getWidth(), sprite.getY()-statusSprite.getHeight()*1.5f);
+            statusSprite.setCenter(sprite.getX()+i*statusSprite.getWidth()*1.5f, sprite.getY()-statusSprite.getHeight()*1.5f);
             statusSprite.draw(spriteBatch);
             statusStackFont.draw(spriteBatch, String.valueOf(status.getIntensity()), statusSprite.getX()+statusSprite.getWidth(), statusSprite.getY()+statusSprite.getHeight()*0.5f);
         }
@@ -88,6 +89,19 @@ abstract public class Creature extends Actor {
         };
     }
 
+    protected Runnable incrementTurn(){
+        return new Runnable() {
+            @Override
+            public void run() {
+                combatController.incrementTurn();
+            }
+        };
+    }
+
+    public void addController(CombatController controller){
+        this.combatController = controller;
+    }
+
 
     public void takeDamage(int damage){
         if(this.hp - damage > 0) {
@@ -99,7 +113,12 @@ abstract public class Creature extends Actor {
         }
     }
 
-    public void getHealed(int healing){this.hp += healing;}
+    public void getHealed(int healing){
+        this.hp += healing;
+        if(this.hp > this.maxHP){
+            this.hp = this.maxHP;
+        }
+    }
 
     public void die(){
         System.out.println("blerghh, I'm dead!!");
@@ -117,8 +136,23 @@ abstract public class Creature extends Actor {
         return statuses;
     }
 
+    public Status searchStatuses(String name){
+        if(!statuses.isEmpty()) {
+            for (Status status : statuses) {
+                if (status.getName().equals(name)) {
+                    return status;
+                }
+            }
+        }
+        return null;
+    }
+
     public void addStatus(Status status){
         this.statuses.add(status);
+    }
+
+    public void removeStatus(String name){
+        statuses.remove(searchStatuses(name));
     }
 
     public void setStatuses(ArrayList<Status> statuses) {

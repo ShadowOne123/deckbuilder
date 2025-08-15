@@ -1,10 +1,13 @@
 package io.github.ShadowOne123;
 
+import io.github.ShadowOne123.Events.DamageEvent;
+
 public class damagingAction extends Action{
 
     @Override
     public void apply(Creature target){
-        target.takeDamage(intensity);
+
+        Main.eventBus.emit(new DamageEvent(target, intensity));
     }
 
     public damagingAction(int intensity){

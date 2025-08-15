@@ -16,9 +16,6 @@ public class Hand extends Board{
     public Hand(SpriteBatch spriteBatch, Viewport viewport){
         super(spriteBatch, viewport);
         drawHand();
-        addCard(new Card("temperance"));
-        addCard(new Card("heal"));
-        addCard(new Card("king"));
         heldCard = null;
     }
 
@@ -31,6 +28,11 @@ public class Hand extends Board{
             heldCard.getSprite().setCenter(clickCoords.x, clickCoords.y);
             heldCard.getSprite().draw(spriteBatch);
         }
+    }
+
+    public void clear(){
+        cards.clear();
+        heldCard = null;
     }
 
 

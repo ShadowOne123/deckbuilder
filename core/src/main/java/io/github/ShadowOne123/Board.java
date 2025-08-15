@@ -4,9 +4,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
+
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveTo;
 
 public abstract class Board extends Actor {
 
@@ -27,20 +30,22 @@ public abstract class Board extends Actor {
         cardTexture = new Texture("king.png");
         boardArea = new Sprite(cardTexture);
         boardArea.setSize(worldWidth*0.40f,worldHeight/4);
-        cardHeight = worldHeight/5;
-        cardWidth = cardHeight*0.7f;
+        cardHeight = worldHeight/4.5f;
+        cardWidth = cardHeight*0.65f;
     }
 
     public void addCard(Card card){
         card.setSize(cardWidth, cardHeight);
-        card.getSprite().setCenter(0, boardArea.getY() + boardArea.getHeight()/2);
+        card.setCenter(worldWidth/15, cardHeight/2 + worldHeight/25);
         cards.add(card);
         reposition();
+        card.setY(cardHeight/2 + worldHeight/25 + worldHeight/4);
+        card.addAction(Actions.moveBy(0,-worldHeight/4, 0.2f));
     }
 
     public void addCard(Card card, int index){
         card.setSize(cardWidth, cardHeight);
-        card.getSprite().setCenter(0, boardArea.getY() + boardArea.getHeight()/2);
+        card.setCenter(0, cardHeight/2 + worldHeight/25);
         cards.add(index, card);
         reposition();
     }
@@ -54,9 +59,9 @@ public abstract class Board extends Actor {
 
     public void drawBoard(){
         boardArea.setSize(worldWidth*0.40f,worldHeight/4);
-        //reposition();
         if(!cards.isEmpty()){
             for(Card card : cards){
+                card.getSprite().setCenter(card.getX(), card.getY());
                 card.getSprite().draw(spriteBatch);
             }
         }

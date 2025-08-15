@@ -1,16 +1,40 @@
 package io.github.ShadowOne123;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.concurrent.atomic.AtomicReference;
 
-public class Deck {
+public class Deck extends Actor {
 
     private ArrayList<Card> cards;
+    private ArrayList<Card> discard;
     int totalCards;
+    Sprite deckSprite;
+    Texture sleeve;
+    SpriteBatch spriteBatch;
+    Hand hand;
 
-    public Deck(){
+    public Deck(Hand hand, SpriteBatch spriteBatch){
+        this.hand = hand;
+        this.spriteBatch = spriteBatch;
         cards = new ArrayList<Card>();
+        discard = new ArrayList<Card>();
         this.totalCards = 0;
+        sleeve = new Texture("rose.png");
+        deckSprite = new Sprite(sleeve);
+        deckSprite.setSize(hand.cardWidth, hand.cardHeight);
+        deckSprite.setCenter(hand.worldWidth/15, hand.cardHeight/2 + hand.worldHeight/25);
+    }
+
+    public void drawDeck(){
+        if(!cards.isEmpty()) {
+            deckSprite.draw(spriteBatch);
+        }
     }
 
     public Deck(ArrayList<Card> cards){
@@ -19,8 +43,24 @@ public class Deck {
     }
 
     public Card draw(Hand hand){
-        hand.addCard(cards.get(0));
-        return cards.remove(0);
+        Card toReturn = null;
+        if(cards.isEmpty() && !discard.isEmpty()){
+            for(Card card : discard){
+                cards.add(card);
+            }
+            discard.clear();
+            shuffle();
+        }
+        if(!cards.isEmpty()) {
+            hand.addCard(cards.get(0));
+            toReturn = cards.remove(0);
+        }
+
+        return toReturn;
+    }
+
+    public void addToDiscard(Card card){
+        discard.add(card);
     }
 
     public Card getCard(int index){
@@ -53,5 +93,9 @@ public class Deck {
             cards.set(first, cards.get(second));
             cards.set(second, temp);
         }
+    }
+
+    public Sprite getSprite(){
+        return deckSprite;
     }
 }

@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import io.github.ShadowOne123.Events.EventBus;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -28,26 +29,30 @@ public class Main extends ApplicationAdapter {
     Texture backgroundTexture2;
     Texture backgroundTexture3;
     Sprite Background;
-    Player player;
+    public Player player;
+    Deck deck;
     Enemy enemyTest;
     Texture enemyTexture;
     //text
     BitmapFont healthFont;
     FreeTypeFontGenerator healthFontGen;
     FreeTypeFontGenerator.FreeTypeFontParameter healthFontParam;
-    Stage stage;
+    public static Stage stage;
 
     //Card creation and file reading
     public static HashMap<String, String> cardDictionary = new HashMap<String,String>();
 
     CombatController combatController;
+    public static EventBus eventBus;
 
     @Override
     public void create() {
         //populate card dictionary
         populateCardDictionary("/cardDictionary.txt");
+        SpellResolver.populateSpellbook("/spellbook.txt");
         //init fonts
         FontManager.init();
+        eventBus = new EventBus();
 
         viewport = new FitViewport(HEIGHT * 16f/9f, HEIGHT);
         bucketTexture = new Texture("bucket.png");
@@ -62,10 +67,10 @@ public class Main extends ApplicationAdapter {
         healthFontGen = FontManager.healthFontGenerator;
         healthFontParam = FontManager.healthFontParameter;
         healthFont = FontManager.healthFont;
-        player = new Player(spriteBatch, viewport, healthFontGen, healthFontParam, viewport.getWorldWidth()/7, viewport.getWorldHeight()/3, bucketTexture);
+        player = new Player(spriteBatch, viewport, healthFontGen, healthFontParam, viewport.getWorldWidth()/5.5f, viewport.getWorldHeight()/2.5f, bucketTexture);
         enemyTexture = new Texture("fireElemental.png");
         enemyTest = new Enemy(spriteBatch, viewport, healthFontGen, healthFontParam, 5.5f*viewport.getWorldWidth()/7,
-            viewport.getWorldHeight()/3, enemyTexture,viewport.getWorldWidth()/10, viewport.getWorldHeight()/4);
+            viewport.getWorldHeight()/2.5f, enemyTexture,viewport.getWorldWidth()/10, viewport.getWorldHeight()/4);
 
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
@@ -73,9 +78,18 @@ public class Main extends ApplicationAdapter {
         stage.addActor(player);
         ArrayList<Enemy> enemies = new ArrayList<Enemy>();
         enemies.add(enemyTest);
-        combatController = new CombatController(player, playArea, enemies);
+        hand.addCard(new Card("temperance", stage));
+        hand.addCard(new Card("heal", stage));
+        hand.addCard(new Card("king", stage));
+        deck = new Deck(hand, spriteBatch);
+        for(int i = 0; i < 5; i++){
+            deck.addCard(new Card("temperance", stage));
+        }
+        combatController = new CombatController(player, playArea, hand, deck, enemies);
+        enemyTest.addController(combatController);
+        player.addController(combatController);
         inputController inpt = new inputController();
-        inpt.setInputModeBattle(hand, playArea, combatController, viewport);
+        inpt.setInputModeBattle(hand, playArea, combatController, viewport, deck);
     }
 
     @Override
@@ -106,8 +120,9 @@ public class Main extends ApplicationAdapter {
         playArea.drawPlayArea();
         player.draw();
         enemyTest.draw();
-        healthFont.draw(spriteBatch, combatController.getTurn(), viewport.getWorldWidth()/2.7f, viewport.getWorldHeight()/1.1f);
+        healthFont.draw(spriteBatch, combatController.getTurn().toString(), viewport.getWorldWidth() / 2.7f, viewport.getWorldHeight() / 1.1f);
         hand.drawHand();
+        deck.drawDeck();
         stage.act();
         spriteBatch.end();
     }

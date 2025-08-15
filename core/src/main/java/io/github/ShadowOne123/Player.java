@@ -11,12 +11,25 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
+
 public class Player extends Creature{
     //statuses probably
 
-    public Player(SpriteBatch spriteBatch, Viewport viewport, FreeTypeFontGenerator textGen, FreeTypeFontGenerator.FreeTypeFontParameter textParam, float centerX, float centerY, Texture texture){
+    public Player(SpriteBatch spriteBatch, Viewport viewport, FreeTypeFontGenerator textGen, FreeTypeFontGenerator.FreeTypeFontParameter textParam,
+                  float centerX, float centerY, Texture texture){
         super(spriteBatch, viewport, textGen, textParam, centerX, centerY, texture);
         hp = 60;
         maxHP = 60;
+    }
+
+
+    public boolean playerAnim(){
+        addAction(sequence(
+            delay(0.5f),
+            run(takeStatuses(this)),
+            run(incrementTurn())
+        ));
+        return true;
     }
 }

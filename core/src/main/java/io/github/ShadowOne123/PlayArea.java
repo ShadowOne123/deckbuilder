@@ -21,7 +21,7 @@ public class PlayArea{
         cards = new Card[slots];
         sprite = new Sprite(new Texture("king.png"));
         sprite.setSize(viewport.getWorldWidth()*0.40f, viewport.getWorldHeight()/4);
-        sprite.setCenter(viewport.getWorldWidth()/2, viewport.getWorldHeight()/2);
+        sprite.setCenter(viewport.getWorldWidth()/2, viewport.getWorldHeight()/1.7f);
     }
 
    public ArrayList<Card> getCards(){

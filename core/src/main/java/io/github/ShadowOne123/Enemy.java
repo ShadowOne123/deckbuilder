@@ -8,15 +8,17 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import io.github.ShadowOne123.Events.DamageEvent;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
 public class Enemy extends Creature{
 
-    public Enemy(SpriteBatch spriteBatch, Viewport viewport, FreeTypeFontGenerator textGen, FreeTypeFontGenerator.FreeTypeFontParameter textParam, float centerX, float centerY, Texture texture, float width, float height){
+    public Enemy(SpriteBatch spriteBatch, Viewport viewport, FreeTypeFontGenerator textGen, FreeTypeFontGenerator.FreeTypeFontParameter textParam,
+                 float centerX, float centerY, Texture texture, float width, float height){
         super(spriteBatch, viewport, textGen, textParam, centerX, centerY, texture);
         sprite.setSize(width, height);
-        hp = 10;
+        hp = 1000;
         maxHP = hp;
     }
 
@@ -32,7 +34,8 @@ public class Enemy extends Creature{
             moveTo(originX, getY(), 0.3f),
             run(attack(player)),
             delay(0.1f),
-            run(takeStatuses(this))
+            run(takeStatuses(this)),
+            run(incrementTurn())
         ));
     }
 
@@ -40,7 +43,7 @@ public class Enemy extends Creature{
         return new Runnable() {
             @Override
             public void run() {
-                player.takeDamage(5);
+                Main.eventBus.emit(new DamageEvent(player, 5));
             }
         };
     }

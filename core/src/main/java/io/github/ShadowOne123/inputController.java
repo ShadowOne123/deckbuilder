@@ -12,11 +12,11 @@ import java.util.ArrayList;
 public class inputController {
     public inputController(){}
 
-    public void setInputModeBattle(Hand hand, PlayArea playArea, CombatController combatController, Viewport viewport){
+    public void setInputModeBattle(Hand hand, PlayArea playArea, CombatController combatController, Viewport viewport, Deck deck){
         Gdx.input.setInputProcessor(new InputAdapter(){
             @Override
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-                if(button == Input.Buttons.LEFT){
+                if(button == Input.Buttons.LEFT && combatController.getTurn() == CombatController.Turn.PLAYER){
                     Creature target;
                     Vector2 clickCoords = new Vector2(Gdx.input.getX(), Gdx.input.getY());
                     clickCoords = viewport.unproject(clickCoords);
@@ -111,6 +111,10 @@ public class inputController {
                             }
                         }
                     }
+                    //TODO: Remove on production
+                    else if(deck.getSprite().getBoundingRectangle().contains(clickCoords)){
+                        deck.draw(hand);
+                    }
                     else{
                         combatController.selectTarget(clickCoords);
                     }
@@ -122,9 +126,10 @@ public class inputController {
             @Override
             public boolean keyUp(int keycode) {
                 switch(keycode){
-                    case Input.Keys.A: hand.addCard(new Card("temperance")); break;
-                    case Input.Keys.S: hand.addCard(new Card("king")); break;
+                    case Input.Keys.A: hand.addCard(new Card("temperance", Main.stage)); break;
+                    case Input.Keys.S: hand.addCard(new Card("butcher", Main.stage)); break;
                     case Input.Keys.ENTER: combatController.resolveTurn(); break;
+                    case Input.Keys.D:
                 }
 
                 return false;

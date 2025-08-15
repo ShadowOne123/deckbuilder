@@ -1,9 +1,11 @@
 package io.github.ShadowOne123;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import io.github.ShadowOne123.Events.StatusAddedEvent;
+import io.github.ShadowOne123.Statuses.NonDamagingStatus;
+import io.github.ShadowOne123.Statuses.StatusIncreasingStatus;
+import io.github.ShadowOne123.Statuses.damagingStatus;
 
 public abstract class Status {
     protected int intensity;
@@ -17,9 +19,10 @@ public abstract class Status {
 
     }
 
-    public Status(String textureName){
+    public Status(String textureName, String name){
         this.texture = new Texture(textureName);
         this.sprite = new Sprite(texture);
+        this.name = name;
         sprite.setSize(10f,10f);
     }
 
@@ -47,6 +50,8 @@ public abstract class Status {
         System.out.println("Unknown status being applied, panic!");
     }
 
+    public void onAdded(Creature target){Main.eventBus.emit(new StatusAddedEvent(target, name, intensity));}
+
     public String toString(){
         return "Status " + name + " at intensity " + intensity;
     }
@@ -55,11 +60,19 @@ public abstract class Status {
     //called mostly by statusAddingAction.java when creating new actions
     public static Status makeStatus(String[] desc){
         //useful parameters start at index 1 because index 0 was the action identifier
-        boolean tempMidTurn = Boolean.parseBoolean(desc[4]);
-        boolean tempEndTurn = Boolean.parseBoolean(desc[5]);
         switch(desc[1]){
             case "1":
-                return new damagingStatus(Integer.parseInt(desc[2]), desc[3], tempMidTurn, tempEndTurn, desc[6]);
+                //Eg bleed, just deals damage at the end of the turn
+                //intensity, name, texture
+                return new damagingStatus(Integer.parseInt(desc[2]), desc[3], desc[4]);
+            case "2":
+                //Eg block, a status that doesn't do anything on its own but triggers something in combat resolution
+                //intensity, name, texture
+                return new NonDamagingStatus(Integer.parseInt(desc[2]), desc[3], desc[4]);
+            case "3":
+                //Status that increases how many stacks of a certain status are applied
+                //intensity, increase, name, affected status, texture
+                return new StatusIncreasingStatus(Integer.parseInt(desc[2]), Integer.parseInt(desc[3]), desc[4], desc[5], desc[6]);
         }
         return null;
     }

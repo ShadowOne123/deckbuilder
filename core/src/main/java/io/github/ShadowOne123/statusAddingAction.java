@@ -15,7 +15,7 @@ public class statusAddingAction extends Action{
     @Override
     public void apply(Creature target){
         ArrayList<Status> targetStatuses = target.getStatuses();
-        mergeStatuses(statuses, targetStatuses);
+        mergeStatuses(statuses, targetStatuses, target);
     }
 
     @Override
@@ -29,25 +29,31 @@ public class statusAddingAction extends Action{
 
     @Override
     public void combine(Action action){
-        mergeStatuses(((statusAddingAction)action).getStatuses(), this.statuses);
+        mergeStatuses(((statusAddingAction)action).getStatuses(), this.statuses, null);
     }
 
     public ArrayList<Status> getStatuses(){
         return this.statuses;
     }
 
-    public static void mergeStatuses(ArrayList<Status> newStatuses, ArrayList<Status> oldStatuses){
+    public static void mergeStatuses(ArrayList<Status> newStatuses, ArrayList<Status> oldStatuses, Creature target){
         boolean merged;
         for(Status newStatus : newStatuses){
             merged = false;
             for(Status existingStatus: oldStatuses){
                 if(newStatus.getName().equals(existingStatus.getName())){
                     existingStatus.addIntensity(newStatus.getIntensity());
+                    if(target != null){
+                        existingStatus.onAdded(target);
+                    }
                     merged = true;
                 }
             }
             if(!merged){
                 oldStatuses.add(newStatus);
+                if(target != null){
+                    newStatus.onAdded(target);
+                }
             }
         }
     }

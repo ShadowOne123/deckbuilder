@@ -4,7 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveTo;
 import static io.github.ShadowOne123.Main.cardDictionary;
 
 public class Card extends Actor {
@@ -13,8 +15,16 @@ public class Card extends Actor {
     private final String name;
 
 
-    public Card(String id){
-        sprite = new Sprite(new Texture(Gdx.files.internal(id + ".png")));
+    public Card(String id, Stage stage){
+
+        stage.addActor(this);
+
+        if(Gdx.files.internal(id + ".png").exists()) {
+            sprite = new Sprite(new Texture(Gdx.files.internal(id + ".png")));
+        }
+        else{
+            sprite = new Sprite(new Texture(Gdx.files.internal("bucket.png")));
+        }
         sprite.setCenter(-10,-10);
         String cardDescription = cardDictionary.get(id);
         //splits it into the name and each individual action
@@ -39,8 +49,16 @@ public class Card extends Actor {
         return "Name: " + name + "\n effect: " + effect.toString();
     }
 
-    public void setLeft(float x){
-        sprite.setCenterX(x + sprite.getWidth()/2);
+    public String getName(){
+        return name;
+    }
 
+    public void setLeft(float x){
+        setX(x + sprite.getWidth()/2);
+    }
+
+    public void setCenter(float x, float y){
+        setX(x);
+        setY(y);
     }
 }

@@ -1,6 +1,8 @@
 package io.github.ShadowOne123;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import io.github.ShadowOne123.Events.DamageEvent;
 import io.github.ShadowOne123.Events.DamageTakenEvent;
 
@@ -10,7 +12,7 @@ import java.util.ArrayList;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static io.github.ShadowOne123.Main.eventBus;
 
-public class CombatController {
+public class CombatController extends Actor {
 
     private ArrayList<Enemy> enemies;
     private ArrayList<Creature> targets;
@@ -72,39 +74,63 @@ public class CombatController {
     //called when "enter" is pressed, ie when the spell is cast
     public boolean resolvePlayerTurn(){
         turn = Turn.LOADING_PLAYER;
-        //build spell
-        Effect effect = SpellResolver.buildEffect(playArea.getCards());
         //check for no cards played
-        if(effect.getActions().isEmpty()){
+        if(playArea.getCards().isEmpty()){
             System.out.println("No cards played!");
             //allows no cards played
             return true;
         }
-        //apply to targets
-        if(!targets.isEmpty()) {
-            for (Creature target : targets) {
-                effect.apply(target);
-            }
-        }
         //check for no targets
-        else{
+        else if (targets.isEmpty()){
             System.out.println("No targets!");
             return false;
         }
-        //discard everything from hand and play area
-        for(Card card : playArea.getCards()){
-            deck.addToDiscard(card);
-        }
-        playArea.clear();
-        for(Card card : hand.getCards()){
-            deck.addToDiscard(card);
-        }
-        deck.addToDiscard(hand.heldCard);
-        hand.clear();
-        unselectAll();
-        targets.clear();
+        //build spell
+        Effect effect = SpellResolver.buildEffect(playArea.getCards());
+
+        addAction(sequence(
+            run(fadeCards()),
+            delay(0.6f),
+            run(resolvePlayerTurnHelper(effect))
+            ));
 
         return player.playerAnim();
+    }
+
+    private Runnable resolvePlayerTurnHelper(Effect effect){
+        return new Runnable() {
+            @Override
+            public void run() {
+                //apply to targets
+                for (Creature target : targets) {
+                    effect.apply(target);
+                }
+                //discard everything from hand and play area
+                for(Card card : playArea.getCards()){
+                    deck.addToDiscard(card);
+                    card.addAction(fadeIn(0.1f));
+                }
+                playArea.clear();
+                for(Card card : hand.getCards()){
+                    deck.addToDiscard(card);
+                }
+                deck.addToDiscard(hand.heldCard);
+                hand.clear();
+                unselectAll();
+                targets.clear();
+            }
+        };
+    }
+
+    private Runnable fadeCards(){
+        return new Runnable() {
+            @Override
+            public void run() {
+                for (Card card : playArea.getCards()){
+                    card.addAction(fadeOut(0.5f));
+                }
+            }
+        };
     }
 
     public void resolveEnemyTurn(){

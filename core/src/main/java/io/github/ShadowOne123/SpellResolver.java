@@ -33,7 +33,6 @@ public class SpellResolver {
         Effect product = new Effect();
         System.out.println(spell);
         if(spellbook.containsKey(spell)){
-            System.out.println("ping");
             Card card = new Card(spellbook.get(spell), Main.stage);
             product = card.getEffect();
         }

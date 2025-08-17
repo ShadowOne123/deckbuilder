@@ -1,5 +1,6 @@
 package io.github.ShadowOne123;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -58,9 +59,11 @@ public abstract class Board extends Actor {
     }
 
     public void drawBoard(){
+        Color color = getColor();
         boardArea.setSize(worldWidth*0.40f,worldHeight/4);
         if(!cards.isEmpty()){
             for(Card card : cards){
+                card.getSprite().setColor(color);
                 card.getSprite().setCenter(card.getX(), card.getY());
                 card.getSprite().draw(spriteBatch);
             }

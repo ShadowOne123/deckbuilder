@@ -26,6 +26,7 @@ public class Enemy extends Creature{
 
 
     public void attackAnim(Player player){
+        Color color = getColor();
         float originX = getX();
         addAction(sequence(
             moveTo(getX() + 10, getY(), 0.06f),
@@ -43,7 +44,7 @@ public class Enemy extends Creature{
         return new Runnable() {
             @Override
             public void run() {
-                Main.eventBus.emit(new DamageEvent(player, 5));
+                Main.eventBus.emit(new DamageEvent(player, 5, DamageType.SLASHING));
             }
         };
     }

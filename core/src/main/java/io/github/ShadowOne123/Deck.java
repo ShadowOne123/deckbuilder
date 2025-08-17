@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Deck extends Actor {
@@ -60,7 +61,17 @@ public class Deck extends Actor {
     }
 
     public void addToDiscard(Card card){
-        discard.add(card);
+        if(card != null){
+            discard.add(card);
+        }
+    }
+
+    public ArrayList<Card> getCards(){
+        return cards;
+    }
+
+    public ArrayList<Card> getDiscard(){
+        return discard;
     }
 
     public Card getCard(int index){
@@ -84,14 +95,13 @@ public class Deck extends Actor {
     }
 
     public void shuffle(){
-        int first;
-        int second;
-        for(int i = 0; i < 1000; i++){
-            first = (int)(Math.random()*(cards.size()-1));
-            second = (int)(Math.random()*(cards.size()-1));
-            Card temp = cards.get(first);
-            cards.set(first, cards.get(second));
-            cards.set(second, temp);
+        Random random = new Random();
+        for (int i = cards.size() - 1; i > 0; i--) {
+            int j = random.nextInt(i + 1); // random integer from 0 to i (inclusive)
+            // Swap elements at indices i and j
+            Card temp = cards.get(i);
+            cards.set(i, cards.get(j));
+            cards.set(j, temp);
         }
     }
 

@@ -63,8 +63,8 @@ public abstract class Status {
         switch(desc[1]){
             case "1":
                 //Eg bleed, just deals damage at the end of the turn
-                //intensity, name, texture
-                return new damagingStatus(Integer.parseInt(desc[2]), desc[3], desc[4]);
+                //intensity, damage type, name, texture
+                return new damagingStatus(Integer.parseInt(desc[2]), DamageType.valueOf(desc[3]), desc[4], desc[5]);
             case "2":
                 //Eg block, a status that doesn't do anything on its own but triggers something in combat resolution
                 //intensity, name, texture

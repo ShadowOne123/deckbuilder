@@ -14,7 +14,7 @@ public class Effect {
             actionDescription = actionDescriptions[i].split(",");
             switch(actionDescription[0]){
                 case "1":
-                    actions.add(new damagingAction(Integer.parseInt(actionDescription[1])));
+                    actions.add(new damagingAction(Integer.parseInt(actionDescription[1]), DamageType.valueOf(actionDescription[2])));
                     break;
                 case "2":
                     actions.add(new statusAddingAction(actionDescription));

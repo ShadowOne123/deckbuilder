@@ -86,6 +86,7 @@ public class Main extends ApplicationAdapter {
             deck.addCard(new Card("temperance", stage));
         }
         combatController = new CombatController(player, playArea, hand, deck, enemies);
+        stage.addActor(combatController);
         enemyTest.addController(combatController);
         player.addController(combatController);
         inputController inpt = new inputController();

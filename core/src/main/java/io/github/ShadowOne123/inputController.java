@@ -33,7 +33,7 @@ public class inputController {
                             ArrayList<Card> cards = hand.getCards();
                             //what if 0 cards
                             if(cards.isEmpty()){
-                                hand.addCard(hand.heldCard);
+                                hand.addCard(hand.heldCard, 0);
                                 hand.heldCard = null;
                             }
                             //what if 1 card
@@ -44,7 +44,7 @@ public class inputController {
                                     hand.addCard(hand.heldCard, 0);
                                 }
                                 else{
-                                    hand.addCard(hand.heldCard);
+                                    hand.addCard(hand.heldCard, 1);
                                 }
                                 hand.heldCard = null;
                             }
@@ -74,11 +74,12 @@ public class inputController {
                                 if(hand.heldCard != null){
                                     temp = cards.get(cards.size()-1).getSprite();
                                     dist = clickCoords.x - (temp.getX() + temp.getWidth()/2);
+
                                     if(dist < 0){
                                         hand.addCard(hand.heldCard, cards.size()-1);
                                     }
                                     else{
-                                        hand.addCard(hand.heldCard);
+                                        hand.addCard(hand.heldCard, cards.size());
                                     }
                                     hand.heldCard = null;
                                 }
@@ -129,12 +130,40 @@ public class inputController {
                     case Input.Keys.A: hand.addCard(new Card("temperance", Main.stage)); break;
                     case Input.Keys.S: hand.addCard(new Card("butcher", Main.stage)); break;
                     case Input.Keys.ENTER: combatController.resolveTurn(); break;
-                    case Input.Keys.D:
+                    case Input.Keys.D: debug(hand, playArea, deck);
                 }
 
                 return false;
             }
         });
     }
+
+    private void debug(Hand hand, PlayArea playArea, Deck deck){
+        System.out.println("Debug report:\nCards held in hand:\n");
+        for(Card card : hand.getCards()){
+            if(card == null){
+                System.out.println("augh!!! AHHHH!!");
+                break;
+            }
+            System.out.println(card.toString());
+        }
+        System.out.println("Cards in deck:\n");
+        for(Card card : deck.getCards()){
+            if(card == null){
+                System.out.println("augh!!! AHHHH!!");
+                break;
+            }
+            System.out.println(card.toString());
+        }
+        System.out.println("Cards in discard:\n");
+        for(Card card : deck.getDiscard()){
+            if(card == null){
+                System.out.println("augh!!! AHHHH!!");
+                break;
+            }
+            System.out.println(card.toString());
+        }
+    }
+
 
 }

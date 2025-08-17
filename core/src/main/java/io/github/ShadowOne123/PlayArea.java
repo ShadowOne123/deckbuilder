@@ -1,5 +1,7 @@
 package io.github.ShadowOne123;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -61,9 +63,12 @@ public class PlayArea{
    }
 
    public void drawPlayArea(){
+        Color color;
         for(Card card : cards){
             if(card != null){
-            card.getSprite().draw(spriteBatch);
+                color = card.getColor();
+                card.getSprite().setColor(color);
+                card.getSprite().draw(spriteBatch);
             }
         }
    }

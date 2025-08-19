@@ -1,5 +1,6 @@
 package io.github.ShadowOne123;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -9,8 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
-
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveTo;
 
 public abstract class Board extends Actor {
 
@@ -37,16 +36,16 @@ public abstract class Board extends Actor {
 
     public void addCard(Card card){
         card.setSize(cardWidth, cardHeight);
-        card.setCenter(worldWidth/15, cardHeight/2 + worldHeight/25);
+        card.getSprite().setSize(cardWidth, cardHeight);
+        card.setPosition(worldWidth/15, worldHeight/25);
         cards.add(card);
         reposition();
-        card.setY(cardHeight/2 + worldHeight/25 + worldHeight/4);
+        card.setY(worldHeight/25 + worldHeight/4);
         card.addAction(Actions.moveBy(0,-worldHeight/4, 0.2f));
     }
 
     public void addCard(Card card, int index){
-        card.setSize(cardWidth, cardHeight);
-        card.setCenter(0, cardHeight/2 + worldHeight/25);
+        card.setPosition(0, worldHeight/25);
         cards.add(index, card);
         reposition();
     }
@@ -64,7 +63,7 @@ public abstract class Board extends Actor {
         if(!cards.isEmpty()){
             for(Card card : cards){
                 card.getSprite().setColor(color);
-                card.getSprite().setCenter(card.getX(), card.getY());
+                card.getSprite().setPosition(card.getX(), card.getY());
                 card.getSprite().draw(spriteBatch);
             }
         }
@@ -73,6 +72,7 @@ public abstract class Board extends Actor {
 
     private void reposition(){
         float step;
+        Card temp;
         if(cards.isEmpty()){
             return;
         }
@@ -83,7 +83,8 @@ public abstract class Board extends Actor {
             step = (boardArea.getWidth() - cardWidth)/(cards.size()-1);
         }
         for(int i = 0; i < cards.size(); i++){
-            cards.get(i).setLeft(boardArea.getX() + (i * step));
+            temp = cards.get(i);
+            temp.setX(boardArea.getX() + (i * step));
         }
     }
 

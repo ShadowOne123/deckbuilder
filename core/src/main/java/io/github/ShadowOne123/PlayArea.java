@@ -45,10 +45,13 @@ public class PlayArea{
 
    public boolean addCard(Card card){
         boolean added = false;
+        Sprite temp;
         for(int i = 0; i < cards.length; i++){
             if(cards[i] == null){
                 cards[i] = card;
-                card.getSprite().setCenter(sprite.getX() + ((sprite.getWidth()/cards.length) * (i+0.5f)), sprite.getY() + sprite.getHeight()/2);
+                temp = card.getSprite();
+                temp.setCenter(sprite.getX() + ((sprite.getWidth()/cards.length) * (i+0.5f)), sprite.getY() + sprite.getHeight()/2);
+                card.setPosition(temp.getX(), temp.getY());
                 added = true;
                 break;
             }

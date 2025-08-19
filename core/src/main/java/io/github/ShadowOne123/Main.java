@@ -3,12 +3,18 @@ package io.github.ShadowOne123;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import io.github.ShadowOne123.Events.EventBus;
 
@@ -38,6 +44,8 @@ public class Main extends ApplicationAdapter {
     FreeTypeFontGenerator healthFontGen;
     FreeTypeFontGenerator.FreeTypeFontParameter healthFontParam;
     public static Stage stage;
+    public Stage uiStage;
+    public static Tooltip tooltip;
 
     //Card creation and file reading
     public static HashMap<String, String> cardDictionary = new HashMap<String,String>();
@@ -73,6 +81,9 @@ public class Main extends ApplicationAdapter {
             viewport.getWorldHeight()/2.5f, enemyTexture,viewport.getWorldWidth()/10, viewport.getWorldHeight()/4);
 
         stage = new Stage(viewport);
+        uiStage = new Stage(viewport);
+        tooltip = new Tooltip("", genSkin());
+        uiStage.addActor(tooltip);
         Gdx.input.setInputProcessor(stage);
         stage.addActor(enemyTest);
         stage.addActor(player);
@@ -89,7 +100,7 @@ public class Main extends ApplicationAdapter {
         stage.addActor(combatController);
         enemyTest.addController(combatController);
         player.addController(combatController);
-        inputController inpt = new inputController();
+        inputController inpt = new inputController(stage);
         inpt.setInputModeBattle(hand, playArea, combatController, viewport, deck);
     }
 
@@ -124,7 +135,9 @@ public class Main extends ApplicationAdapter {
         healthFont.draw(spriteBatch, combatController.getTurn().toString(), viewport.getWorldWidth() / 2.7f, viewport.getWorldHeight() / 1.1f);
         hand.drawHand();
         deck.drawDeck();
+        tooltip.draw(spriteBatch, 1);
         stage.act();
+        uiStage.act();
         spriteBatch.end();
     }
 
@@ -163,6 +176,39 @@ public class Main extends ApplicationAdapter {
         catch (IOException e){
             e.printStackTrace();
         }
+    }
+
+    private Skin genSkin(){
+        BitmapFont font = new BitmapFont();
+
+        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+
+        pixmap.setColor(0.2f, 0.2f, 0.2f, 0.95f);
+
+        pixmap.fill();
+
+        Texture tex = new Texture(pixmap);
+
+        tex.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+
+        Drawable bg = new TextureRegionDrawable(new TextureRegion(tex));
+
+        pixmap.dispose();
+
+        Skin skin = new Skin();
+
+        skin.add("default-font", font);
+
+        skin.add("default-background", bg);
+
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
+
+        labelStyle.font = font;
+
+        labelStyle.background = bg;
+
+        skin.add("default", labelStyle);
+        return skin;
     }
 
 }

@@ -1,9 +1,12 @@
 package io.github.ShadowOne123;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveTo;
@@ -16,7 +19,7 @@ public class Card extends Actor {
 
 
     public Card(String id, Stage stage){
-
+        addListener(new CardInputListener(this));
         stage.addActor(this);
 
         if(Gdx.files.internal(id + ".png").exists()) {
@@ -37,10 +40,6 @@ public class Card extends Actor {
         return sprite;
     }
 
-    public void setSize(float width, float height){
-        sprite.setSize(width, height);
-    }
-
     public Effect getEffect() {
         return effect;
     }
@@ -53,12 +52,4 @@ public class Card extends Actor {
         return name;
     }
 
-    public void setLeft(float x){
-        setX(x + sprite.getWidth()/2);
-    }
-
-    public void setCenter(float x, float y){
-        setX(x);
-        setY(y);
-    }
 }

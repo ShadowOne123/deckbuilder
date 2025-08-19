@@ -3,17 +3,27 @@ package io.github.ShadowOne123;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
 
 public class inputController {
-    public inputController(){}
+    private Stage stage;
+    private InputMultiplexer multiplexer;
+    public inputController(Stage stage){
+        this.stage = stage;
+        multiplexer = new InputMultiplexer();
+    }
 
     public void setInputModeBattle(Hand hand, PlayArea playArea, CombatController combatController, Viewport viewport, Deck deck){
-        Gdx.input.setInputProcessor(new InputAdapter(){
+        Gdx.input.setInputProcessor(multiplexer);
+        multiplexer.addProcessor(stage);
+        multiplexer.addProcessor(new InputAdapter(){
+
             @Override
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {
                 if(button == Input.Buttons.LEFT && combatController.getTurn() == CombatController.Turn.PLAYER){

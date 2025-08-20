@@ -4,4 +4,5 @@ temperance:2,1,2,SLASHING,bleed,bleed.png
 buckler:2,2,4,block,block.png
 butcher:2,3,1,3,hemophilia,bleed,hemophilia.png
 rose:2,2,3,regen,regen.png
+barbed_wire:2,2,2,thorns,thorns.png
 death_by_a_thousand_cuts:1,45

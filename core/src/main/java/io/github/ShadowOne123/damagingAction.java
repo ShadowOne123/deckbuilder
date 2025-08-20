@@ -8,8 +8,7 @@ public class damagingAction extends Action{
 
     @Override
     public void apply(Creature target){
-
-        Main.eventBus.emit(new DamageEvent(target, intensity, damageType));
+        Main.eventBus.emit(new DamageEvent(target, Main.player, intensity, damageType));
     }
 
     public damagingAction(int intensity, DamageType damageType){

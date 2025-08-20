@@ -35,7 +35,7 @@ public class Main extends ApplicationAdapter {
     Texture backgroundTexture2;
     Texture backgroundTexture3;
     Sprite Background;
-    public Player player;
+    public static Player player;
     Deck deck;
     Enemy enemyTest;
     Texture enemyTexture;
@@ -135,7 +135,8 @@ public class Main extends ApplicationAdapter {
         healthFont.draw(spriteBatch, combatController.getTurn().toString(), viewport.getWorldWidth() / 2.7f, viewport.getWorldHeight() / 1.1f);
         hand.drawHand();
         deck.drawDeck();
-        tooltip.draw(spriteBatch, 1);
+        //TODO: re-enable later
+        //tooltip.draw(spriteBatch, 1);
         stage.act();
         uiStage.act();
         spriteBatch.end();

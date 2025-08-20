@@ -6,13 +6,16 @@ import io.github.ShadowOne123.DamageType;
 public class DamageEvent implements GameEvent {
     public final Creature target;
 
-    public final DamageType type;
+    public final Creature source;
+
+    public final DamageType damageType;
 
     public final int amount;
 
-    public DamageEvent(Creature target, int amount, DamageType type) {
+    public DamageEvent(Creature target, Creature source, int amount, DamageType damageType) {
         this.target = target;
         this.amount = amount;
-        this.type = type;
+        this.damageType = damageType;
+        this.source = source;
     }
 }

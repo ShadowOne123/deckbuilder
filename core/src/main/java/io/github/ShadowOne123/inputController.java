@@ -112,12 +112,15 @@ public class inputController {
                         }
                         //move cards to hand on-click from played area
                         if(playArea.getSprite().getBoundingRectangle().contains(clickCoords)) {
-                            for (int i = playArea.getCards().size() - 1; i >= 0; i--) {
-                                temp = playArea.getCards().get(i);
-                                if (temp.getSprite().getBoundingRectangle().contains(clickCoords)) {
-                                    playArea.removeCard(i);
-                                    hand.heldCard = temp;
-                                    break;
+                            Card[] cards = playArea.getCardsAsArray();
+                            for (int i = cards.length - 1; i >= 0; i--) {
+                                temp = cards[i];
+                                if(temp != null) {
+                                    if (temp.getSprite().getBoundingRectangle().contains(clickCoords)) {
+                                        playArea.removeCard(i);
+                                        hand.heldCard = temp;
+                                        break;
+                                    }
                                 }
                             }
                         }
@@ -138,7 +141,7 @@ public class inputController {
             public boolean keyUp(int keycode) {
                 switch(keycode){
                     case Input.Keys.A: hand.addCard(new Card("temperance", Main.stage)); break;
-                    case Input.Keys.S: hand.addCard(new Card("butcher", Main.stage)); break;
+                    case Input.Keys.S: hand.addCard(new Card("barbed_wire", Main.stage)); break;
                     case Input.Keys.ENTER: combatController.resolveTurn(); break;
                     case Input.Keys.D: debug(hand, playArea, deck);
                 }
@@ -149,7 +152,8 @@ public class inputController {
     }
 
     private void debug(Hand hand, PlayArea playArea, Deck deck){
-        System.out.println("Debug report:\nCards held in hand:\n");
+        /*
+        System.out.println("Debug report:\nCards held in hand:");
         for(Card card : hand.getCards()){
             if(card == null){
                 System.out.println("augh!!! AHHHH!!");
@@ -157,7 +161,7 @@ public class inputController {
             }
             System.out.println(card.toString());
         }
-        System.out.println("Cards in deck:\n");
+        System.out.println("Cards in deck:");
         for(Card card : deck.getCards()){
             if(card == null){
                 System.out.println("augh!!! AHHHH!!");
@@ -165,13 +169,23 @@ public class inputController {
             }
             System.out.println(card.toString());
         }
-        System.out.println("Cards in discard:\n");
+        System.out.println("Cards in discard:");
         for(Card card : deck.getDiscard()){
             if(card == null){
                 System.out.println("augh!!! AHHHH!!");
                 break;
             }
             System.out.println(card.toString());
+        }
+
+         */
+        System.out.println("Debug report");
+        for(Card card : playArea.getCards()){
+            if(card == null){
+                System.out.println("augh!!! AHHHH!!");
+                break;
+            }
+            System.out.println(card);
         }
     }
 

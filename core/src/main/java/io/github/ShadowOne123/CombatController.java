@@ -41,6 +41,7 @@ public class CombatController extends Actor {
         eventBus.register(DamageEvent.class, event -> {
             int finalDmg = event.amount;
             Status block = event.target.searchStatuses("block");
+            Status thorns = event.target.searchStatuses("thorns");
             if(block != null){
                 System.out.println("block found!");
                 if(block.getIntensity() <= event.amount){
@@ -55,7 +56,13 @@ public class CombatController extends Actor {
                     finalDmg = 0;
                 }
             }
+            if(thorns != null){
+                event.source.takeDamage(thorns.intensity);
+                thorns.intensity--;
+                eventBus.emit(new DamageTakenEvent(event.source, thorns.intensity, DamageType.SLASHING));
+            }
             event.target.takeDamage(finalDmg);
+            eventBus.emit(new DamageTakenEvent(event.target, finalDmg, event.damageType));
         });
 
 
@@ -91,10 +98,13 @@ public class CombatController extends Actor {
         addAction(sequence(
             run(fadeCards()),
             delay(0.6f),
-            run(resolvePlayerTurnHelper(effect))
+            run(resolvePlayerTurnHelper(effect)),
+            delay(0.2f),
+            run(player.takeStatuses(player)),
+            run(player.incrementTurn())
             ));
 
-        return player.playerAnim();
+        return true;
     }
 
     private Runnable resolvePlayerTurnHelper(Effect effect){
@@ -140,8 +150,6 @@ public class CombatController extends Actor {
             enemy.attackAnim(player);
         }
     }
-
-
 
     public void incrementTurn(){
         if(turn == Turn.LOADING_PLAYER){

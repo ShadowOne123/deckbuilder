@@ -44,7 +44,7 @@ public class Enemy extends Creature{
         return new Runnable() {
             @Override
             public void run() {
-                Main.eventBus.emit(new DamageEvent(player, 5, DamageType.SLASHING));
+                Main.eventBus.emit(new DamageEvent(player, Enemy.this, 5, DamageType.SLASHING));
             }
         };
     }

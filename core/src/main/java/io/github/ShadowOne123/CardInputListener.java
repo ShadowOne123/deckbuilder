@@ -13,10 +13,9 @@ public class CardInputListener extends InputListener {
 
     @Override
     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-        System.out.println(card.toString());
-        //Main.tooltip.setVisible(true);
         Main.tooltip.updateText("bing");
-        Main.tooltip.setPosition(card.getX(), card.getTop()-card.getHeight()/20);
+        Main.tooltip.setPosition(card.getX() + card.getWidth()/2, card.getTop()+card.getHeight()/4);
+        Main.tooltip.setVisible(false);
         return false;
     }
 

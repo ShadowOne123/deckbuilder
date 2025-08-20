@@ -1,15 +1,12 @@
 package io.github.ShadowOne123;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 
 public class PlayArea{
@@ -36,8 +33,9 @@ public class PlayArea{
         return toReturn;
    }
 
-
-
+   public Card[] getCardsAsArray(){
+        return cards;
+   }
 
    public Sprite getSprite(){
         return sprite;
@@ -81,21 +79,4 @@ public class PlayArea{
             cards[i] = null;
         }
    }
-
-
-   /*
-   Old, Board-extending play area
-   public PlayArea(SpriteBatch spriteBatch, Viewport viewport){
-        super(spriteBatch, viewport);
-        cardHeight = worldHeight/4;
-        cardWidth = cardHeight*0.7f;
-    }
-
-    public void drawPlayArea(){
-        boardArea.setCenter(worldWidth/2, worldHeight/2);
-        super.drawBoard();
-
-    }
-
-    */
 }

@@ -12,12 +12,12 @@ public class NonDamagingStatus extends Status {
 
     @Override
     public void apply(Creature target){
-        if(name.equals("block")){
-            //do nothing
+        switch (name) {
+            case "regen":
+                target.getHealed(intensity);
+                intensity--;
+                break;
         }
-        else if(name.equals("regen")){
-            target.getHealed(intensity);
-            intensity--;
-        }
+
     }
 }

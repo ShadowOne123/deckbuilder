@@ -19,7 +19,7 @@ public class FontManager {
         healthFontParameter.size = 128;
         healthFontParameter.genMipMaps = true;
         healthFont = healthFontGenerator.generateFont(healthFontParameter);
-        healthFont.getData().setScale(0.1f);
+        healthFont.getData().setScale(0.8f);
 
         FreeTypeFontGenerator stackFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("FreeSerif.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter stackFontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -27,7 +27,7 @@ public class FontManager {
         stackFontParameter.genMipMaps = true;
         stackFontParameter.color = Color.GREEN;
         stackFont = stackFontGenerator.generateFont(stackFontParameter);
-        stackFont.getData().setScale(0.05f, 0.05f);
+        stackFont.getData().setScale(0.4f, 0.4f);
         stackFontGenerator.dispose();
     }
 }

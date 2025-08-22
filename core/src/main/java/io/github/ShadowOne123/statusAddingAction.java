@@ -20,9 +20,9 @@ public class statusAddingAction extends Action{
 
     @Override
     public String toString(){
-        StringBuilder sb = new StringBuilder("Status inflicting action with statuses:\n");
+        StringBuilder sb = new StringBuilder("applies");
         for(Status status : statuses){
-            sb.append(status.toString() + "\n");
+            sb.append(status.toString() + ",");
         }
         return(sb.toString());
     }

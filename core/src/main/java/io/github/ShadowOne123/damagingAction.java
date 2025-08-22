@@ -19,7 +19,7 @@ public class damagingAction extends Action{
 
     @Override
     public String toString(){
-        return "Damaging action with intensity " + intensity;
+        return "deals " + intensity + " " + damageType.toString().toLowerCase() + " damage";
     }
 
     @Override

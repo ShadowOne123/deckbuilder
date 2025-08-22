@@ -3,6 +3,7 @@ package io.github.ShadowOne123;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.assets.loaders.BitmapFontLoader;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -25,9 +26,9 @@ import java.util.HashMap;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends ApplicationAdapter {
-    final int HEIGHT = 200;
+    final int HEIGHT = 1000;
     public SpriteBatch spriteBatch;
-    FitViewport viewport;
+    public static FitViewport viewport;
     Texture bucketTexture;
     Hand hand;
     PlayArea playArea;
@@ -82,7 +83,9 @@ public class Main extends ApplicationAdapter {
 
         stage = new Stage(viewport);
         uiStage = new Stage(viewport);
-        tooltip = new Tooltip("", genSkin());
+        tooltip = new Tooltip(genLabel());
+        tooltip.maxWidth(hand.cardWidth * 2);
+        tooltip.width(hand.cardWidth * 2);
         uiStage.addActor(tooltip);
         Gdx.input.setInputProcessor(stage);
         stage.addActor(enemyTest);
@@ -135,8 +138,7 @@ public class Main extends ApplicationAdapter {
         healthFont.draw(spriteBatch, combatController.getTurn().toString(), viewport.getWorldWidth() / 2.7f, viewport.getWorldHeight() / 1.1f);
         hand.drawHand();
         deck.drawDeck();
-        //TODO: re-enable later
-        //tooltip.draw(spriteBatch, 1);
+        uiStage.draw();
         stage.act();
         uiStage.act();
         spriteBatch.end();
@@ -179,8 +181,14 @@ public class Main extends ApplicationAdapter {
         }
     }
 
-    private Skin genSkin(){
-        BitmapFont font = new BitmapFont();
+    private Label genLabel(){
+        FreeTypeFontGenerator.FreeTypeFontParameter param = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        FreeTypeFontGenerator gen = new FreeTypeFontGenerator(Gdx.files.internal("FreeSerif.ttf"));
+        param.size = 64;
+        BitmapFont font;
+        font = gen.generateFont(param);
+        font.getData().setScale(0.4f);
+        gen.dispose();
 
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
 
@@ -209,7 +217,10 @@ public class Main extends ApplicationAdapter {
         labelStyle.background = bg;
 
         skin.add("default", labelStyle);
-        return skin;
+
+        Label label = new Label("", skin);
+        label.setWrap(true);
+        return label;
     }
 
 }

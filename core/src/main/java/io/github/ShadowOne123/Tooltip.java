@@ -19,13 +19,8 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 
 public class Tooltip extends Container<Label> {
 
-    public Tooltip(String text, Skin skin) {
-        super(new Label(text, skin));
-        setVisible(false);
-        // Optionally style (background, padding, etc.)
-        pad(5);
-        // setBackground(...);
-
+    public Tooltip(Label label) {
+        super(label);
     }
 
     public void updateText(String text) {

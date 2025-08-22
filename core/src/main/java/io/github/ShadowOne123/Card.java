@@ -45,7 +45,7 @@ public class Card extends Actor {
     }
 
     public String toString(){
-        return "Name: " + name + "\n effect: " + effect.toString();
+        return name + "\n" + effect.toString();
     }
 
     public String getName(){

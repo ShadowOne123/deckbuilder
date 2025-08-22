@@ -23,7 +23,7 @@ public abstract class Status {
         this.texture = new Texture(textureName);
         this.sprite = new Sprite(texture);
         this.name = name;
-        sprite.setSize(10f,10f);
+        sprite.setSize(Main.viewport.getWorldWidth()/50, Main.viewport.getWorldWidth()/50);
     }
 
     public int getIntensity(){
@@ -53,7 +53,7 @@ public abstract class Status {
     public void onAdded(Creature target){Main.eventBus.emit(new StatusAddedEvent(target, name, intensity));}
 
     public String toString(){
-        return "Status " + name + " at intensity " + intensity;
+        return " " + intensity + " " + name;
     }
 
     //builds and output a status based on parameters handed through string array

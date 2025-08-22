@@ -39,7 +39,7 @@ abstract public class Creature extends Actor {
         sprite = new Sprite(creatureTexture);
         sprite.setSize(viewport.getWorldWidth()/10, viewport.getWorldHeight()/5);
         this.text = textGen.generateFont(textParam);
-        text.getData().setScale(0.1f);
+        text.getData().setScale(0.5f);
         this.centerX = centerX;
         this.centerY = centerY;
         sprite.setCenter(centerX, centerY);

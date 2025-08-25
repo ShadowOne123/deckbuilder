@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static io.github.ShadowOne123.Main.eventBus;
+import static io.github.ShadowOne123.Main.viewport;
 
 public class CombatController extends Actor {
 
@@ -93,16 +94,25 @@ public class CombatController extends Actor {
             return false;
         }
         //build spell
-        Effect effect = SpellResolver.buildEffect(playArea.getCards());
-
-        addAction(sequence(
-            run(fadeCards()),
-            delay(0.6f),
-            run(resolvePlayerTurnHelper(effect)),
-            delay(0.2f),
-            run(player.takeStatuses(player)),
-            run(player.incrementTurn())
+        Card tempCard;
+        Effect effect;
+        if((tempCard = SpellResolver.checkForSpell(playArea.getCards())) != null){
+            playArea.spell = tempCard;
+            tempCard.getSprite().setCenter(viewport.getWorldWidth()/2, viewport.getWorldHeight()/2);
+            tempCard.addAction(sequence(
+                fadeOut(0),
+                moveTo(viewport.getWorldWidth()/2, viewport.getWorldHeight()/2),
+                delay(0.6f),
+                fadeIn(0.8f),
+                delay(0.4f),
+                fadeOut(0.2f)
             ));
+            runSpellAnim(tempCard.getEffect(), 2f);
+        }
+        else{
+            effect = SpellResolver.buildEffect(playArea.getCards());
+            runSpellAnim(effect, 0.6f);
+        }
 
         return true;
     }
@@ -141,6 +151,18 @@ public class CombatController extends Actor {
                 }
             }
         };
+    }
+
+    //depending on whether a spell was activated or not changes the delay between fading out the cards and passing the turn
+    private void runSpellAnim(Effect effect, Float delay){
+        addAction(sequence(
+            run(fadeCards()),
+            delay(delay),
+            run(resolvePlayerTurnHelper(effect)),
+            delay(0.2f),
+            run(player.takeStatuses(player)),
+            run(player.incrementTurn())
+        ));
     }
 
     public void resolveEnemyTurn(){

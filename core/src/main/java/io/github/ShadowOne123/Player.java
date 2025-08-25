@@ -22,14 +22,4 @@ public class Player extends Creature{
         hp = 60;
         maxHP = 60;
     }
-
-
-    public boolean playerAnim(){
-        addAction(sequence(
-            delay(0.5f),
-            run(takeStatuses(this)),
-            run(incrementTurn())
-        ));
-        return true;
-    }
 }

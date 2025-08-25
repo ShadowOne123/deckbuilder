@@ -18,33 +18,30 @@ public class SpellResolver {
 
 
     public static Effect buildEffect(ArrayList<Card> cards){
-        String spell = "";
-        StringBuilder sb = new StringBuilder();
         Effect[] effectsArr = new Effect[cards.size()];
         for(int i = 0; i < effectsArr.length; i++){
             effectsArr[i] = cards.get(i).getEffect();
-            sb.append(cards.get(i).getName());
-            if(i != effectsArr.length-1){
-                sb.append(" ");
-            }
         }
-        System.out.println();
-        spell = sb.toString();
         Effect product = new Effect();
-        if(spellbook.containsKey(spell)){
-            Card card = new Card(spellbook.get(spell), Main.stage);
-            product = card.getEffect();
-        }
-        else {
-            for (Effect effect : effectsArr) {
-                mergeActions(product.getActions(), effect.getActions());
-            }
+        for (Effect effect : effectsArr) {
+            mergeActions(product.getActions(), effect.getActions());
         }
         return product;
     }
 
-    public void apply(Effect effect, Creature target){
+    public static Card checkForSpell(ArrayList<Card> cards){
+        StringBuilder spell = new StringBuilder();
+        for(int i = 0; i < cards.size(); i++){
+            spell.append(cards.get(i).getName());
+            if(i != cards.size()-1){
+                spell.append(" ");
+            }
+        }
 
+        if(spellbook.containsKey(spell.toString())){
+            return new Card(spellbook.get(spell.toString()), Main.stage);
+        }
+        return null;
     }
 
     public static void mergeActions(ArrayList<Action> currentArr, ArrayList<Action> newArr){

@@ -14,6 +14,7 @@ public class PlayArea{
     private Sprite sprite;
     private SpriteBatch spriteBatch;
     private Card[] cards;
+    public Card spell;
 
     public PlayArea(int slots, SpriteBatch spriteBatch, Viewport viewport){
         this.spriteBatch = spriteBatch;
@@ -21,6 +22,7 @@ public class PlayArea{
         sprite = new Sprite();
         sprite.setSize(viewport.getWorldWidth()*0.40f, viewport.getWorldHeight()/4);
         sprite.setCenter(viewport.getWorldWidth()/2, viewport.getWorldHeight()/1.7f);
+        spell = null;
     }
 
    public ArrayList<Card> getCards(){
@@ -57,6 +59,8 @@ public class PlayArea{
         return added;
    }
 
+
+
    public Card removeCard(int index){
         Card removed = cards[index];
         cards[index] = null;
@@ -71,6 +75,11 @@ public class PlayArea{
                 card.getSprite().setColor(color);
                 card.getSprite().draw(spriteBatch);
             }
+        }
+        if(spell != null){
+            color = spell.getColor();
+            spell.getSprite().setColor(color);
+            spell.getSprite().draw(spriteBatch);
         }
    }
 

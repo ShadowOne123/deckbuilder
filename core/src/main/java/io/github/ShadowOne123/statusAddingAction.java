@@ -20,9 +20,12 @@ public class statusAddingAction extends Action{
 
     @Override
     public String toString(){
-        StringBuilder sb = new StringBuilder("applies");
-        for(Status status : statuses){
-            sb.append(status.toString() + ",");
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < statuses.size(); i++){
+            sb.append(statuses.get(i));
+            if(i > 0 && i != statuses.size()-1){
+                sb.append(", ");
+            }
         }
         return(sb.toString());
     }

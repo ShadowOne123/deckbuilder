@@ -5,8 +5,8 @@ import io.github.ShadowOne123.Status;
 
 public class NonDamagingStatus extends Status {
 
-    public NonDamagingStatus(int intensity, String name, String textureName){
-        super(textureName, name);
+    public NonDamagingStatus(int intensity, String name){
+        super(name);
         this.intensity = intensity;
     }
 

@@ -11,8 +11,8 @@ public class damagingStatus extends Status {
 
     DamageType damageType;
 
-    public damagingStatus(int intensity, DamageType damageType, String name, String textureName){
-        super(textureName, name);
+    public damagingStatus(int intensity, DamageType damageType, String name){
+        super(name);
         this.intensity = intensity;
         this.damageType = damageType;
     }

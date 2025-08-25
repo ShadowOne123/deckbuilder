@@ -1,1 +1,4 @@
 temperance king butcher:death_by_a_thousand_cuts
+king king king:emperor's_strike
+buckler rose barbed_wire:blessing_of_the_treants
+blaze blaze blaze:inferno

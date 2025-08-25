@@ -10,13 +10,14 @@ import java.util.LinkedList;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 
+import static io.github.ShadowOne123.Main.atlas;
+
 public class Deck extends Actor {
 
     private ArrayList<Card> cards;
     private ArrayList<Card> discard;
     int totalCards;
     Sprite deckSprite;
-    Texture sleeve;
     SpriteBatch spriteBatch;
     Hand hand;
 
@@ -26,8 +27,7 @@ public class Deck extends Actor {
         cards = new ArrayList<Card>();
         discard = new ArrayList<Card>();
         this.totalCards = 0;
-        sleeve = new Texture("rose.png");
-        deckSprite = new Sprite(sleeve);
+        deckSprite = new Sprite(atlas.findRegion("rose"));
         deckSprite.setSize(hand.cardWidth, hand.cardHeight);
         deckSprite.setCenter(hand.worldWidth/15, hand.cardHeight/2 + hand.worldHeight/25);
     }

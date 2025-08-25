@@ -27,7 +27,7 @@ public class FontManager {
         stackFontParameter.genMipMaps = true;
         stackFontParameter.color = Color.GREEN;
         stackFont = stackFontGenerator.generateFont(stackFontParameter);
-        stackFont.getData().setScale(0.4f, 0.4f);
+        stackFont.getData().setScale(0.2f, 0.2f);
         stackFontGenerator.dispose();
     }
 }

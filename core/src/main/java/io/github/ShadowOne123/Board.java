@@ -11,10 +11,11 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
 
+import static io.github.ShadowOne123.Main.atlas;
+
 public abstract class Board extends Actor {
 
     protected SpriteBatch spriteBatch;
-    protected Texture cardTexture;
     protected Viewport viewport;
     protected float worldWidth;
     protected float worldHeight;
@@ -27,8 +28,7 @@ public abstract class Board extends Actor {
         this.worldWidth = viewport.getWorldWidth();
         this.viewport = viewport;
         this.spriteBatch = spriteBatch;
-        cardTexture = new Texture("king.png");
-        boardArea = new Sprite(cardTexture);
+        boardArea = new Sprite(atlas.findRegion("king"));
         boardArea.setSize(worldWidth*0.40f,worldHeight/4);
         cardHeight = worldHeight/4.5f;
         cardWidth = cardHeight*0.65f;

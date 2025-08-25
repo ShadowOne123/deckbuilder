@@ -1,0 +1,156 @@
+
+textureAtlas.png
+size: 2048, 2048
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+GothicCastleBackground3
+  rotate: false
+  xy: 2, 994
+  size: 1792, 1024
+  orig: 1792, 1024
+  offset: 0, 0
+  index: -1
+bucket
+  rotate: false
+  xy: 1796, 1918
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+king
+  rotate: false
+  xy: 1348, 2
+  size: 682, 990
+  orig: 682, 990
+  offset: 0, 0
+  index: -1
+libgdx
+  rotate: false
+  xy: 2, 159
+  size: 378, 63
+  orig: 378, 63
+  offset: 0, 0
+  index: -1
+steampunkBackground1
+  rotate: false
+  xy: 2, 224
+  size: 1344, 768
+  orig: 1344, 768
+  offset: 0, 0
+  index: -1
+
+textureAtlas2.png
+size: 2048, 2048
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+barbed_wire
+  rotate: false
+  xy: 686, 2
+  size: 585, 1024
+  orig: 585, 1024
+  offset: 0, 0
+  index: -1
+blaze
+  rotate: false
+  xy: 1292, 261
+  size: 682, 1023
+  orig: 682, 1023
+  offset: 0, 0
+  index: -1
+bleed
+  rotate: false
+  xy: 2, 1028
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+block
+  rotate: false
+  xy: 260, 1028
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+butcher
+  rotate: false
+  xy: 2, 3
+  size: 682, 1023
+  orig: 682, 1023
+  offset: 0, 0
+  index: -1
+hemophilia
+  rotate: false
+  xy: 518, 1028
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+regen
+  rotate: false
+  xy: 776, 1028
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+thorns
+  rotate: false
+  xy: 1034, 1028
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+
+textureAtlas3.png
+size: 2048, 2048
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+heal
+  rotate: false
+  xy: 686, 2
+  size: 585, 1024
+  orig: 585, 1024
+  offset: 0, 0
+  index: -1
+rose
+  rotate: false
+  xy: 2, 3
+  size: 682, 1023
+  orig: 682, 1023
+  offset: 0, 0
+  index: -1
+temperance
+  rotate: false
+  xy: 1273, 2
+  size: 595, 1024
+  orig: 595, 1024
+  offset: 0, 0
+  index: -1
+
+textureAtlas4.png
+size: 2048, 2048
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+MagicalForestBackground1
+  rotate: false
+  xy: 2, 2
+  size: 1792, 1024
+  orig: 1792, 1024
+  offset: 0, 0
+  index: -1
+
+textureAtlas5.png
+size: 1024, 2048
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+fireElemental
+  rotate: false
+  xy: 2, 2
+  size: 768, 1344
+  orig: 768, 1344
+  offset: 0, 0
+  index: -1

@@ -57,9 +57,9 @@ abstract public class Creature extends Actor {
         for(int i = 0; i < statuses.size(); i++){
             status = statuses.get(i);
             statusSprite = status.getSprite();
-            statusSprite.setCenter(sprite.getX()+i*statusSprite.getWidth()*1.5f, sprite.getY()-statusSprite.getHeight()*1.5f);
+            statusSprite.setCenter(sprite.getX()+i*statusSprite.getWidth(), sprite.getY()-statusSprite.getHeight()*1.5f);
             statusSprite.draw(spriteBatch);
-            statusStackFont.draw(spriteBatch, String.valueOf(status.getIntensity()), statusSprite.getX()+statusSprite.getWidth(), statusSprite.getY()+statusSprite.getHeight()*0.5f);
+            statusStackFont.draw(spriteBatch, String.valueOf(status.getIntensity()), statusSprite.getX()+statusSprite.getWidth()/1.5f, statusSprite.getY()+statusSprite.getHeight()*0.4f);
         }
     }
 

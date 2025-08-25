@@ -18,7 +18,7 @@ public class PlayArea{
     public PlayArea(int slots, SpriteBatch spriteBatch, Viewport viewport){
         this.spriteBatch = spriteBatch;
         cards = new Card[slots];
-        sprite = new Sprite(new Texture("king.png"));
+        sprite = new Sprite();
         sprite.setSize(viewport.getWorldWidth()*0.40f, viewport.getWorldHeight()/4);
         sprite.setCenter(viewport.getWorldWidth()/2, viewport.getWorldHeight()/1.7f);
     }

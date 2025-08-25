@@ -4,12 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveTo;
+import static io.github.ShadowOne123.Main.atlas;
 import static io.github.ShadowOne123.Main.cardDictionary;
 
 public class Card extends Actor {
@@ -22,11 +24,11 @@ public class Card extends Actor {
         addListener(new CardInputListener(this));
         stage.addActor(this);
 
-        if(Gdx.files.internal(id + ".png").exists()) {
-            sprite = new Sprite(new Texture(Gdx.files.internal(id + ".png")));
+        if(atlas.findRegion(id) != null) {
+            sprite = new Sprite(atlas.findRegion(id));
         }
         else{
-            sprite = new Sprite(new Texture(Gdx.files.internal("bucket.png")));
+            sprite = new Sprite(atlas.findRegion("bucket"));
         }
         sprite.setCenter(-10,-10);
         String cardDescription = cardDictionary.get(id);
@@ -45,7 +47,8 @@ public class Card extends Actor {
     }
 
     public String toString(){
-        return name + "\n" + effect.toString();
+        String Temp_name = name.replace('_',' ');
+        return Temp_name + "\n" + effect.toString();
     }
 
     public String getName(){

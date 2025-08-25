@@ -6,10 +6,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.loaders.BitmapFontLoader;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -29,6 +26,7 @@ public class Main extends ApplicationAdapter {
     final int HEIGHT = 1000;
     public SpriteBatch spriteBatch;
     public static FitViewport viewport;
+    public static TextureAtlas atlas;
     Texture bucketTexture;
     Hand hand;
     PlayArea playArea;
@@ -64,6 +62,7 @@ public class Main extends ApplicationAdapter {
         eventBus = new EventBus();
 
         viewport = new FitViewport(HEIGHT * 16f/9f, HEIGHT);
+        atlas = new TextureAtlas(Gdx.files.internal("textureAtlas.atlas"));
         bucketTexture = new Texture("bucket.png");
         spriteBatch = new SpriteBatch();
         hand = new Hand(spriteBatch, viewport);
@@ -93,7 +92,7 @@ public class Main extends ApplicationAdapter {
         ArrayList<Enemy> enemies = new ArrayList<Enemy>();
         enemies.add(enemyTest);
         hand.addCard(new Card("temperance", stage));
-        hand.addCard(new Card("heal", stage));
+        hand.addCard(new Card("rose", stage));
         hand.addCard(new Card("king", stage));
         deck = new Deck(hand, spriteBatch);
         for(int i = 0; i < 5; i++){

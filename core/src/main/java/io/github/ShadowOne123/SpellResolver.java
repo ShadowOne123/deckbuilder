@@ -31,7 +31,6 @@ public class SpellResolver {
         System.out.println();
         spell = sb.toString();
         Effect product = new Effect();
-        System.out.println(spell);
         if(spellbook.containsKey(spell)){
             Card card = new Card(spellbook.get(spell), Main.stage);
             product = card.getEffect();

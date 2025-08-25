@@ -10,8 +10,8 @@ public class StatusIncreasingStatus extends Status {
     public int increase;
     private GameEventListener<StatusAddedEvent> listener;
 
-    public StatusIncreasingStatus(int intensity, int increase, String name, String affectedStatus, String textureName){
-        super(textureName, name);
+    public StatusIncreasingStatus(int intensity, int increase, String name, String affectedStatus){
+        super(name);
         this.intensity = intensity;
         this.affectedStatus = affectedStatus;
         this.increase = increase;
@@ -37,5 +37,10 @@ public class StatusIncreasingStatus extends Status {
         if(intensity == 0){
             Main.eventBus.unregister(StatusAddedEvent.class, listener);
         }
+    }
+
+    @Override
+    public String toString(){
+        return "increase " + affectedStatus + " applications by " + increase;
     }
 }

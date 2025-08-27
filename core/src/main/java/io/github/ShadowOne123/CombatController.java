@@ -1,12 +1,11 @@
 package io.github.ShadowOne123;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import io.github.ShadowOne123.Enemies.Enemy;
 import io.github.ShadowOne123.Events.DamageEvent;
 import io.github.ShadowOne123.Events.DamageTakenEvent;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;

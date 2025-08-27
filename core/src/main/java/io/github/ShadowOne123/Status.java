@@ -12,8 +12,6 @@ import static io.github.ShadowOne123.Main.atlas;
 public abstract class Status {
     protected int intensity;
     protected String name;
-    protected boolean midTurn;
-    protected boolean endOfTurn;
     protected Sprite sprite;
 
     public Status(){
@@ -38,14 +36,6 @@ public abstract class Status {
         this.intensity += intensity;
     }
 
-    public boolean isMidTurn(){
-        return midTurn;
-    }
-
-    public boolean isEndOfTurn() {
-        return endOfTurn;
-    }
-
     public void apply(Creature target){
         System.out.println("Unknown status being applied, panic!");
     }
@@ -59,23 +49,19 @@ public abstract class Status {
     //builds and output a status based on parameters handed through string array
     //called mostly by statusAddingAction.java when creating new actions
     public static Status makeStatus(String[] desc){
-        String texture = "";
         //useful parameters start at index 1 because index 0 was the action identifier
         switch(desc[1]){
             case "1":
                 //Eg bleed, just deals damage at the end of the turn
-                //intensity, damage type, name, texture
-                texture = texture + desc[4] + ".png";
+                //intensity, damage type, name
                 return new damagingStatus(Integer.parseInt(desc[2]), DamageType.valueOf(desc[3]), desc[4]);
             case "2":
                 //Eg block, a status that doesn't do anything on its own but triggers something in combat resolution
-                //intensity, name, texture
-                texture = texture + desc[3] + ".png";
+                //intensity, name
                 return new NonDamagingStatus(Integer.parseInt(desc[2]), desc[3]);
             case "3":
                 //Status that increases how many stacks of a certain status are applied
-                //intensity, increase, name, affected status, texture
-                texture = texture + desc[4] + ".png";
+                //intensity, increase, name, affected status
                 return new StatusIncreasingStatus(Integer.parseInt(desc[2]), Integer.parseInt(desc[3]), desc[4], desc[5]);
         }
         return null;

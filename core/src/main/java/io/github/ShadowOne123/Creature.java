@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+
+import static io.github.ShadowOne123.Main.atlas;
 import static io.github.ShadowOne123.Main.eventBus;
 import io.github.ShadowOne123.Events.*;
 
@@ -20,23 +22,19 @@ abstract public class Creature extends Actor {
     protected int maxHP;
     private boolean selected;
     protected Sprite sprite;
-    Sprite healthBar;
     Viewport viewport;
     SpriteBatch spriteBatch;
-    Texture creatureTexture;
     BitmapFont text;
     BitmapFont statusStackFont;
     float centerX;
     float centerY;
-    //statuses probably
     protected ArrayList<Status> statuses;
     protected CombatController combatController;
 
-    public Creature(SpriteBatch spriteBatch, Viewport viewport, FreeTypeFontGenerator textGen, FreeTypeFontGenerator.FreeTypeFontParameter textParam, float centerX, float centerY, Texture texture){
+    public Creature(SpriteBatch spriteBatch, Viewport viewport, FreeTypeFontGenerator textGen, FreeTypeFontGenerator.FreeTypeFontParameter textParam, float centerX, float centerY, String texture){
         this.spriteBatch = spriteBatch;
         this.viewport = viewport;
-        creatureTexture = texture;
-        sprite = new Sprite(creatureTexture);
+        sprite = new Sprite(atlas.findRegion(texture));
         sprite.setSize(viewport.getWorldWidth()/10, viewport.getWorldHeight()/5);
         this.text = textGen.generateFont(textParam);
         text.getData().setScale(0.5f);

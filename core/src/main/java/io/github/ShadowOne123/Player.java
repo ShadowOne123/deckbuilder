@@ -17,7 +17,7 @@ public class Player extends Creature{
     //statuses probably
 
     public Player(SpriteBatch spriteBatch, Viewport viewport, FreeTypeFontGenerator textGen, FreeTypeFontGenerator.FreeTypeFontParameter textParam,
-                  float centerX, float centerY, Texture texture){
+                  float centerX, float centerY, String texture){
         super(spriteBatch, viewport, textGen, textParam, centerX, centerY, texture);
         hp = 60;
         maxHP = 60;

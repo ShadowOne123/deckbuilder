@@ -3,7 +3,6 @@ package io.github.ShadowOne123;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.assets.loaders.BitmapFontLoader;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
@@ -13,7 +12,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import io.github.ShadowOne123.Enemies.Enemy;
+import io.github.ShadowOne123.Enemies.EnemyData;
 import io.github.ShadowOne123.Events.EventBus;
 
 import java.io.*;
@@ -27,17 +29,13 @@ public class Main extends ApplicationAdapter {
     public SpriteBatch spriteBatch;
     public static FitViewport viewport;
     public static TextureAtlas atlas;
-    Texture bucketTexture;
     Hand hand;
     PlayArea playArea;
-    Texture backgroundTexture;
-    Texture backgroundTexture2;
-    Texture backgroundTexture3;
     Sprite Background;
     public static Player player;
     Deck deck;
     Enemy enemyTest;
-    Texture enemyTexture;
+    ArrayList<EnemyData> enemies;
     //text
     BitmapFont healthFont;
     FreeTypeFontGenerator healthFontGen;
@@ -63,22 +61,19 @@ public class Main extends ApplicationAdapter {
 
         viewport = new FitViewport(HEIGHT * 16f/9f, HEIGHT);
         atlas = new TextureAtlas(Gdx.files.internal("textureAtlas.atlas"));
-        bucketTexture = new Texture("bucket.png");
         spriteBatch = new SpriteBatch();
         hand = new Hand(spriteBatch, viewport);
         playArea = new PlayArea(3, spriteBatch, viewport);
-        backgroundTexture = new Texture("GothicCastleBackground3.png");
-        backgroundTexture2 = new Texture("MagicalForestBackground1.png");
-        backgroundTexture3 = new Texture("steampunkBackground1.png");
-        Background = new Sprite(backgroundTexture3);
+        Background = new Sprite(atlas.findRegion("steampunkBackground1"));
         //text
         healthFontGen = FontManager.healthFontGenerator;
         healthFontParam = FontManager.healthFontParameter;
         healthFont = FontManager.healthFont;
-        player = new Player(spriteBatch, viewport, healthFontGen, healthFontParam, viewport.getWorldWidth()/5.5f, viewport.getWorldHeight()/2.5f, bucketTexture);
-        enemyTexture = new Texture("fireElemental.png");
-        enemyTest = new Enemy(spriteBatch, viewport, healthFontGen, healthFontParam, 5.5f*viewport.getWorldWidth()/7,
-            viewport.getWorldHeight()/2.5f, enemyTexture,viewport.getWorldWidth()/10, viewport.getWorldHeight()/4);
+        player = new Player(spriteBatch, viewport, healthFontGen, healthFontParam, viewport.getWorldWidth()/5.5f, viewport.getWorldHeight()/2.5f, "bucket");
+        Json json = new Json();
+        enemies = json.fromJson(ArrayList.class, EnemyData.class, Gdx.files.internal("enemies.json"));
+        enemyTest = new Enemy(enemies.get(0),spriteBatch, viewport, healthFontGen, healthFontParam, 5.5f*viewport.getWorldWidth()/7,
+            viewport.getWorldHeight()/2.5f, "fireElemental");
 
         stage = new Stage(viewport);
         uiStage = new Stage(viewport);

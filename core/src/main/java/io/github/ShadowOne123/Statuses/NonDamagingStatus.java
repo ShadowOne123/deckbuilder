@@ -1,7 +1,6 @@
 package io.github.ShadowOne123.Statuses;
 
 import io.github.ShadowOne123.Creature;
-import io.github.ShadowOne123.Status;
 
 public class NonDamagingStatus extends Status {
 

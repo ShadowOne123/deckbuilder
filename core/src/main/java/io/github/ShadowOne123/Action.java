@@ -26,8 +26,9 @@ public abstract class Action {
         return this.intensity;
     }
 
-    public void combine(Action action){
+    public boolean combine(Action action){
         System.out.println("Unspecified action combining requested, abort");
+        return false;
     }
 
 }

@@ -4,7 +4,7 @@ import io.github.ShadowOne123.Events.DamageEvent;
 
 public class damagingAction extends Action{
 
-    DamageType damageType;
+    private DamageType damageType;
 
     @Override
     public void apply(Creature target){
@@ -17,13 +17,23 @@ public class damagingAction extends Action{
         id = 1;
     }
 
+    public DamageType getDamageType(){
+        return damageType;
+    }
+
     @Override
     public String toString(){
         return "deals " + intensity + " " + damageType.toString().toLowerCase() + " damage";
     }
 
     @Override
-    public void combine(Action action){
-        this.intensity += action.getIntensity();
+    public boolean combine(Action action){
+        if(((damagingAction)action).getDamageType() == this.damageType) {
+            this.intensity += action.getIntensity();
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }

@@ -21,8 +21,10 @@ public class EventBus {
                 ((GameEventListener<T>)listener).onEvent(event);
 
             }
-
         }
+    }
+
+    private void reprioritize(){
 
     }
 }

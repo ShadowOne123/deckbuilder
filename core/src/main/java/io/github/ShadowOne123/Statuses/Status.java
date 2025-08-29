@@ -1,11 +1,10 @@
-package io.github.ShadowOne123;
+package io.github.ShadowOne123.Statuses;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import io.github.ShadowOne123.Creature;
+import io.github.ShadowOne123.DamageType;
 import io.github.ShadowOne123.Events.StatusAddedEvent;
-import io.github.ShadowOne123.Statuses.NonDamagingStatus;
-import io.github.ShadowOne123.Statuses.StatusIncreasingStatus;
-import io.github.ShadowOne123.Statuses.damagingStatus;
+import io.github.ShadowOne123.Main;
 
 import static io.github.ShadowOne123.Main.atlas;
 
@@ -36,6 +35,10 @@ public abstract class Status {
         this.intensity += intensity;
     }
 
+    public void decrementIntensity() {
+        this.intensity--;
+    }
+
     public void apply(Creature target){
         System.out.println("Unknown status being applied, panic!");
     }
@@ -63,6 +66,10 @@ public abstract class Status {
                 //Status that increases how many stacks of a certain status are applied
                 //intensity, increase, name, affected status
                 return new StatusIncreasingStatus(Integer.parseInt(desc[2]), Integer.parseInt(desc[3]), desc[4], desc[5]);
+            case "4":
+                //Status that affects damage dealt either to or by the target. The type is determined by the last argument
+                //intensity, name, direction of damage affected
+                return new damageModifyingStatus(Integer.parseInt(desc[2]), desc[3], desc[4]);
         }
         return null;
     }

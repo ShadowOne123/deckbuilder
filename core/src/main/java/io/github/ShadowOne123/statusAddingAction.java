@@ -1,5 +1,7 @@
 package io.github.ShadowOne123;
 
+import io.github.ShadowOne123.Statuses.Status;
+
 import java.util.ArrayList;
 
 public class statusAddingAction extends Action{
@@ -31,8 +33,9 @@ public class statusAddingAction extends Action{
     }
 
     @Override
-    public void combine(Action action){
+    public boolean combine(Action action){
         mergeStatuses(((statusAddingAction)action).getStatuses(), this.statuses, null);
+        return true;
     }
 
     public ArrayList<Status> getStatuses(){

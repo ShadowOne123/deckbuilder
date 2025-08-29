@@ -1,0 +1,47 @@
+package io.github.ShadowOne123.Statuses;
+
+import io.github.ShadowOne123.Creature;
+import io.github.ShadowOne123.Events.DamageEvent;
+import io.github.ShadowOne123.Events.EventBus;
+import io.github.ShadowOne123.Events.GameEventListener;
+import io.github.ShadowOne123.Main;
+
+public class damageModifyingStatus extends Status{
+
+    /*
+    needs to encompass these possible scenarios:
+    Increases damage dealt by the holder
+    Decreases damage dealt by the holder
+    Increases damage dealt *to* the holder
+    Decreases damage dealt *to* the holder
+
+    Fields needed: Intensity, obviously. Decrease/increase can probably just be handled by negative intensity, no need for a new status
+    Direction affected. "dealt"/"taken" should work
+     */
+    private String direction;
+    private GameEventListener<DamageEvent> listener;
+
+    public damageModifyingStatus(int intensity, String name, String direction){
+        super(name);
+        this.intensity = intensity;
+        this.direction = direction;
+    }
+
+    @Override
+    public void onAdded(Creature target){
+        super.onAdded(target);
+        if(direction.equals("taken")){
+            listener = event -> {
+
+            };
+        }
+        Main.eventBus.register(DamageEvent.class, listener);
+    }
+
+    @Override
+    public void apply(Creature target){
+        if(intensity == 0){
+
+        }
+    }
+}

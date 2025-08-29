@@ -5,6 +5,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import io.github.ShadowOne123.Enemies.Enemy;
 import io.github.ShadowOne123.Events.DamageEvent;
 import io.github.ShadowOne123.Events.DamageTakenEvent;
+import io.github.ShadowOne123.Events.GameEventListener;
+import io.github.ShadowOne123.Statuses.Status;
 
 import java.util.ArrayList;
 
@@ -38,7 +40,7 @@ public class CombatController extends Actor {
         enemyTurnProgress = 0;
 
         //basic combat event listener registration
-        eventBus.register(DamageEvent.class, event -> {
+        GameEventListener<DamageEvent> listener = event -> {
             int finalDmg = event.amount;
             Status block = event.target.searchStatuses("block");
             Status thorns = event.target.searchStatuses("thorns");
@@ -57,13 +59,14 @@ public class CombatController extends Actor {
                 }
             }
             if(thorns != null){
-                event.source.takeDamage(thorns.intensity);
-                thorns.intensity--;
-                eventBus.emit(new DamageTakenEvent(event.source, thorns.intensity, DamageType.SLASHING));
+                event.source.takeDamage(thorns.getIntensity());
+                thorns.decrementIntensity();
+                eventBus.emit(new DamageTakenEvent(event.source, thorns.getIntensity(), DamageType.SLASHING));
             }
             event.target.takeDamage(finalDmg);
             eventBus.emit(new DamageTakenEvent(event.target, finalDmg, event.damageType));
-        });
+        };
+        eventBus.register(DamageEvent.class, listener);
 
 
     }

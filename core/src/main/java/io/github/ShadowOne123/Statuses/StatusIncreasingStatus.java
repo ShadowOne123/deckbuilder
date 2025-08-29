@@ -3,7 +3,6 @@ package io.github.ShadowOne123.Statuses;
 import io.github.ShadowOne123.Creature;
 import io.github.ShadowOne123.Events.*;
 import io.github.ShadowOne123.Main;
-import io.github.ShadowOne123.Status;
 
 public class StatusIncreasingStatus extends Status {
     public String affectedStatus;

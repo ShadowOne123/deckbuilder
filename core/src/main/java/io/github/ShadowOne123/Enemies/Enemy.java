@@ -1,12 +1,11 @@
 package io.github.ShadowOne123.Enemies;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import io.github.ShadowOne123.*;
 import io.github.ShadowOne123.Events.DamageEvent;
+import io.github.ShadowOne123.Statuses.Status;
 
 import java.util.ArrayList;
 import java.util.Random;

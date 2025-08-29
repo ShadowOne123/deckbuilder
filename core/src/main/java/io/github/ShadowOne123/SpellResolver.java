@@ -52,8 +52,7 @@ public class SpellResolver {
             combined = false;
             for(Action action : currentArr){
                 if(action.getClass().equals(newA.getClass())){
-                    action.combine(newA);
-                    combined = true;
+                    combined = action.combine(newA);
                 }
             }
             if(!combined){

@@ -9,5 +9,15 @@
     ],
     "width" : 10,
     "height" : 4
+  },
+
+  {
+    "name" : "storage",
+    "health" : 0,
+    "attacks" : [
+      {"name" :  "rekindle", "damage" :  -7, "damageType" :  "HEALING", "target" : "self"}
+    ],
+    "width" : 10,
+    "height" : 4
   }
 ]

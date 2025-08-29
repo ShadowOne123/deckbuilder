@@ -10,7 +10,7 @@ public class DamageEvent implements GameEvent {
 
     public final DamageType damageType;
 
-    public final int amount;
+    public int amount;
 
     public DamageEvent(Creature target, Creature source, int amount, DamageType damageType) {
         this.target = target;

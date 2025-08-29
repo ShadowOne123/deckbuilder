@@ -66,7 +66,7 @@ public class CombatController extends Actor {
             event.target.takeDamage(finalDmg);
             eventBus.emit(new DamageTakenEvent(event.target, finalDmg, event.damageType));
         };
-        eventBus.register(DamageEvent.class, listener);
+        eventBus.register(DamageEvent.class, listener, 10);
 
 
     }

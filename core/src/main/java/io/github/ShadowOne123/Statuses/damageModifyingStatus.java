@@ -18,7 +18,7 @@ public class damageModifyingStatus extends Status{
     Fields needed: Intensity, obviously. Decrease/increase can probably just be handled by negative intensity, no need for a new status
     Direction affected. "dealt"/"taken" should work
      */
-    private String direction;
+    private final String direction;
     private GameEventListener<DamageEvent> listener;
 
     public damageModifyingStatus(int intensity, String name, String direction){
@@ -32,16 +32,26 @@ public class damageModifyingStatus extends Status{
         super.onAdded(target);
         if(direction.equals("taken")){
             listener = event -> {
-
+                if(event.target.equals(target)) {
+                    event.amount += intensity;
+                }
             };
         }
-        Main.eventBus.register(DamageEvent.class, listener);
+        else if(direction.equals("dealt")){
+            listener = event -> {
+                if(event.source.equals(target)) {
+                    event.amount += intensity;
+                }
+            };
+        }
+        Main.eventBus.register(DamageEvent.class, listener, 5);
     }
 
     @Override
     public void apply(Creature target){
+        intensity--;
         if(intensity == 0){
-
+            Main.eventBus.unregister(DamageEvent.class, listener);
         }
     }
 }

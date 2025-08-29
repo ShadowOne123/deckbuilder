@@ -26,7 +26,7 @@ public class StatusIncreasingStatus extends Status {
                     target.searchStatuses(affectedStatus).addIntensity(increase);
                 }
             };
-            Main.eventBus.register(StatusAddedEvent.class, listener);
+            Main.eventBus.register(StatusAddedEvent.class, listener, 10);
         }
     }
 

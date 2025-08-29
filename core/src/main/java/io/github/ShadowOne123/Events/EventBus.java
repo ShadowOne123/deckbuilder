@@ -2,29 +2,39 @@ package io.github.ShadowOne123.Events;
 import java.util.*;
 
 public class EventBus {
-    private Map<Class<? extends GameEvent>, List<GameEventListener<? extends GameEvent>>> listeners = new HashMap<>();
+    private Map<Class<? extends GameEvent>, List<ListenerWithPriority>> listeners = new HashMap<>();
 
-    public <T extends GameEvent> void register(Class<T> eventType, GameEventListener<T> listener) {
-        listeners.computeIfAbsent(eventType, k -> new ArrayList<>()).add(listener);
+    public <T extends GameEvent> void register(Class<T> eventType, GameEventListener<T> listener, int priority) {
+
+        List<ListenerWithPriority> list = listeners.computeIfAbsent(eventType, k -> new ArrayList<>());
+
+        list.add(new ListenerWithPriority(listener, priority));
+
+        Collections.sort(list); // Now this call is type-safe and works
+
     }
 
     public <T extends GameEvent> void unregister(Class<T> eventType, GameEventListener<T> listener) {
-        List<GameEventListener<? extends GameEvent>> list = listeners.get(eventType);
+        List<ListenerWithPriority> list = listeners.get(eventType);
         if (list != null) list.remove(listener);
-
     }
+
+    @SuppressWarnings("unchecked")
 
     public <T extends GameEvent> void emit(T event) {
-        List<GameEventListener<? extends GameEvent>> list = listeners.get(event.getClass());
+
+        List<ListenerWithPriority> list = listeners.get(event.getClass());
+
         if (list != null) {
-            for (GameEventListener<? extends GameEvent> listener : new ArrayList<>(list)) {
-                ((GameEventListener<T>)listener).onEvent(event);
+
+            for (ListenerWithPriority wrapper : new ArrayList<>(list)) {
+
+                ((GameEventListener<T>) wrapper.listener).onEvent(event);
 
             }
+
         }
-    }
-
-    private void reprioritize(){
 
     }
+
 }

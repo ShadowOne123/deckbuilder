@@ -20,10 +20,16 @@ public class damageModifyingStatus extends Status{
      */
     private final String direction;
     private GameEventListener<DamageEvent> listener;
+    private int mult = 1;
 
     public damageModifyingStatus(int intensity, String name, String direction){
         super(name);
-        this.intensity = intensity;
+        //if intensity is negative, we remember this but register it as positive for turn counting reasons
+        //otherwise mult is 1, which does nothing
+        if(intensity < 0){
+            mult = -1;
+        }
+        this.intensity = intensity * mult;
         this.direction = direction;
     }
 
@@ -33,14 +39,17 @@ public class damageModifyingStatus extends Status{
         if(direction.equals("taken")){
             listener = event -> {
                 if(event.target.equals(target)) {
-                    event.amount += intensity;
+                    event.amount += intensity * mult;
                 }
             };
         }
         else if(direction.equals("dealt")){
             listener = event -> {
                 if(event.source.equals(target)) {
-                    event.amount += intensity;
+                    event.amount += intensity * mult;
+                    if(name.equals("luck")){
+                        intensity = 0;
+                    }
                 }
             };
         }
@@ -49,8 +58,10 @@ public class damageModifyingStatus extends Status{
 
     @Override
     public void apply(Creature target){
-        intensity--;
-        if(intensity == 0){
+        if(name.equals("frost")){
+            intensity--;
+        }
+        if(intensity <= 0){
             Main.eventBus.unregister(DamageEvent.class, listener);
         }
     }

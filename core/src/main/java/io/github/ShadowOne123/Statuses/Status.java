@@ -70,6 +70,10 @@ public abstract class Status {
                 //Status that affects damage dealt either to or by the target. The type is determined by the last argument
                 //intensity, name, direction of damage affected
                 return new damageModifyingStatus(Integer.parseInt(desc[2]), desc[3], desc[4]);
+            case "5":
+                //Status that adds a specified status every turn, equal to its own intensity. Intensity decays over turn end.
+                //intensity, name, status to add
+                return new statusAddingStatus(Integer.parseInt(desc[2]), desc[3], desc[4]);
         }
         return null;
     }

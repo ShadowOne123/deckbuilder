@@ -27,7 +27,7 @@ public class Deck extends Actor {
         cards = new ArrayList<Card>();
         discard = new ArrayList<Card>();
         this.totalCards = 0;
-        deckSprite = new Sprite(atlas.findRegion("rose"));
+        deckSprite = new Sprite(atlas.findRegion("cards/rose"));
         deckSprite.setSize(hand.cardWidth, hand.cardHeight);
         deckSprite.setCenter(hand.worldWidth/15, hand.cardHeight/2 + hand.worldHeight/25);
     }

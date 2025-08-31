@@ -1,6 +1,10 @@
 package io.github.ShadowOne123;
 
-import java.awt.image.AreaAveragingScaleFilter;
+import io.github.ShadowOne123.Actions.Action;
+import io.github.ShadowOne123.Actions.damagingAction;
+import io.github.ShadowOne123.Actions.healingAction;
+import io.github.ShadowOne123.Actions.statusAddingAction;
+
 import java.util.ArrayList;
 
 public class Effect {
@@ -13,12 +17,18 @@ public class Effect {
         for(int i = 0; i < actionDescriptions.length; i++){
             actionDescription = actionDescriptions[i].split(",");
             switch(actionDescription[0]){
+                //parameters start at index 1 because index 0 is the action type
                 case "1":
+                    //intensity, damageType. damageType references types held in the DamageType enum
                     actions.add(new damagingAction(Integer.parseInt(actionDescription[1]), DamageType.valueOf(actionDescription[2])));
                     break;
                 case "2":
+                    //complex, varied description of the status, which is unpacked and processed by Status.makeStatus()
                     actions.add(new statusAddingAction(actionDescription));
                     break;
+                case "3":
+                    //just takes the intensity, ie the amount to heal
+                    actions.add(new healingAction(Integer.parseInt(actionDescription[1])));
             }
         }
     }

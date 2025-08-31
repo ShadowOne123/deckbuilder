@@ -4,7 +4,6 @@ public enum DamageType {
     SLASHING,
     FIRE,
     ICE,
-    ELECTRIC,
+    LIGHTNING,
     POISON,
-    HEALING
 }

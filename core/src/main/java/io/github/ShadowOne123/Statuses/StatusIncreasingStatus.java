@@ -9,8 +9,8 @@ public class StatusIncreasingStatus extends Status {
     public int increase;
     private GameEventListener<StatusAddedEvent> listener;
 
-    public StatusIncreasingStatus(int intensity, int increase, String name, String affectedStatus){
-        super(name);
+    public StatusIncreasingStatus(int intensity, int increase, String name, String affectedStatus, boolean endTurnDecay){
+        super(name, endTurnDecay);
         this.intensity = intensity;
         this.affectedStatus = affectedStatus;
         this.increase = increase;
@@ -31,7 +31,7 @@ public class StatusIncreasingStatus extends Status {
     }
 
     @Override
-    public void apply(Creature target){
+    public void decay(){
         intensity--;
         if(intensity == 0){
             Main.eventBus.unregister(StatusAddedEvent.class, listener);
@@ -39,7 +39,21 @@ public class StatusIncreasingStatus extends Status {
     }
 
     @Override
+    public void apply(Creature target){
+        //do nothing
+    }
+
+    @Override
     public String toString(){
         return "increase " + affectedStatus + " applications by " + increase;
+    }
+
+    @Override
+    public String descriptiveToString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(name);
+        sb.append("\n");
+        sb.append(this.toString());
+        return sb.toString();
     }
 }

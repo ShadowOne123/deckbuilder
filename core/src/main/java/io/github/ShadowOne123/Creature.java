@@ -53,7 +53,8 @@ abstract public class Creature extends Actor {
         for(int i = 0; i < statuses.size(); i++){
             status = statuses.get(i);
             statusSprite = status.getSprite();
-            statusSprite.setCenter(sprite.getX()+i*statusSprite.getWidth(), sprite.getY()-statusSprite.getHeight()*1.5f);
+            status.setPosition(sprite.getX()+i*statusSprite.getWidth(), sprite.getY()-statusSprite.getHeight()*2f);
+            statusSprite.setPosition(status.getX(), status.getY());
             statusSprite.draw(spriteBatch);
             statusStackFont.draw(spriteBatch, String.valueOf(status.getIntensity()), statusSprite.getX()+statusSprite.getWidth()/1.5f, statusSprite.getY()+statusSprite.getHeight()*0.4f);
         }
@@ -74,11 +75,24 @@ abstract public class Creature extends Actor {
         return new Runnable() {
             @Override
             public void run() {
+                for(Status status : statuses){
+                    status.apply(target);
+                }
+            }
+        };
+    }
+
+    protected Runnable decayStatuses(){
+        return new Runnable() {
+            @Override
+            public void run() {
                 for(int i = 0; i < statuses.size(); i++){
-                    statuses.get(i).apply(target);
-                    if(statuses.get(i).getIntensity() == 0){
-                        statuses.remove(i);
-                        i--;
+                    if(statuses.get(i).hasEndTurnDecay()) {
+                        statuses.get(i).decay();
+                        if (statuses.get(i).getIntensity() <= 0) {
+                            statuses.remove(i);
+                            i--;
+                        }
                     }
                 }
             }

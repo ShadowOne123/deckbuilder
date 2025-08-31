@@ -52,10 +52,8 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void create() {
-        //populate card dictionary
-        populateCardDictionary("/cardDictionary.txt");
+        populateCardDictionary("cardDictionary.txt");
         SpellResolver.populateSpellbook("/spellbook.txt");
-        //init fonts
         FontManager.init();
         eventBus = new EventBus();
 
@@ -86,9 +84,9 @@ public class Main extends ApplicationAdapter {
         stage.addActor(player);
         ArrayList<Enemy> enemies = new ArrayList<Enemy>();
         enemies.add(enemyTest);
-        hand.addCard(new Card("temperance", stage));
-        hand.addCard(new Card("rose", stage));
-        hand.addCard(new Card("king", stage));
+        hand.addCard(new Card("hypothermia", stage));
+        hand.addCard(new Card("blaze", stage));
+        hand.addCard(new Card("pocket_sand", stage));
         deck = new Deck(hand, spriteBatch);
         for(int i = 0; i < 5; i++){
             deck.addCard(new Card("temperance", stage));
@@ -152,8 +150,7 @@ public class Main extends ApplicationAdapter {
 
     public void populateCardDictionary(String filepath){
 
-        try(InputStream inputStream = getClass().getResourceAsStream(filepath);){
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        try(BufferedReader reader = new BufferedReader(Gdx.files.internal(filepath).reader());){
             String line;
 
             while ((line = reader.readLine()) != null) {

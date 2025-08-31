@@ -3,9 +3,8 @@
     "name" : "fireElemental",
     "health" : 40,
     "attacks" : [
-      {"name" :  "immolation", "damage" :  4, "damageType" :  "FIRE", "statuses" :  ["0,1,3,FIRE,burn"], "target" :  "player"},
-      {"name" :  "blast", "damage" : 12, "damageType" :  "FIRE", "target" :  "player"},
-      {"name" :  "rekindle", "damage" :  -7, "damageType" :  "HEALING", "target" : "self"}
+      {"name" :  "immolation", "damage" :  4, "damageType" :  "FIRE", "statuses" :  ["0,1,3,FIRE,burn,true"], "target" :  "player"},
+      {"name" :  "blast", "damage" : 12, "damageType" :  "FIRE", "target" :  "player"}
     ],
     "width" : 10,
     "height" : 4

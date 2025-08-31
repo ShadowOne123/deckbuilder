@@ -18,4 +18,8 @@ public class DamageEvent implements GameEvent {
         this.damageType = damageType;
         this.source = source;
     }
+
+    public String toString(){
+        return amount + " " + damageType + " damage, event launched";
+    }
 }

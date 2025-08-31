@@ -24,8 +24,8 @@ public class Card extends Actor {
         addListener(new CardInputListener(this));
         stage.addActor(this);
 
-        if(atlas.findRegion(id) != null) {
-            sprite = new Sprite(atlas.findRegion(id));
+        if(atlas.findRegion("cards/" + id) != null) {
+            sprite = new Sprite(atlas.findRegion("cards/" + id));
         }
         else{
             sprite = new Sprite(atlas.findRegion("bucket"));

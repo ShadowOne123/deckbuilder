@@ -6,6 +6,7 @@ import io.github.ShadowOne123.Enemies.Enemy;
 import io.github.ShadowOne123.Events.DamageEvent;
 import io.github.ShadowOne123.Events.DamageTakenEvent;
 import io.github.ShadowOne123.Events.GameEventListener;
+import io.github.ShadowOne123.Events.HealEvent;
 import io.github.ShadowOne123.Statuses.Status;
 
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class CombatController extends Actor {
         enemyTurnProgress = 0;
 
         //basic combat event listener registration
-        GameEventListener<DamageEvent> listener = event -> {
+        GameEventListener<DamageEvent> damageListener = event -> {
             int finalDmg = event.amount;
             Status block = event.target.searchStatuses("block");
             Status thorns = event.target.searchStatuses("thorns");
@@ -58,15 +59,23 @@ public class CombatController extends Actor {
                     finalDmg = 0;
                 }
             }
-            if(thorns != null){
+            if(thorns != null && event.source != null){
                 event.source.takeDamage(thorns.getIntensity());
-                thorns.decrementIntensity();
+                thorns.decay();
                 eventBus.emit(new DamageTakenEvent(event.source, thorns.getIntensity(), DamageType.SLASHING));
+            }
+            if(finalDmg < 0){
+                finalDmg = 0;
             }
             event.target.takeDamage(finalDmg);
             eventBus.emit(new DamageTakenEvent(event.target, finalDmg, event.damageType));
+            System.out.println(event);
         };
-        eventBus.register(DamageEvent.class, listener, 10);
+        eventBus.register(DamageEvent.class, damageListener, 10);
+        GameEventListener<HealEvent> healingListener = event -> {
+            event.target.getHealed(event.amount);
+        };
+        eventBus.register(HealEvent.class, healingListener, 10);
 
 
     }
@@ -87,8 +96,7 @@ public class CombatController extends Actor {
         //check for no cards played
         if(playArea.getCards().isEmpty()){
             System.out.println("No cards played!");
-            //allows no cards played
-            return true;
+            return false;
         }
         //check for no targets
         else if (targets.isEmpty()){
@@ -163,6 +171,7 @@ public class CombatController extends Actor {
             run(resolvePlayerTurnHelper(effect)),
             delay(0.2f),
             run(player.takeStatuses(player)),
+            run(player.decayStatuses()),
             run(player.incrementTurn())
         ));
     }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import io.github.ShadowOne123.*;
+import io.github.ShadowOne123.Actions.statusAddingAction;
 import io.github.ShadowOne123.Events.DamageEvent;
 import io.github.ShadowOne123.Statuses.Status;
 
@@ -38,6 +39,7 @@ public class Enemy extends Creature {
             run(attack(player)),
             delay(0.1f),
             run(takeStatuses(this)),
+            run(decayStatuses()),
             run(incrementTurn())
         ));
     }

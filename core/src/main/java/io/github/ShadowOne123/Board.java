@@ -28,7 +28,7 @@ public abstract class Board extends Actor {
         this.worldWidth = viewport.getWorldWidth();
         this.viewport = viewport;
         this.spriteBatch = spriteBatch;
-        boardArea = new Sprite(atlas.findRegion("king"));
+        boardArea = new Sprite(atlas.findRegion("cards/king"));
         boardArea.setSize(worldWidth*0.40f,worldHeight/4);
         cardHeight = worldHeight/4.5f;
         cardWidth = cardHeight*0.65f;

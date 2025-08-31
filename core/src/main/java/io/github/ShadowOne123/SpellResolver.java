@@ -1,5 +1,7 @@
 package io.github.ShadowOne123;
 
+import io.github.ShadowOne123.Actions.Action;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;

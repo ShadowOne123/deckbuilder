@@ -1,6 +1,9 @@
-package io.github.ShadowOne123;
+package io.github.ShadowOne123.Actions;
 
+import io.github.ShadowOne123.Creature;
+import io.github.ShadowOne123.DamageType;
 import io.github.ShadowOne123.Events.DamageEvent;
+import io.github.ShadowOne123.Main;
 
 public class damagingAction extends Action{
 

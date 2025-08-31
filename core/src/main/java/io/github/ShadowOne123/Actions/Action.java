@@ -1,4 +1,8 @@
-package io.github.ShadowOne123;
+package io.github.ShadowOne123.Actions;
+
+import io.github.ShadowOne123.Creature;
+import io.github.ShadowOne123.Effect;
+
 /* generic action class, to be extended by all possible actions that a card effect can perpetuate
 */
 public abstract class Action {

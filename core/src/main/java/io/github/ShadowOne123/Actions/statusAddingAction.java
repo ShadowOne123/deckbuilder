@@ -1,5 +1,6 @@
-package io.github.ShadowOne123;
+package io.github.ShadowOne123.Actions;
 
+import io.github.ShadowOne123.Creature;
 import io.github.ShadowOne123.Statuses.Status;
 
 import java.util.ArrayList;

@@ -30,6 +30,7 @@ public class Deck extends Actor {
         deckSprite = new Sprite(atlas.findRegion("cards/rose"));
         deckSprite.setSize(hand.cardWidth, hand.cardHeight);
         deckSprite.setCenter(hand.worldWidth/15, hand.cardHeight/2 + hand.worldHeight/25);
+        Main.stage.addActor(this);
     }
 
     public void drawDeck(){

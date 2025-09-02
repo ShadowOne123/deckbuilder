@@ -4,14 +4,19 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
+
+import static io.github.ShadowOne123.Main.atlas;
+import static io.github.ShadowOne123.Main.viewport;
 
 
 public class PlayArea{
 
     private Sprite sprite;
+    private TextureRegion slotBorder;
     private SpriteBatch spriteBatch;
     private Card[] cards;
     public Card spell;
@@ -23,6 +28,7 @@ public class PlayArea{
         sprite.setSize(viewport.getWorldWidth()*0.40f, viewport.getWorldHeight()/4);
         sprite.setCenter(viewport.getWorldWidth()/2, viewport.getWorldHeight()/1.7f);
         spell = null;
+        slotBorder = atlas.findRegion("cards/king");
     }
 
    public ArrayList<Card> getCards(){
@@ -69,6 +75,12 @@ public class PlayArea{
 
    public void drawPlayArea(){
         Color color;
+        //card borders
+        for(int i = 0; i < cards.length; i++){
+            spriteBatch.draw(slotBorder,sprite.getX() + ((sprite.getWidth()/cards.length) * (i+0.16f)), sprite.getY(), viewport.getWorldHeight()/4f*0.65f, viewport.getWorldHeight()/4f);
+        }
+
+        //cards
         for(Card card : cards){
             if(card != null){
                 color = card.getColor();
@@ -76,6 +88,7 @@ public class PlayArea{
                 card.getSprite().draw(spriteBatch);
             }
         }
+        //spell card if present
         if(spell != null){
             color = spell.getColor();
             spell.getSprite().setColor(color);

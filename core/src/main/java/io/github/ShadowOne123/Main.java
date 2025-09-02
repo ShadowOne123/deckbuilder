@@ -34,6 +34,7 @@ public class Main extends ApplicationAdapter {
     Sprite Background;
     public static Player player;
     Deck deck;
+    DiscardActor discardActor;
     Enemy enemyTest;
     ArrayList<EnemyData> enemies;
     //text
@@ -91,6 +92,7 @@ public class Main extends ApplicationAdapter {
         for(int i = 0; i < 5; i++){
             deck.addCard(new Card("temperance", stage));
         }
+        discardActor = new DiscardActor(deck, hand, spriteBatch);
         combatController = new CombatController(player, playArea, hand, deck, enemies);
         stage.addActor(combatController);
         enemyTest.addController(combatController);
@@ -130,6 +132,7 @@ public class Main extends ApplicationAdapter {
         healthFont.draw(spriteBatch, combatController.getTurn().toString(), viewport.getWorldWidth() / 2.7f, viewport.getWorldHeight() / 1.1f);
         hand.drawHand();
         deck.drawDeck();
+        discardActor.draw();
         uiStage.draw();
         stage.act();
         uiStage.act();

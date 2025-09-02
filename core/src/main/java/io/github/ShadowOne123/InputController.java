@@ -11,17 +11,18 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
 
-public class inputController {
-    private Stage stage;
-    private InputMultiplexer multiplexer;
-    public inputController(Stage stage){
-        this.stage = stage;
+import static io.github.ShadowOne123.Main.*;
+
+public class InputController {
+    private static InputMultiplexer multiplexer;
+    public InputController(){
         multiplexer = new InputMultiplexer();
     }
 
-    public void setInputModeBattle(Hand hand, PlayArea playArea, CombatController combatController, Viewport viewport, Deck deck){
+    public static void setInputModeBattle(){
+        activeStage = "main";
         Gdx.input.setInputProcessor(multiplexer);
-        multiplexer.addProcessor(stage);
+        multiplexer.addProcessor(Main.stage);
         multiplexer.addProcessor(new InputAdapter(){
 
             @Override
@@ -125,10 +126,6 @@ public class inputController {
                             }
                         }
                     }
-                    //TODO: Remove on production
-                    else if(deck.getSprite().getBoundingRectangle().contains(clickCoords)){
-                        deck.draw(hand);
-                    }
                     else{
                         combatController.selectTarget(clickCoords);
                     }
@@ -143,7 +140,23 @@ public class inputController {
                     case Input.Keys.A: hand.addCard(new Card("king", Main.stage)); break;
                     case Input.Keys.S: hand.addCard(new Card("barbed_wire", Main.stage)); break;
                     case Input.Keys.ENTER: combatController.resolveTurn(); break;
-                    case Input.Keys.D: debug(hand, playArea, deck);
+                }
+
+                return false;
+            }
+        });
+    }
+
+    public static void setInputModeMenu(){
+        System.out.println("ping");
+        activeStage = "menu";
+        multiplexer.clear();
+        multiplexer.addProcessor(menuStage);
+        multiplexer.addProcessor(new InputAdapter(){
+            @Override
+            public boolean keyUp(int keycode) {
+                switch(keycode){
+                    case Input.Keys.ESCAPE: setInputModeBattle();
                 }
 
                 return false;

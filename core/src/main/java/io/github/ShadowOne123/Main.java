@@ -29,12 +29,12 @@ public class Main extends ApplicationAdapter {
     public SpriteBatch spriteBatch;
     public static FitViewport viewport;
     public static TextureAtlas atlas;
-    Hand hand;
-    PlayArea playArea;
+    public static Hand hand;
+    public static PlayArea playArea;
     Sprite Background;
     public static Player player;
-    Deck deck;
-    DiscardActor discardActor;
+    public static Deck deck;
+    public static DiscardActor discardActor;
     Enemy enemyTest;
     ArrayList<EnemyData> enemies;
     //text
@@ -43,12 +43,15 @@ public class Main extends ApplicationAdapter {
     FreeTypeFontGenerator.FreeTypeFontParameter healthFontParam;
     public static Stage stage;
     public Stage uiStage;
+    public static Stage menuStage;
+    public static String activeStage;
     public static Tooltip tooltip;
 
     //Card creation and file reading
     public static HashMap<String, String> cardDictionary = new HashMap<String,String>();
 
-    CombatController combatController;
+    public static InputController inputController;
+    public static CombatController combatController;
     public static EventBus eventBus;
 
     @Override
@@ -64,6 +67,7 @@ public class Main extends ApplicationAdapter {
         hand = new Hand(spriteBatch, viewport);
         playArea = new PlayArea(3, spriteBatch, viewport);
         Background = new Sprite(atlas.findRegion("steampunkBackground1"));
+        Background.setSize(viewport.getWorldWidth(), viewport.getWorldHeight());
         //text
         healthFontGen = FontManager.healthFontGenerator;
         healthFontParam = FontManager.healthFontParameter;
@@ -76,11 +80,12 @@ public class Main extends ApplicationAdapter {
 
         stage = new Stage(viewport);
         uiStage = new Stage(viewport);
+        menuStage = new Stage(viewport);
+        activeStage = "main";
         tooltip = new Tooltip(genLabel());
         tooltip.maxWidth(hand.cardWidth * 2);
         tooltip.width(hand.cardWidth * 2);
         uiStage.addActor(tooltip);
-        Gdx.input.setInputProcessor(stage);
         stage.addActor(enemyTest);
         stage.addActor(player);
         ArrayList<Enemy> enemies = new ArrayList<Enemy>();
@@ -88,7 +93,7 @@ public class Main extends ApplicationAdapter {
         hand.addCard(new Card("hypothermia", stage));
         hand.addCard(new Card("blaze", stage));
         hand.addCard(new Card("pocket_sand", stage));
-        deck = new Deck(hand, spriteBatch);
+        deck = new Deck(spriteBatch);
         for(int i = 0; i < 5; i++){
             deck.addCard(new Card("temperance", stage));
         }
@@ -97,8 +102,8 @@ public class Main extends ApplicationAdapter {
         stage.addActor(combatController);
         enemyTest.addController(combatController);
         player.addController(combatController);
-        inputController inpt = new inputController(stage);
-        inpt.setInputModeBattle(hand, playArea, combatController, viewport, deck);
+        inputController = new InputController();
+        InputController.setInputModeBattle();
     }
 
     @Override
@@ -125,17 +130,24 @@ public class Main extends ApplicationAdapter {
         spriteBatch.begin();
 
         Background.draw(spriteBatch);
-        Background.setSize(viewport.getWorldWidth(), viewport.getWorldHeight());
-        playArea.drawPlayArea();
-        player.draw();
-        enemyTest.draw();
-        healthFont.draw(spriteBatch, combatController.getTurn().toString(), viewport.getWorldWidth() / 2.7f, viewport.getWorldHeight() / 1.1f);
-        hand.drawHand();
-        deck.drawDeck();
-        discardActor.draw();
+
+        if(activeStage.equals("main")) {
+            playArea.drawPlayArea();
+            player.draw();
+            enemyTest.draw();
+            healthFont.draw(spriteBatch, combatController.getTurn().toString(), viewport.getWorldWidth() / 2.7f, viewport.getWorldHeight() / 1.1f);
+            hand.drawHand();
+            deck.drawDeck();
+            discardActor.draw();
+            stage.act();
+        }
+        else if(activeStage.equals("menu")) {
+            menuStage.draw();
+            menuStage.act();
+        }
         uiStage.draw();
-        stage.act();
         uiStage.act();
+
         spriteBatch.end();
     }
 

@@ -6,9 +6,6 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.Viewport;
-
 import java.util.ArrayList;
 
 import static io.github.ShadowOne123.Main.*;
@@ -17,11 +14,13 @@ public class InputController {
     private static InputMultiplexer multiplexer;
     public InputController(){
         multiplexer = new InputMultiplexer();
+        Gdx.input.setInputProcessor(multiplexer);
     }
 
     public static void setInputModeBattle(){
+        tooltip.setVisible(false);
         activeStage = "main";
-        Gdx.input.setInputProcessor(multiplexer);
+        multiplexer.clear();
         multiplexer.addProcessor(Main.stage);
         multiplexer.addProcessor(new InputAdapter(){
 
@@ -148,7 +147,7 @@ public class InputController {
     }
 
     public static void setInputModeMenu(){
-        System.out.println("ping");
+        tooltip.setVisible(false);
         activeStage = "menu";
         multiplexer.clear();
         multiplexer.addProcessor(menuStage);
@@ -156,7 +155,9 @@ public class InputController {
             @Override
             public boolean keyUp(int keycode) {
                 switch(keycode){
-                    case Input.Keys.ESCAPE: setInputModeBattle();
+                    case Input.Keys.ESCAPE:
+                        setInputModeBattle();
+                        deck.exitMenu();
                 }
 
                 return false;

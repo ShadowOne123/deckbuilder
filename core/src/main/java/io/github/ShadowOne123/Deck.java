@@ -28,7 +28,7 @@ public class Deck extends Actor {
         this.totalCards = 0;
         deckSprite = new Sprite(atlas.findRegion("cards/rose"));
         deckSprite.setSize(hand.cardWidth, hand.cardHeight);
-        deckSprite.setCenter(hand.worldWidth/15, hand.cardHeight/2 + hand.worldHeight/25);
+        deckSprite.setPosition(hand.worldWidth/15-hand.cardWidth/2, hand.worldHeight/25);
         setSize(hand.cardWidth, hand.cardHeight);
         setPosition(deckSprite.getX(), deckSprite.getY());
         addListener(new PileInputListener(cards));
@@ -110,5 +110,14 @@ public class Deck extends Actor {
 
     public Sprite getSprite(){
         return deckSprite;
+    }
+
+    public void exitMenu(){
+        for(Card card : cards){
+            Main.stage.addActor(card);
+        }
+        for(Card card : discard){
+            Main.stage.addActor(card);
+        }
     }
 }

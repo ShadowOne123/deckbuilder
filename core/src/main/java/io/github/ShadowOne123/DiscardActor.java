@@ -18,7 +18,9 @@ public class DiscardActor extends Actor {
         this.spriteBatch = spriteBatch;
         sprite = new Sprite(atlas.findRegion("cards/rose"));
         sprite.setSize(hand.cardWidth, hand.cardHeight);
-        sprite.setCenter((hand.worldWidth/15)*14, hand.cardHeight/2 + hand.worldHeight/25);
+        setSize(sprite.getWidth(), sprite.getHeight());
+        sprite.setPosition((hand.worldWidth/15)*14-hand.cardHeight/2, hand.worldHeight/25);
+        setPosition(sprite.getX(), sprite.getY());
         addListener(new PileInputListener(deck.discard));
         Main.stage.addActor(this);
     }

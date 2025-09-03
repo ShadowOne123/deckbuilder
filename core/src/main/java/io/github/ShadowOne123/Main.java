@@ -140,15 +140,18 @@ public class Main extends ApplicationAdapter {
             deck.drawDeck();
             discardActor.draw();
             stage.act();
+            spriteBatch.end();
         }
+
         else if(activeStage.equals("menu")) {
+            spriteBatch.end();
             menuStage.draw();
             menuStage.act();
         }
         uiStage.draw();
         uiStage.act();
 
-        spriteBatch.end();
+
     }
 
     private void input(){

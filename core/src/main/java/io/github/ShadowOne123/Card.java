@@ -3,6 +3,7 @@ package io.github.ShadowOne123;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -11,8 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveTo;
-import static io.github.ShadowOne123.Main.atlas;
-import static io.github.ShadowOne123.Main.cardDictionary;
+import static io.github.ShadowOne123.Main.*;
 
 public class Card extends Actor {
     private final Sprite sprite;
@@ -53,6 +53,11 @@ public class Card extends Actor {
 
     public String getName(){
         return name;
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        batch.draw(sprite, getX(), getY(), getWidth(), getHeight());
     }
 
 }

@@ -1,4 +1,5 @@
-temperance king butcher:death_by_a_thousand_cuts
-king king king:emperor's_strike
-buckler rose barbed_wire:blessing_of_the_treants
-blaze blaze blaze:inferno
+rogue:temperance king butcher:death_by_a_thousand_cuts
+rogue:vial vial vial:pocket_sand
+druid:king king king:emperor's_strike
+druid:buckler rose barbed_wire:blessing_of_the_treants
+mage:blaze blaze blaze:inferno

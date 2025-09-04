@@ -33,6 +33,7 @@ public class Main extends ApplicationAdapter {
     public static PlayArea playArea;
     Sprite Background;
     public static Player player;
+    public static String characterClass;
     public static Deck deck;
     public static DiscardActor discardActor;
     Enemy enemyTest;
@@ -42,10 +43,11 @@ public class Main extends ApplicationAdapter {
     FreeTypeFontGenerator healthFontGen;
     FreeTypeFontGenerator.FreeTypeFontParameter healthFontParam;
     public static Stage stage;
-    public Stage uiStage;
+    public static Stage uiStage;
     public static Stage menuStage;
     public static String activeStage;
     public static Tooltip tooltip;
+    SpellbookButton spellbookButton;
 
     //Card creation and file reading
     public static HashMap<String, String> cardDictionary = new HashMap<String,String>();
@@ -56,6 +58,7 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void create() {
+        characterClass = "rogue";
         populateCardDictionary("cardDictionary.txt");
         SpellResolver.populateSpellbook("/spellbook.txt");
         FontManager.init();
@@ -86,12 +89,13 @@ public class Main extends ApplicationAdapter {
         tooltip.maxWidth(hand.cardWidth * 2);
         tooltip.width(hand.cardWidth * 2);
         uiStage.addActor(tooltip);
+        spellbookButton = new SpellbookButton();
         stage.addActor(enemyTest);
         stage.addActor(player);
         ArrayList<Enemy> enemies = new ArrayList<Enemy>();
         enemies.add(enemyTest);
-        hand.addCard(new Card("hypothermia", stage));
-        hand.addCard(new Card("blaze", stage));
+        hand.addCard(new Card("vial", stage));
+        hand.addCard(new Card("butcher", stage));
         hand.addCard(new Card("pocket_sand", stage));
         deck = new Deck(spriteBatch);
         for(int i = 0; i < 5; i++){
@@ -142,7 +146,6 @@ public class Main extends ApplicationAdapter {
             stage.act();
             spriteBatch.end();
         }
-
         else if(activeStage.equals("menu")) {
             spriteBatch.end();
             menuStage.draw();
@@ -150,8 +153,6 @@ public class Main extends ApplicationAdapter {
         }
         uiStage.draw();
         uiStage.act();
-
-
     }
 
     private void input(){
@@ -172,14 +173,17 @@ public class Main extends ApplicationAdapter {
             String line;
 
             while ((line = reader.readLine()) != null) {
-                String[] keyValue = line.split(":");
+                String[] attributes = line.split(":");
 
                 // Make sure the line contains exactly one key-value pair
-                if (keyValue.length == 2) {
-                    String key = keyValue[0].trim();
-                    String value = keyValue[1].trim();
+                if (attributes.length == 3) {
+                    String cardClass = attributes[0].trim();
+                    if (cardClass.equals(characterClass)) {
+                        String key = attributes[1].trim();
+                        String value = attributes[2].trim();
+                        cardDictionary.put(key, value);
+                    }
 
-                    cardDictionary.put(key, value);
                 } else {
                     System.out.println("Skipping invalid entry: " + line);
                 }

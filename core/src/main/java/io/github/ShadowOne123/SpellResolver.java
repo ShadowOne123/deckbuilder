@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static io.github.ShadowOne123.Main.characterClass;
+
 public class SpellResolver {
 
     private static Map<String, String> spellbook = new HashMap<>();
@@ -69,14 +71,17 @@ public class SpellResolver {
             String line;
 
             while ((line = reader.readLine()) != null) {
-                String[] keyValue = line.split(":");
+                String[] attributes = line.split(":");
 
                 // Make sure the line contains exactly one key-value pair
-                if (keyValue.length == 2) {
-                    String key = keyValue[0].trim();
-                    String value = keyValue[1].trim();
+                if (attributes.length == 3) {
+                    String cardClass = attributes[0].trim();
+                    if (cardClass.equals(characterClass)) {
+                        String key = attributes[1].trim();
+                        String value = attributes[2].trim();
+                        spellbook.put(key, value);
+                    }
 
-                    spellbook.put(key, value);
                 } else {
                     System.out.println("Skipping invalid entry: " + line);
                 }
@@ -85,5 +90,9 @@ public class SpellResolver {
         catch (IOException e){
             e.printStackTrace();
         }
+    }
+
+    public static Map<String, String> getSpellbook(){
+        return spellbook;
     }
 }

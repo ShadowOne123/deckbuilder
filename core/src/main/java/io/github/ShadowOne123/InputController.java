@@ -21,6 +21,7 @@ public class InputController {
         tooltip.setVisible(false);
         activeStage = "main";
         multiplexer.clear();
+        multiplexer.addProcessor(uiStage);
         multiplexer.addProcessor(Main.stage);
         multiplexer.addProcessor(new InputAdapter(){
 
@@ -150,6 +151,7 @@ public class InputController {
         tooltip.setVisible(false);
         activeStage = "menu";
         multiplexer.clear();
+        multiplexer.addProcessor(uiStage);
         multiplexer.addProcessor(menuStage);
         multiplexer.addProcessor(new InputAdapter(){
             @Override

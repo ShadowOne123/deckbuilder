@@ -17,7 +17,6 @@ public class PileInputListener extends InputListener {
 
     @Override
     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-        System.out.println("ping");
         InputController.setInputModeMenu();
         Card temp;
         for(int i = 0; i < cards.size(); i++){

@@ -12,14 +12,14 @@ import static io.github.ShadowOne123.Main.viewport;
 public class SpellbookButton extends Actor {
     Sprite sprite;
 
-    public SpellbookButton(){
+    public SpellbookButton(SpellbookActor spellbookActor){
         this.sprite = new Sprite(atlas.findRegion("bucket"));
-        setPosition(viewport.getWorldWidth()/10, viewport.getWorldHeight()/5*4);
+        setPosition(viewport.getWorldWidth()/25, viewport.getWorldHeight()/7*6);
         sprite.setPosition(getX(), getY());
-        setSize(viewport.getWorldWidth()/10, viewport.getWorldWidth()/10);
+        setSize(viewport.getWorldWidth()/20, viewport.getWorldWidth()/20);
         sprite.setSize(getWidth(), getHeight());
         Main.uiStage.addActor(this);
-        addListener(new spellbookInputListener());
+        addListener(new spellbookInputListener(spellbookActor));
     }
 
     @Override

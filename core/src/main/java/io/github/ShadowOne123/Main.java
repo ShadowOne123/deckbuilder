@@ -47,6 +47,7 @@ public class Main extends ApplicationAdapter {
     public static Stage menuStage;
     public static String activeStage;
     public static Tooltip tooltip;
+    public static SpellbookActor spellbookActor;
     SpellbookButton spellbookButton;
 
     //Card creation and file reading
@@ -89,7 +90,8 @@ public class Main extends ApplicationAdapter {
         tooltip.maxWidth(hand.cardWidth * 2);
         tooltip.width(hand.cardWidth * 2);
         uiStage.addActor(tooltip);
-        spellbookButton = new SpellbookButton();
+        spellbookActor = new SpellbookActor();
+        spellbookButton = new SpellbookButton(spellbookActor);
         stage.addActor(enemyTest);
         stage.addActor(player);
         ArrayList<Enemy> enemies = new ArrayList<Enemy>();

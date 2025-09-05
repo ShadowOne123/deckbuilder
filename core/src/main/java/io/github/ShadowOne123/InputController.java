@@ -160,6 +160,7 @@ public class InputController {
                     case Input.Keys.ESCAPE:
                         setInputModeBattle();
                         deck.exitMenu();
+                        spellbookActor.hideSpellbook();
                 }
 
                 return false;

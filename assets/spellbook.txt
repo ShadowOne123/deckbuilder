@@ -1,4 +1,4 @@
-rogue:temperance king butcher:death_by_a_thousand_cuts
+rogue:temperance pocket_sand butcher:death_by_a_thousand_cuts
 rogue:vial vial vial:pocket_sand
 druid:king king king:emperor's_strike
 druid:buckler rose barbed_wire:blessing_of_the_treants

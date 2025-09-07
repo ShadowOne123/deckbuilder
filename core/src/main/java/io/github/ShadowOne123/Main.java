@@ -96,7 +96,7 @@ public class Main extends ApplicationAdapter {
         stage.addActor(player);
         ArrayList<Enemy> enemies = new ArrayList<Enemy>();
         enemies.add(enemyTest);
-        hand.addCard(new Card("vial", stage));
+        hand.addCard(new Card("temperance", stage));
         hand.addCard(new Card("butcher", stage));
         hand.addCard(new Card("pocket_sand", stage));
         deck = new Deck(spriteBatch);

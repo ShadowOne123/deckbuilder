@@ -1,9 +1,6 @@
 package io.github.ShadowOne123;
 
-import io.github.ShadowOne123.Actions.Action;
-import io.github.ShadowOne123.Actions.damagingAction;
-import io.github.ShadowOne123.Actions.healingAction;
-import io.github.ShadowOne123.Actions.statusAddingAction;
+import io.github.ShadowOne123.Actions.*;
 
 import java.util.ArrayList;
 
@@ -29,6 +26,14 @@ public class Effect {
                 case "3":
                     //just takes the intensity, ie the amount to heal
                     actions.add(new healingAction(Integer.parseInt(actionDescription[1])));
+                    break;
+                case "4":
+                    //intensity, num hits, damage type
+                    actions.add(new multiHitAction(Integer.parseInt(actionDescription[1]), Integer.parseInt(actionDescription[2]), DamageType.valueOf(actionDescription[3])));
+                    break;
+                case "5":
+                    //intensity, affected status, type of interaction
+                    actions.add(new statusDependentAction(Integer.parseInt(actionDescription[1]), actionDescription[2], actionDescription[3]));
             }
         }
     }

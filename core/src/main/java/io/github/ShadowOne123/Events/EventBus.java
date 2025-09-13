@@ -28,9 +28,7 @@ public class EventBus {
         if (list != null) {
 
             for (ListenerWithPriority wrapper : new ArrayList<>(list)) {
-
                 ((GameEventListener<T>) wrapper.listener).onEvent(event);
-
             }
 
         }

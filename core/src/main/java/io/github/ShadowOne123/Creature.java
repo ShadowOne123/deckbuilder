@@ -75,8 +75,15 @@ abstract public class Creature extends Actor {
         return new Runnable() {
             @Override
             public void run() {
-                for(Status status : statuses){
-                    status.apply(target);
+                int originalSize = statuses.size();
+                for(int i = 0; i < statuses.size(); i++){
+                    statuses.get(i).apply(target);
+                }
+                //if a new status has been added
+                if(statuses.size() > originalSize){
+                    for(int i = originalSize; i < statuses.size(); i++){
+                        statuses.get(i).apply(target);
+                    }
                 }
             }
         };

@@ -31,12 +31,7 @@ public class damagingAction extends Action{
 
     @Override
     public boolean combine(Action action){
-        if(((damagingAction)action).getDamageType() == this.damageType) {
-            this.intensity += action.getIntensity();
-            return true;
-        }
-        else{
-            return false;
-        }
+        //temporarily always returning false, meaning it's always treated as a fresh action and executed separately
+        return false;
     }
 }

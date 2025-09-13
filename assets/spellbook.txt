@@ -1,6 +1,5 @@
 rogue:temperance bite butcher:death_by_a_thousand_cuts
 rogue:bite temperance bite:drain
-druid:king king king:emperor's_strike
 druid:buckler rose barbed_wire:blessing_of_the_treants
 druid:magpie magpie heal:favor_of_the_leprechauns
 mage:blaze blaze blaze:inferno

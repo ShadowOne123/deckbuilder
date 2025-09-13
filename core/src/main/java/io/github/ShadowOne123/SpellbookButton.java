@@ -13,10 +13,10 @@ public class SpellbookButton extends Actor {
     Sprite sprite;
 
     public SpellbookButton(SpellbookActor spellbookActor){
-        this.sprite = new Sprite(atlas.findRegion("bucket"));
-        setPosition(viewport.getWorldWidth()/25, viewport.getWorldHeight()/7*6);
+        this.sprite = new Sprite(atlas.findRegion("spellbook"));
+        setPosition(viewport.getWorldWidth()/40, viewport.getWorldHeight()/7*6);
         sprite.setPosition(getX(), getY());
-        setSize(viewport.getWorldWidth()/20, viewport.getWorldWidth()/20);
+        setSize(viewport.getWorldWidth()/15, viewport.getWorldWidth()/15);
         sprite.setSize(getWidth(), getHeight());
         Main.uiStage.addActor(this);
         addListener(new spellbookInputListener(spellbookActor));

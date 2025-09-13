@@ -31,7 +31,7 @@ public abstract class Action {
     }
 
     public boolean combine(Action action){
-        System.out.println("Unspecified action combining requested, abort");
+        //System.out.println("Unspecified action combining requested, abort");
         return false;
     }
 

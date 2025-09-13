@@ -12,7 +12,7 @@ public class statusDependentAction extends Action{
     private String type;
     private DamageType damageType;
 
-    public statusDependentAction(int intensity, String type, String status){
+    public statusDependentAction(int intensity, String status, String type){
         super(intensity);
         String[] typeSplit = type.split(">");
         this.type = typeSplit[0]; //interaction type, ie heal heals for intensity * status in question
@@ -34,5 +34,20 @@ public class statusDependentAction extends Action{
                     Main.eventBus.emit(new DamageEvent(target, Main.player, intensity * statusIntensity, damageType));
             }
         }
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        if(type.equals("heal")){
+            sb.append("heals you for ");
+        }
+        else if(type.equals("damage")){
+            sb.append("deals damage equal to ");
+        }
+        sb.append(intensity);
+        sb.append(" times ");
+        sb.append(status);
+        return sb.toString();
     }
 }

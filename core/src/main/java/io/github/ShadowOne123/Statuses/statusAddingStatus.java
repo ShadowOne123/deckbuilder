@@ -20,7 +20,7 @@ public class statusAddingStatus extends Status{
         statusAddingAction action;
         switch (addedStatus){
             case "luck":
-                String desc = "4," + intensity + ",luck,dealt";
+                String desc = "x,4," + intensity + ",luck,dealt,false";
                 action = new statusAddingAction(desc.split(","));
                 action.apply(target);
         }

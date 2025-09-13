@@ -35,12 +35,7 @@ public class multiHitAction extends Action{
 
     @Override
     public boolean combine(Action action){
-        if(((damagingAction)action).getDamageType() == this.damageType) {
-            this.intensity += action.getIntensity();
-            return true;
-        }
-        else{
-            return false;
-        }
+        // temporarily returning false on everything, meaning it's always added as a new action to the effect
+        return false;
     }
 }

@@ -69,7 +69,6 @@ public class CombatController extends Actor {
             }
             event.target.takeDamage(finalDmg);
             eventBus.emit(new DamageTakenEvent(event.target, finalDmg, event.damageType));
-            System.out.println(event);
         };
         eventBus.register(DamageEvent.class, damageListener, 10);
         GameEventListener<HealEvent> healingListener = event -> {
@@ -108,16 +107,18 @@ public class CombatController extends Actor {
         Effect effect;
         if((tempCard = SpellResolver.checkForSpell(playArea.getCards())) != null){
             playArea.spell = tempCard;
-            tempCard.getSprite().setCenter(viewport.getWorldWidth()/2, viewport.getWorldHeight()/2);
+            tempCard.setSize(hand.cardWidth*2, hand.cardHeight*2);
+            tempCard.getSprite().setSize(hand.cardWidth*2, hand.cardHeight*2);
+            tempCard.setPosition(-1 * viewport.getWorldWidth(), viewport.getWorldHeight()/2);
             tempCard.addAction(sequence(
                 fadeOut(0),
-                moveTo(viewport.getWorldWidth()/2, viewport.getWorldHeight()/2),
                 delay(0.6f),
+                moveTo(viewport.getWorldWidth()/2.4f, viewport.getWorldHeight()/2.6f, 0),
                 fadeIn(0.8f),
-                delay(0.4f),
+                delay(1.2f),
                 fadeOut(0.2f)
             ));
-            runSpellAnim(tempCard.getEffect(), 2f);
+            runSpellAnim(tempCard.getEffect(), 2.8f);
         }
         else{
             effect = SpellResolver.buildEffect(playArea.getCards());

@@ -137,8 +137,8 @@ public class InputController {
             @Override
             public boolean keyUp(int keycode) {
                 switch(keycode){
-                    case Input.Keys.A: hand.addCard(new Card("king", Main.stage)); break;
-                    case Input.Keys.S: hand.addCard(new Card("barbed_wire", Main.stage)); break;
+                    case Input.Keys.A: hand.addCard(new Card("magpie", Main.stage)); break;
+                    case Input.Keys.S: hand.addCard(new Card("magic_missile", Main.stage)); break;
                     case Input.Keys.ENTER: combatController.resolveTurn(); break;
                 }
 

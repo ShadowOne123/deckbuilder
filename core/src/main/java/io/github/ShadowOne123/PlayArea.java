@@ -9,8 +9,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
 
-import static io.github.ShadowOne123.Main.atlas;
-import static io.github.ShadowOne123.Main.viewport;
+import static io.github.ShadowOne123.Main.*;
 
 
 public class PlayArea{
@@ -28,7 +27,7 @@ public class PlayArea{
         sprite.setSize(viewport.getWorldWidth()*0.40f, viewport.getWorldHeight()/4);
         sprite.setCenter(viewport.getWorldWidth()/2, viewport.getWorldHeight()/1.7f);
         spell = null;
-        slotBorder = atlas.findRegion("cards/king");
+        slotBorder = atlas.findRegion("slotBorder");
     }
 
    public ArrayList<Card> getCards(){
@@ -77,7 +76,7 @@ public class PlayArea{
         Color color;
         //card borders
         for(int i = 0; i < cards.length; i++){
-            spriteBatch.draw(slotBorder,sprite.getX() + ((sprite.getWidth()/cards.length) * (i+0.16f)), sprite.getY(), viewport.getWorldHeight()/4f*0.65f, viewport.getWorldHeight()/4f);
+            spriteBatch.draw(slotBorder,sprite.getX()*0.975f + ((sprite.getWidth()/cards.length) * (i+0.1f)), sprite.getY()*0.89f, viewport.getWorldHeight()/3f*0.65f, viewport.getWorldHeight()/2.8f);
         }
 
         //cards
@@ -93,8 +92,10 @@ public class PlayArea{
             color = spell.getColor();
             spell.getSprite().setColor(color);
             spell.getSprite().draw(spriteBatch);
+            spell.getSprite().setPosition(spell.getX(), spell.getY());
         }
    }
+
 
    public void clear(){
         for(int i = 0; i < cards.length; i++){

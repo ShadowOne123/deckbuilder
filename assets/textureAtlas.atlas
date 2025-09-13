@@ -6,30 +6,23 @@ filter: Nearest, Nearest
 repeat: none
 GothicCastleBackground3
   rotate: false
-  xy: 2, 837
+  xy: 0, 1024
+  size: 1792, 1024
+  orig: 1792, 1024
+  offset: 0, 0
+  index: -1
+MagicalForestBackground1
+  rotate: false
+  xy: 0, 0
   size: 1792, 1024
   orig: 1792, 1024
   offset: 0, 0
   index: -1
 bucket
   rotate: false
-  xy: 1796, 1761
+  xy: 1792, 1948
   size: 100, 100
   orig: 100, 100
-  offset: 0, 0
-  index: -1
-libgdx
-  rotate: false
-  xy: 2, 2
-  size: 378, 63
-  orig: 378, 63
-  offset: 0, 0
-  index: -1
-steampunkBackground1
-  rotate: false
-  xy: 2, 67
-  size: 1344, 768
-  orig: 1344, 768
   offset: 0, 0
   index: -1
 
@@ -38,100 +31,170 @@ size: 2048, 2048
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
-MagicalForestBackground1
+fireElemental
   rotate: false
-  xy: 2, 2
-  size: 1792, 1024
-  orig: 1792, 1024
+  xy: 832, 225
+  size: 585, 1023
+  orig: 585, 1023
+  offset: 0, 0
+  index: -1
+libgdx
+  rotate: false
+  xy: 832, 162
+  size: 378, 63
+  orig: 378, 63
+  offset: 0, 0
+  index: -1
+slotBorder
+  rotate: false
+  xy: 0, 0
+  size: 832, 1248
+  orig: 832, 1248
+  offset: 0, 0
+  index: -1
+spellbook
+  rotate: false
+  xy: 1344, 1516
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1
+steampunkBackground1
+  rotate: false
+  xy: 0, 1248
+  size: 1344, 768
+  orig: 1344, 768
   offset: 0, 0
   index: -1
 
 textureAtlas3.png
-size: 1024, 2048
-format: RGBA8888
-filter: Nearest, Nearest
-repeat: none
-fireElemental
-  rotate: false
-  xy: 2, 2
-  size: 768, 1344
-  orig: 768, 1344
-  offset: 0, 0
-  index: -1
-
-textureAtlas4.png
-size: 2048, 1024
+size: 2048, 512
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
 statuses/bleed
   rotate: false
-  xy: 2, 518
+  xy: 0, 256
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 statuses/blind
   rotate: false
-  xy: 2, 260
+  xy: 0, 0
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 statuses/block
   rotate: false
-  xy: 260, 518
+  xy: 256, 256
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 statuses/burn
   rotate: false
-  xy: 2, 2
+  xy: 256, 0
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+statuses/favor
+  rotate: false
+  xy: 512, 256
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 statuses/frost
   rotate: false
-  xy: 260, 260
+  xy: 512, 0
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 statuses/hemophilia
   rotate: false
-  xy: 518, 518
+  xy: 768, 256
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 statuses/luck
   rotate: false
-  xy: 260, 2
+  xy: 768, 0
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 statuses/poison
   rotate: false
-  xy: 518, 260
+  xy: 1024, 256
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 statuses/regen
   rotate: false
-  xy: 776, 518
+  xy: 1024, 0
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 statuses/thorns
   rotate: false
-  xy: 518, 2
+  xy: 1280, 256
   size: 256, 256
   orig: 256, 256
+  offset: 0, 0
+  index: -1
+
+textureAtlas4.png
+size: 2048, 2048
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+cards/bite
+  rotate: false
+  xy: 0, 1023
+  size: 682, 1023
+  orig: 682, 1023
+  offset: 0, 0
+  index: -1
+cards/blaze
+  rotate: false
+  xy: 0, 0
+  size: 682, 1023
+  orig: 682, 1023
+  offset: 0, 0
+  index: -1
+cards/blessing_of_the_treants
+  rotate: false
+  xy: 682, 1023
+  size: 682, 1023
+  orig: 682, 1023
+  offset: 0, 0
+  index: -1
+cards/buckler
+  rotate: false
+  xy: 682, 0
+  size: 682, 1023
+  orig: 682, 1023
+  offset: 0, 0
+  index: -1
+cards/butcher
+  rotate: false
+  xy: 1364, 1023
+  size: 682, 1023
+  orig: 682, 1023
+  offset: 0, 0
+  index: -1
+cards/drain
+  rotate: false
+  xy: 1364, 0
+  size: 682, 1023
+  orig: 682, 1023
   offset: 0, 0
   index: -1
 
@@ -140,39 +203,46 @@ size: 2048, 2048
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
-cards/blaze
+cards/favor_of_the_leprechauns
   rotate: false
-  xy: 2, 994
+  xy: 0, 1023
   size: 682, 1023
   orig: 682, 1023
   offset: 0, 0
   index: -1
-cards/butcher
+cards/hypothermia
   rotate: false
-  xy: 686, 994
+  xy: 0, 0
   size: 682, 1023
   orig: 682, 1023
   offset: 0, 0
   index: -1
-cards/king
+cards/inferno
   rotate: false
-  xy: 2, 2
-  size: 682, 990
-  orig: 682, 990
+  xy: 682, 1023
+  size: 682, 1023
+  orig: 682, 1023
   offset: 0, 0
   index: -1
-cards/lightning_strike
+cards/magic_missile
   rotate: false
-  xy: 686, 58
-  size: 682, 934
-  orig: 682, 934
+  xy: 682, 0
+  size: 682, 1023
+  orig: 682, 1023
   offset: 0, 0
   index: -1
-cards/temperance
+cards/pocket_sand
   rotate: false
-  xy: 1370, 993
-  size: 595, 1024
-  orig: 595, 1024
+  xy: 1364, 1023
+  size: 682, 1023
+  orig: 682, 1023
+  offset: 0, 0
+  index: -1
+cards/rose
+  rotate: false
+  xy: 1364, 0
+  size: 682, 1023
+  orig: 682, 1023
   offset: 0, 0
   index: -1
 
@@ -181,58 +251,72 @@ size: 2048, 2048
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
-cards/barbed_wire
+cards/king
   rotate: false
-  xy: 1370, 853
-  size: 585, 1024
-  orig: 585, 1024
+  xy: 682, 1056
+  size: 682, 990
+  orig: 682, 990
   offset: 0, 0
   index: -1
-cards/hypothermia
+cards/lightning_strike
   rotate: false
-  xy: 2, 854
+  xy: 1364, 1112
+  size: 682, 934
+  orig: 682, 934
+  offset: 0, 0
+  index: -1
+cards/storm
+  rotate: false
+  xy: 0, 1023
   size: 682, 1023
   orig: 682, 1023
   offset: 0, 0
   index: -1
-cards/magpie
+cards/strike
   rotate: false
-  xy: 2, 2
-  size: 682, 850
-  orig: 682, 850
+  xy: 0, 0
+  size: 682, 1023
+  orig: 682, 1023
   offset: 0, 0
   index: -1
-cards/pocket_sand
+cards/temperance
   rotate: false
-  xy: 686, 854
+  xy: 1364, 88
+  size: 595, 1024
+  orig: 595, 1024
+  offset: 0, 0
+  index: -1
+cards/vial
+  rotate: false
+  xy: 682, 0
   size: 682, 1023
   orig: 682, 1023
   offset: 0, 0
   index: -1
 
 textureAtlas7.png
-size: 2048, 2048
+size: 2048, 1024
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
-cards/heal
+cards/barbed_wire
   rotate: false
-  xy: 1370, 2
+  xy: 0, 0
   size: 585, 1024
   orig: 585, 1024
   offset: 0, 0
   index: -1
-cards/rose
+cards/heal
   rotate: false
-  xy: 2, 3
-  size: 682, 1023
-  orig: 682, 1023
+  xy: 585, 0
+  size: 585, 1024
+  orig: 585, 1024
   offset: 0, 0
   index: -1
-cards/vial
+cards/magpie
   rotate: false
-  xy: 686, 3
-  size: 682, 1023
-  orig: 682, 1023
+  xy: 1170, 174
+  size: 682, 850
+  orig: 682, 850
   offset: 0, 0
   index: -1

@@ -18,6 +18,7 @@ public class SpellbookActor extends Actor {
         }
 
         for(int i = 0; i < keys.size(); i++){
+            System.out.println(keys.get(i));
             String[] splitKey = keys.get(i).split(" ");
             for(int j = 0; j < splitKey.length; j++){
                 Card card = new Card(splitKey[j], Main.menuStage);

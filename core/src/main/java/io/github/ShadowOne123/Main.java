@@ -59,7 +59,7 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void create() {
-        characterClass = "rogue";
+        characterClass = "druid";
         populateCardDictionary("cardDictionary.txt");
         SpellResolver.populateSpellbook("/spellbook.txt");
         FontManager.init();
@@ -96,12 +96,12 @@ public class Main extends ApplicationAdapter {
         stage.addActor(player);
         ArrayList<Enemy> enemies = new ArrayList<Enemy>();
         enemies.add(enemyTest);
-        hand.addCard(new Card("temperance", stage));
-        hand.addCard(new Card("butcher", stage));
-        hand.addCard(new Card("pocket_sand", stage));
+        hand.addCard(new Card("buckler", stage));
+        hand.addCard(new Card("rose", stage));
+        hand.addCard(new Card("barbed_wire", stage));
         deck = new Deck(spriteBatch);
         for(int i = 0; i < 5; i++){
-            deck.addCard(new Card("temperance", stage));
+            //deck.addCard(new Card("lightning_strike", stage));
         }
         discardActor = new DiscardActor(deck, hand, spriteBatch);
         combatController = new CombatController(player, playArea, hand, deck, enemies);
@@ -141,7 +141,6 @@ public class Main extends ApplicationAdapter {
             playArea.drawPlayArea();
             player.draw();
             enemyTest.draw();
-            healthFont.draw(spriteBatch, combatController.getTurn().toString(), viewport.getWorldWidth() / 2.7f, viewport.getWorldHeight() / 1.1f);
             hand.drawHand();
             deck.drawDeck();
             discardActor.draw();

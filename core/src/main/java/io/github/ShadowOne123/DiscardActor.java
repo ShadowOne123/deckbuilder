@@ -16,7 +16,7 @@ public class DiscardActor extends Actor {
     public DiscardActor(Deck deck, Hand hand, SpriteBatch spriteBatch){
         this.deck = deck;
         this.spriteBatch = spriteBatch;
-        sprite = new Sprite(atlas.findRegion("cards/rose"));
+        sprite = new Sprite(atlas.findRegion("card_sleeve"));
         sprite.setSize(hand.cardWidth, hand.cardHeight);
         setSize(sprite.getWidth(), sprite.getHeight());
         sprite.setPosition((hand.worldWidth/15)*14-hand.cardHeight/2, hand.worldHeight/25);

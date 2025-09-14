@@ -31,23 +31,23 @@ size: 2048, 2048
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
-fireElemental
+card_sleeve
   rotate: false
-  xy: 832, 225
-  size: 585, 1023
-  orig: 585, 1023
+  xy: 0, 0
+  size: 832, 1248
+  orig: 832, 1248
   offset: 0, 0
   index: -1
 libgdx
   rotate: false
-  xy: 832, 162
+  xy: 1344, 1453
   size: 378, 63
   orig: 378, 63
   offset: 0, 0
   index: -1
 slotBorder
   rotate: false
-  xy: 0, 0
+  xy: 832, 0
   size: 832, 1248
   orig: 832, 1248
   offset: 0, 0
@@ -68,6 +68,33 @@ steampunkBackground1
   index: -1
 
 textureAtlas3.png
+size: 2048, 2048
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+button_background
+  rotate: false
+  xy: 0, 1024
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: -1
+dagger_icon
+  rotate: false
+  xy: 0, 0
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: -1
+fireElemental
+  rotate: false
+  xy: 1024, 1025
+  size: 585, 1023
+  orig: 585, 1023
+  offset: 0, 0
+  index: -1
+
+textureAtlas4.png
 size: 2048, 512
 format: RGBA8888
 filter: Nearest, Nearest
@@ -150,7 +177,7 @@ statuses/thorns
   offset: 0, 0
   index: -1
 
-textureAtlas4.png
+textureAtlas5.png
 size: 2048, 2048
 format: RGBA8888
 filter: Nearest, Nearest
@@ -198,7 +225,7 @@ cards/drain
   offset: 0, 0
   index: -1
 
-textureAtlas5.png
+textureAtlas6.png
 size: 2048, 2048
 format: RGBA8888
 filter: Nearest, Nearest
@@ -246,7 +273,7 @@ cards/rose
   offset: 0, 0
   index: -1
 
-textureAtlas6.png
+textureAtlas7.png
 size: 2048, 2048
 format: RGBA8888
 filter: Nearest, Nearest
@@ -294,7 +321,7 @@ cards/vial
   offset: 0, 0
   index: -1
 
-textureAtlas7.png
+textureAtlas8.png
 size: 2048, 1024
 format: RGBA8888
 filter: Nearest, Nearest

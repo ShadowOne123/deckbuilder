@@ -85,7 +85,8 @@ public class Main extends ApplicationAdapter {
         decklists.put("druid", "strike, strike, heal, buckler, rose, magpie, magpie, barbed_wire");
         decklists.put("mage", "magic_missile, magic_missile, hypothermia, blaze, blaze, blaze, lightning_strike, lightning_strike");
 
-        //initGame();
+        //buttons for picking a class:
+
     }
 
     @Override

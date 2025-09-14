@@ -1,8 +1,17 @@
 # Deckbuilder
 
-A [libGDX](https://libgdx.com/) project generated with [gdx-liftoff](https://github.com/libgdx/gdx-liftoff).
+In order to compile the game into a .jar file, run the command `./gradlew lwjgl3:dist` while in the game's main folder.
+The resulting jar file will be in lwjgl3/build/libs/. You can run it via command line with `java -jar jar-file-name.jar`.
+ You must have a JVM installed on your device in order to play the game.
 
-This project was generated with a template including simple application launchers and an `ApplicationAdapter` extension that draws libGDX logo.
+## Controls
+
+There is currently no in-game tutorial, so here's a brief explanation of the controls:
+
+- When loading into the game, press either the 'm', 'r', or 'd' keys in order to pick a class, corresponding to Mage, Rogue, and Druid.
+- In order to pass your turn, or have the enemy take its turn, press the 'enter' key.
+- To play cards, move them into the slots in the middle of the screen, by clicking on the card and then the slots. The card will be placed in the first available slot, not the one you were hovering over.
+- Click on the spellbook icon in the top left, the deck, or discard piles to view various menus. Press 'esc' to return to the game.
 
 ## Platforms
 

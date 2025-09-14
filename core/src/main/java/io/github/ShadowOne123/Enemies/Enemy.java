@@ -30,18 +30,20 @@ public class Enemy extends Creature {
 
 
     public void attackAnim(Player player){
-        float originX = getX();
-        addAction(sequence(
-            moveTo(getX() + 10, getY(), 0.06f),
-            delay(0.1f),
-            moveTo(getX() - 20, getY(), 0.1f),
-            moveTo(originX, getY(), 0.3f),
-            run(attack(player)),
-            delay(0.1f),
-            run(takeStatuses(this)),
-            run(decayStatuses()),
-            run(incrementTurn())
-        ));
+        if(!dead) {
+            float originX = getX();
+            addAction(sequence(
+                moveTo(getX() + 10, getY(), 0.06f),
+                delay(0.1f),
+                moveTo(getX() - 20, getY(), 0.1f),
+                moveTo(originX, getY(), 0.3f),
+                run(attack(player)),
+                delay(0.1f),
+                run(takeStatuses(this)),
+                run(decayStatuses()),
+                run(incrementTurn())
+            ));
+        }
     }
 
     private Runnable attack(Player player){

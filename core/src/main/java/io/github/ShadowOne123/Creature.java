@@ -23,6 +23,7 @@ abstract public class Creature extends Actor {
     Viewport viewport;
     SpriteBatch spriteBatch;
     BitmapFont text;
+    protected boolean dead;
     BitmapFont statusStackFont;
     float centerX;
     float centerY;
@@ -42,21 +43,24 @@ abstract public class Creature extends Actor {
         statuses = new ArrayList<Status>();
         statusStackFont = FontManager.stackFont;
         setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
+        dead = false;
     }
 
     public void draw(){
-        sprite.draw(spriteBatch);
-        sprite.setCenter(getX()+sprite.getWidth()/2,getY()+ sprite.getHeight()/2);
-        text.draw(spriteBatch, ""+hp, sprite.getX()+sprite.getWidth()/3.5f, sprite.getY());
-        Sprite statusSprite;
-        Status status;
-        for(int i = 0; i < statuses.size(); i++){
-            status = statuses.get(i);
-            statusSprite = status.getSprite();
-            status.setPosition(sprite.getX()+i*statusSprite.getWidth(), sprite.getY()-statusSprite.getHeight()*2f);
-            statusSprite.setPosition(status.getX(), status.getY());
-            statusSprite.draw(spriteBatch);
-            statusStackFont.draw(spriteBatch, String.valueOf(status.getIntensity()), statusSprite.getX()+statusSprite.getWidth()/1.5f, statusSprite.getY()+statusSprite.getHeight()*0.4f);
+        if(!dead) {
+            sprite.draw(spriteBatch);
+            sprite.setCenter(getX() + sprite.getWidth() / 2, getY() + sprite.getHeight() / 2);
+            text.draw(spriteBatch, "" + hp, sprite.getX() + sprite.getWidth() / 3.5f, sprite.getY());
+            Sprite statusSprite;
+            Status status;
+            for (int i = 0; i < statuses.size(); i++) {
+                status = statuses.get(i);
+                statusSprite = status.getSprite();
+                status.setPosition(sprite.getX() + i * statusSprite.getWidth(), sprite.getY() - statusSprite.getHeight() * 2f);
+                statusSprite.setPosition(status.getX(), status.getY());
+                statusSprite.draw(spriteBatch);
+                statusStackFont.draw(spriteBatch, String.valueOf(status.getIntensity()), statusSprite.getX() + statusSprite.getWidth() / 1.5f, statusSprite.getY() + statusSprite.getHeight() * 0.4f);
+            }
         }
     }
 
@@ -138,7 +142,7 @@ abstract public class Creature extends Actor {
     }
 
     public void die(){
-        System.out.println("blerghh, I'm dead!!");
+        this.dead = true;
     }
 
     public Sprite getSprite(){

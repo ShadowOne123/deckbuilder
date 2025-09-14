@@ -12,29 +12,20 @@ import io.github.ShadowOne123.Statuses.Status;
 import java.util.ArrayList;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
-import static io.github.ShadowOne123.Main.eventBus;
-import static io.github.ShadowOne123.Main.viewport;
+import static io.github.ShadowOne123.Main.*;
 
 public class CombatController extends Actor {
 
     private ArrayList<Enemy> enemies;
     private ArrayList<Creature> targets;
-    private Player player;
-    private PlayArea playArea;
     public enum Turn {ENEMY, PLAYER, LOADING_PLAYER, LOADING_ENEMY}
     private Turn turn = Turn.PLAYER;
     private int maxTargets;
     private int currentTargets;
     private int enemyTurnProgress;
-    private Deck deck;
-    private Hand hand;
 
-    public CombatController(Player player, PlayArea playArea, Hand hand, Deck deck, ArrayList<Enemy> enemies){
+    public CombatController(ArrayList<Enemy> enemies){
         this.enemies = enemies;
-        this.playArea = playArea;
-        this.hand = hand;
-        this.deck = deck;
-        this.player = player;
         this.targets = new ArrayList<Creature>();
         this.maxTargets = 1;
         this.currentTargets = 0;
@@ -46,7 +37,6 @@ public class CombatController extends Actor {
             Status block = event.target.searchStatuses("block");
             Status thorns = event.target.searchStatuses("thorns");
             if(block != null){
-                System.out.println("block found!");
                 if(block.getIntensity() <= event.amount){
                     finalDmg -= block.getIntensity();
                     block.addIntensity(-1 * block.getIntensity());
@@ -75,8 +65,6 @@ public class CombatController extends Actor {
             event.target.getHealed(event.amount);
         };
         eventBus.register(HealEvent.class, healingListener, 10);
-
-
     }
 
     public void resolveTurn(){
@@ -85,6 +73,7 @@ public class CombatController extends Actor {
         }
         else if (turn == Turn.ENEMY){
             resolveEnemyTurn();
+            System.out.println("ping");
         }
         //if the turn is loading just don't do anything
     }
@@ -256,9 +245,6 @@ public class CombatController extends Actor {
         return turn;
     }
 
-    public Player getPlayer(){
-        return player;
-    }
 
     public ArrayList<Enemy> getEnemies(){
         return enemies;

@@ -100,10 +100,10 @@ abstract public class Creature extends Actor {
                 for(int i = 0; i < statuses.size(); i++){
                     if(statuses.get(i).hasEndTurnDecay()) {
                         statuses.get(i).decay();
-                        if (statuses.get(i).getIntensity() <= 0) {
-                            statuses.remove(i);
-                            i--;
-                        }
+                    }
+                    if (statuses.get(i).getIntensity() <= 0) {
+                        statuses.remove(i);
+                        i--;
                     }
                 }
             }

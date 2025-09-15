@@ -71,10 +71,6 @@ public class CombatController extends Actor {
         if(turn == Turn.PLAYER){
             resolvePlayerTurn();
         }
-        else if (turn == Turn.ENEMY){
-            resolveEnemyTurn();
-            System.out.println("ping");
-        }
         //if the turn is loading just don't do anything
     }
 
@@ -84,11 +80,13 @@ public class CombatController extends Actor {
         //check for no cards played
         if(playArea.getCards().isEmpty()){
             System.out.println("No cards played!");
+            turn = Turn.PLAYER;
             return false;
         }
         //check for no targets
         else if (targets.isEmpty()){
             System.out.println("No targets!");
+            turn = Turn.PLAYER;
             return false;
         }
         //build spell
@@ -177,13 +175,14 @@ public class CombatController extends Actor {
     public void incrementTurn(){
         if(turn == Turn.LOADING_PLAYER){
             turn = Turn.ENEMY;
+            resolveEnemyTurn();
         }
         else if(turn == Turn.LOADING_ENEMY){
             enemyTurnProgress++;
             if(enemyTurnProgress == enemies.size()){
                 enemyTurnProgress = 0;
                 turn = Turn.PLAYER;
-                for(int i = 0; i < 3; i++) {
+                for(int i = 0; i < 4; i++) {
                     deck.draw(hand);
                 }
             }

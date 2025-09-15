@@ -9,8 +9,8 @@ The resulting jar file will be in lwjgl3/build/libs/. You can run it via command
 There is currently no in-game tutorial, so here's a brief explanation of the controls:
 
 - When loading into the game, press either the 'm', 'r', or 'd' keys in order to pick a class, corresponding to Mage, Rogue, and Druid.
-- In order to pass your turn, or have the enemy take its turn, press the 'enter' key.
-- To play cards, move them into the slots in the middle of the screen, by clicking on the card and then the slots. The card will be placed in the first available slot, not the one you were hovering over.
+- In order to pass your turn, press the 'enter' key.
+- To play cards, move them into the slots in the middle of the screen, by clicking on the card and then the slots.
 - Click on the spellbook icon in the top left, the deck, or discard piles to view various menus. Press 'esc' to return to the game.
 
 ## Platforms

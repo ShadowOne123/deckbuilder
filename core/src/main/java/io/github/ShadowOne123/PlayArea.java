@@ -48,18 +48,32 @@ public class PlayArea{
         return sprite;
    }
 
-   public boolean addCard(Card card){
+   public boolean addCard(Card card, float clickX){
         boolean added = false;
+        int slotUsed = 0;
         Sprite temp;
-        for(int i = 0; i < cards.length; i++){
-            if(cards[i] == null){
-                cards[i] = card;
-                temp = card.getSprite();
-                temp.setCenter(sprite.getX() + ((sprite.getWidth()/cards.length) * (i+0.5f)), sprite.getY() + sprite.getHeight()/2);
-                card.setPosition(temp.getX(), temp.getY());
-                added = true;
-                break;
+        // clickX - sprite.get(x) = the distance between the left of the play area and the click.
+        // divide this by 1/3rd of the width?
+        int slotClicked = (int)((clickX - sprite.getX())/(sprite.getWidth()/3));
+        if(cards[slotClicked] == null){
+            cards[slotClicked] = card;
+            added = true;
+            slotUsed = slotClicked;
+        }
+        else{
+            for(int i = 0; i < cards.length; i++){
+                if(cards[i] == null){
+                    cards[i] = card;
+                    slotUsed = i;
+                    added = true;
+                    break;
+                }
             }
+        }
+        if(added){
+            temp = card.getSprite();
+            temp.setCenter(sprite.getX() + ((sprite.getWidth()/cards.length) * (slotUsed+0.5f)), sprite.getY() + sprite.getHeight()/2);
+            card.setPosition(temp.getX(), temp.getY());
         }
         return added;
    }
